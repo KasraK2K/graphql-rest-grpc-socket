@@ -1,4 +1,6 @@
-const typeDefs = /* GraphQL */ `
+import { gql } from 'graphql-tag'
+
+const typeDefs = gql`
   """
   Gender Enum
   """

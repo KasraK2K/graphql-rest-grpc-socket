@@ -1,3 +1,4 @@
+import { gql } from 'graphql-tag'
 import userService from './user.service'
 
 const resolvers = {
@@ -6,7 +7,7 @@ const resolvers = {
   },
 }
 
-const typeDefs = /* GraphQL */ `
+const typeDefs = gql`
   type Query {
     users: [UserResponse]
   }
