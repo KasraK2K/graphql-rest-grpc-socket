@@ -1,8 +1,7 @@
-import { Context } from 'koa'
 import Router from '@koa/router'
 const router = new Router()
 
-router.get('/', (ctx: Context) => {
+router.get('/', (ctx): void => {
   ctx.body = 'Hello World'
 })
 

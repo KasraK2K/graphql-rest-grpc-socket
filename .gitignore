@@ -1,5 +1,8 @@
 node_modules/
 dist/
 build/
+.vscode/
+.fleet/
+.idea/
 
 package-lock.json
