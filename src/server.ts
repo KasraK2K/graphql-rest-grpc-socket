@@ -10,7 +10,6 @@ import { Logger } from '@apollo/utils.logger'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
-const eventEmitter = new Koa.EventEmitter()
 const PORT = Number(process.env.PORT) || 3000
 const GRAPHQL_PORT = Number(process.env.GRAPHQL_PORT) || 4000
 
