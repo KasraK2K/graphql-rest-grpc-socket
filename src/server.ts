@@ -21,21 +21,19 @@ const registerGraphQL = (port: number) => {
   // const { logger /* , cache */ } = server
   logger = server.logger
 
-  startStandaloneServer(server, { listen: { port } }).then(
-    ({ url }) => logger.warn(`🧩 GraphQL Server ready at:\t ${url}`)
-    // console.log(`🧩 GraphQL Server ready at:\t ${url}`)
+  startStandaloneServer(server, { listen: { port } }).then(({ url }) =>
+    logger.info(`🧩 GraphQL Server ready at:\t ${url}`)
   )
 }
 registerGraphQL(GRAPHQL_PORT)
 
 /* -------------------------------- REST API -------------------------------- */
+
 app
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(PORT)
-  .on('listening', () => eventEmitter.emit('start'))
+  .on('listening', () => logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`))
   .on('connection', (stream): void => console.log('connection', stream))
   .on('request', (stream): void => console.log('request', stream))
   .on('error', (stream): void => console.error('server error', stream))
-
-eventEmitter.on('start', () => logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`))
