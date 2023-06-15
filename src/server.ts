@@ -1,38 +1,55 @@
 /* ------------------------------ Dependencies ------------------------------ */
+import http from 'node:http'
 import Koa from 'koa'
+import bodyParser from 'koa-bodyparser'
+import cors from '@koa/cors'
 import { ApolloServer } from '@apollo/server'
-import { startStandaloneServer } from '@apollo/server/standalone'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+import { koaMiddleware } from '@as-integrations/koa'
+import { Logger } from '@apollo/utils.logger'
 /* --------------------------------- Modules -------------------------------- */
 import router from './restful/router'
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
-import { Logger } from '@apollo/utils.logger'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
+const httpServer = http.createServer(app.callback())
+
 const PORT = Number(process.env.PORT) || 3000
-const GRAPHQL_PORT = Number(process.env.GRAPHQL_PORT) || 4000
-
 let logger: Logger
-/* --------------------------------- GraphQL -------------------------------- */
-const registerGraphQL = (port: number) => {
-  const server = new ApolloServer({ typeDefs, resolvers })
-  // const { logger /* , cache */ } = server
+
+httpServer
+  .on('listening', () => {
+    logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`)
+    logger.info(`🧩 GraphQL Server ready at:\t http://localhost:${PORT}/graphql/`)
+  })
+  .on('connection', (): void => console.log('connection'))
+  .on('request', (): void => console.log('request'))
+  .on('error', (): void => console.error('server error'))
+
+/* -------------------------------------------------------------------------- */
+/*                             Run Server Function                            */
+/* -------------------------------------------------------------------------- */
+const run = async (port: number) => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  })
   logger = server.logger
+  await server.start()
 
-  startStandaloneServer(server, { listen: { port } }).then(({ url }) =>
-    logger.info(`🧩 GraphQL Server ready at:\t ${url}`)
-  )
+  app
+    .use(cors())
+    .use(bodyParser())
+    .use(router.routes())
+    .use(router.allowedMethods())
+    .use(koaMiddleware(server, { context: async ({ ctx }) => ({ token: ctx.headers.token }) }))
+
+  Promise.resolve()
+    .then(() => httpServer.listen({ port }))
+    .then(() => {})
+    .catch((err) => logger.error(`🔴 ${err.message}`))
 }
-registerGraphQL(GRAPHQL_PORT)
-
-/* -------------------------------- REST API -------------------------------- */
-
-app
-  .use(router.routes())
-  .use(router.allowedMethods())
-  .listen(PORT)
-  .on('listening', () => logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`))
-  .on('connection', (stream): void => console.log('connection', stream))
-  .on('request', (stream): void => console.log('request', stream))
-  .on('error', (stream): void => console.error('server error', stream))
+run(PORT)
