@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "ts-node-dev --quiet --clear src/server"
+    "kill": "lsof -t -i tcp:3000 | xargs kill",
+    "start": "ts-node-dev --transpile-only --respawn --no-notify --quiet --clear src/server.ts"
   },
   "keywords": [
     "boilerplate"
