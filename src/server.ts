@@ -7,6 +7,7 @@ import { ApolloServer } from '@apollo/server'
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import { koaMiddleware } from '@as-integrations/koa'
 import { Logger } from '@apollo/utils.logger'
+
 /* --------------------------------- Modules -------------------------------- */
 import router from './restful/router'
 import resolvers from './graphql/resolvers'
@@ -29,27 +30,49 @@ httpServer
   .on('error', (): void => console.error('server error'))
 
 /* -------------------------------------------------------------------------- */
-/*                             Run Server Function                            */
+/*                            Create Apollo Server                            */
 /* -------------------------------------------------------------------------- */
-const run = async (port: number) => {
+const createApolloServer = (): ApolloServer => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   })
   logger = server.logger
-  await server.start()
-
-  app
-    .use(cors())
-    .use(bodyParser())
-    .use(router.routes())
-    .use(router.allowedMethods())
-    .use(koaMiddleware(server, { context: async ({ ctx }) => ({ token: ctx.headers.token }) }))
-
-  Promise.resolve()
-    .then(() => httpServer.listen({ port }))
-    .then(() => {})
-    .catch((err) => logger.error(`🔴 ${err.message}`))
+  return server
 }
-run(PORT)
+
+/* -------------------------------------------------------------------------- */
+/*                             Run Server Function                            */
+/* -------------------------------------------------------------------------- */
+// Function to run the server
+const run = async (port: number) => {
+  try {
+    const server = createApolloServer() // Create the Apollo Server instance
+    await server.start() // Start the Apollo Server
+
+    // Set up Koa middleware and routes
+    app
+      .use(cors()) // Enable CORS
+      .use(bodyParser()) // Parse request bodies
+      .use(router.routes()) // Add RESTful routes
+      .use(router.allowedMethods()) // Allow appropriate HTTP methods for routes
+      .use(
+        koaMiddleware(server, {
+          // Connect Apollo Server middleware to Koa
+          context: async ({ ctx }) => ({ token: ctx.headers.token }), // Set context for GraphQL resolvers
+        })
+      )
+
+    httpServer.listen({ port }) // Start the HTTP server
+  } catch (err) {
+    if (err instanceof Error) {
+      logger.error(`🔴 ${err.message}`)
+    } else {
+      logger.error(`🔴 An unknown error occurred`)
+    }
+  }
+}
+
+// Run the server with the specified port
+run(PORT).catch((err) => logger.error(`🔴 ${err.message}`))
