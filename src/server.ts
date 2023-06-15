@@ -70,6 +70,7 @@ const run = async (port: number) => {
       logger.error(`🔴 ${err.message}`)
     } else {
       logger.error(`🔴 An unknown error occurred`)
+      console.assert(err)
     }
   }
 }
