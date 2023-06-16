@@ -101,11 +101,11 @@ app.use(async (ctx, next) => {
       ctx.body = {
         success: false,
         status: 500,
-        message: 'An unknown error occurred at error handler',
+        message: 'An unknown error occurred at errorMiddleware',
       }
       // TODO : Change this logger.error to winston log
       logger.error({
-        message: 'An unknown error occurred at error handler',
+        message: 'An unknown error occurred at errorMiddleware',
         statusCode: 500,
         type: 'ServerError',
       })

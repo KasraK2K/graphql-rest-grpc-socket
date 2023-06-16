@@ -24,7 +24,7 @@ const errorMiddleware: Middleware = async (ctx: Context, next) => {
         message: error.message,
       }
     }
-    // Unknown error
+    // Unknown instance error
     else {
       // TODO : Change this console.error to winston log
       console.error({
