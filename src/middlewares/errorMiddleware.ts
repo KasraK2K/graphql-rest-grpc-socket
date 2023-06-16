@@ -11,11 +11,12 @@ const errorMiddleware: Middleware = async (ctx: Context, next) => {
   } catch (error) {
     // AppError instance error
     if (error instanceof AppError) {
+      // TODO : Change this console.error to winston log
       console.error({
         message: error.message,
         statusCode: error.statusCode,
         type: 'AppError',
-        ...errorFilePath(error),
+        ...errorFilePath(error, ctx),
       })
       ctx.body = {
         success: false,
@@ -25,11 +26,12 @@ const errorMiddleware: Middleware = async (ctx: Context, next) => {
     }
     // Unknown error
     else {
+      // TODO : Change this console.error to winston log
       console.error({
         message: 'Unhandled error',
         statusCode: 500,
         type: 'Error',
-        ...errorFilePath(error),
+        ...errorFilePath(error, ctx),
       })
       ctx.body = {
         success: false,

@@ -30,6 +30,7 @@ httpServer
   // .on('connection', (): void => console.log('connection'))
   // .on('request', (): void => console.log('request'))
   .on('error', (err: Error | AppError): void => {
+    // TODO : Change this logger.error to winston log
     logger.error('🔴 Error event raised')
     logger.warn(err.stack)
   })
@@ -84,5 +85,30 @@ const run = async (port: number) => {
 run(PORT).catch((err) => logger.error(`🔴 ${err.message}`))
 
 app.use(async (ctx, next) => {
-  await errorMiddleware(ctx, next)
+  try {
+    await errorMiddleware(ctx, next)
+  } catch (error) {
+    // If `errorMiddleware` has error
+    if (error instanceof Error) {
+      ctx.body = {
+        success: false,
+        status: 500,
+        message: error.message,
+      }
+      // TODO : Change this logger.error to winston log
+      logger.error({ message: error.message, statusCode: 500, type: 'ServerError' })
+    } else {
+      ctx.body = {
+        success: false,
+        status: 500,
+        message: 'An unknown error occurred at error handler',
+      }
+      // TODO : Change this logger.error to winston log
+      logger.error({
+        message: 'An unknown error occurred at error handler',
+        statusCode: 500,
+        type: 'ServerError',
+      })
+    }
+  }
 })

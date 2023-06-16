@@ -1,8 +1,8 @@
 import AppError from './AppError'
 
 class NotFoundError extends AppError {
-  constructor(message: string) {
-    super(message || 'Resource not found', 404)
+  constructor(message = 'Resource not found') {
+    super(message, 404)
   }
 }
 

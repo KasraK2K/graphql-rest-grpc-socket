@@ -1,6 +1,10 @@
+/* ------------------------------ Dependencies ------------------------------ */
+import { Context } from 'koa'
+
+/* --------------------------------- Modules -------------------------------- */
 import AppError from './AppError'
 
-const errorFilePath = (error: unknown | Error | AppError) => {
+const errorFilePath = (error: unknown | Error | AppError, ctx: Context) => {
   if ((error instanceof Error || error instanceof AppError) && error.stack) {
     let stack = error.stack.split('\n').map((line) => line.trim())
     const file_path = stack[1].substring(
