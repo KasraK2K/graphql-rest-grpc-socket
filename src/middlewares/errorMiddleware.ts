@@ -1,5 +1,9 @@
+/* ------------------------------ Dependencies ------------------------------ */
 import { Middleware, Context } from 'koa'
+
+/* --------------------------------- Modules -------------------------------- */
 import AppError from '../common/helpers/errors/AppError'
+import errorFilePath from '../common/helpers/errors/errorFilePath'
 
 const errorMiddleware: Middleware = async (ctx: Context, next) => {
   try {
@@ -7,7 +11,12 @@ const errorMiddleware: Middleware = async (ctx: Context, next) => {
   } catch (error) {
     // AppError instance error
     if (error instanceof AppError) {
-      console.error({ message: error.message, statusCode: error.statusCode, type: 'AppError' })
+      console.error({
+        message: error.message,
+        statusCode: error.statusCode,
+        type: 'AppError',
+        ...errorFilePath(error),
+      })
       ctx.body = {
         success: false,
         status: error.statusCode,
@@ -16,7 +25,12 @@ const errorMiddleware: Middleware = async (ctx: Context, next) => {
     }
     // Unknown error
     else {
-      console.error({ message: 'Unhandled error', statusCode: 500, type: 'Error' })
+      console.error({
+        message: 'Unhandled error',
+        statusCode: 500,
+        type: 'Error',
+        ...errorFilePath(error),
+      })
       ctx.body = {
         success: false,
         status: 500,
