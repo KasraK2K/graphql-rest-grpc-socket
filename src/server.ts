@@ -12,6 +12,8 @@ import { Logger } from '@apollo/utils.logger'
 import router from './restful/router'
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
+import errorMiddleware from './middlewares/errorMiddleware'
+import AppError from './common/helpers/errors/AppError'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
@@ -25,9 +27,12 @@ httpServer
     logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`)
     logger.info(`🧩 GraphQL Server ready at:\t http://localhost:${PORT}/graphql/`)
   })
-  .on('connection', (): void => console.log('connection'))
-  .on('request', (): void => console.log('request'))
-  .on('error', (): void => console.error('server error'))
+  // .on('connection', (): void => console.log('connection'))
+  // .on('request', (): void => console.log('request'))
+  .on('error', (err: Error | AppError): void => {
+    logger.error('🔴 Error event raised')
+    logger.warn(err.stack)
+  })
 
 /* -------------------------------------------------------------------------- */
 /*                            Create Apollo Server                            */
@@ -77,3 +82,7 @@ const run = async (port: number) => {
 
 // Run the server with the specified port
 run(PORT).catch((err) => logger.error(`🔴 ${err.message}`))
+
+app.use(async (ctx, next) => {
+  await errorMiddleware(ctx, next)
+})
