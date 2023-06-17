@@ -1,52 +1,78 @@
 /* ------------------------------ Dependencies ------------------------------ */
-import http from 'node:http'
+// import http from 'node:http'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import cors from '@koa/cors'
-import { ApolloServer } from '@apollo/server'
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
-import { koaMiddleware } from '@as-integrations/koa'
-import { Logger } from '@apollo/utils.logger'
 
 /* --------------------------------- Modules -------------------------------- */
 import router from './restful/router'
-import resolvers from './graphql/resolvers'
-import typeDefs from './graphql/typeDefs'
 import errorMiddleware from './middlewares/errorMiddleware'
 import AppError from './common/helpers/errors/AppError'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
-const httpServer = http.createServer(app.callback())
+// const httpServer = http.createServer(app.callback())
 
 const PORT = Number(process.env.PORT) || 3000
-let logger: Logger
 
-httpServer
-  .on('listening', () => {
-    logger.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`)
-    logger.info(`🧩 GraphQL Server ready at:\t http://localhost:${PORT}/graphql/`)
-  })
-  // .on('connection', (): void => console.log('connection'))
-  // .on('request', (): void => console.log('request'))
-  .on('error', (err: Error | AppError): void => {
-    // TODO : Change this logger.error to winston log
-    logger.error('🔴 Error event raised')
-    logger.warn(err.stack)
-  })
+// `Set up Koa middleware and routes
+app
+  .use(async (ctx, next) => {
+    try {
+      await errorMiddleware(ctx, next)
+    } catch (error) {
+      // If `errorMiddleware` has error
+      if (error instanceof Error) {
+        ctx.body = {
+          success: false,
+          status: 500,
+          message: error.message,
+        }
+        // TODO : Change this console.error to winston log
+        console.error({ message: error.message, statusCode: 500, type: 'ServerError' })
+      } else {
+        ctx.body = {
+          success: false,
+          status: 500,
+          message: 'An unknown error occurred at errorMiddleware',
+        }
+        // TODO : Change this console.error to winston log
+        console.error({
+          message: 'An unknown error occurred at errorMiddleware',
+          statusCode: 500,
+          type: 'ServerError',
+        })
+      }
+    }
+  }) // Error Handler
+  .use(
+    cors({
+      origin: (ctx) => {
+        // TODO : Fill `blockDomains` array using Redis for block how doesn't have enough license
+        const blockDomains: string[] = ['http://localhost:5000']
+        const blockMethods: string[] = []
+        const isBlocked = blockDomains.some((domainAddress) => ctx.origin.includes(domainAddress))
+        const isBlockedMethod = blockMethods.some((method) => ctx.method.includes(method))
+        if (isBlocked) throw new AppError('Forbidden', 403)
+        else if (isBlockedMethod) throw new AppError('Method Not Allowed', 405)
+        else return ctx.origin
+      },
+    })
+  ) // Enable CORS
+  .use(bodyParser()) // Parse request bodies
+  .use(router.routes()) // Add RESTful routes
+  .use(router.allowedMethods()) // Allow appropriate HTTP methods for routes
+
+app.on('error', (err: Error | AppError): void => {
+  // TODO : Change this console.error to winston log
+  console.error('🔴 Error event raised')
+  console.warn(err.stack)
+})
 
 /* -------------------------------------------------------------------------- */
 /*                            Create Apollo Server                            */
 /* -------------------------------------------------------------------------- */
-const createApolloServer = (): ApolloServer => {
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  })
-  logger = server.logger
-  return server
-}
+// TODO : GraphQL Implementation
 
 /* -------------------------------------------------------------------------- */
 /*                             Run Server Function                            */
@@ -54,61 +80,21 @@ const createApolloServer = (): ApolloServer => {
 // Function to run the server
 const run = async (port: number) => {
   try {
-    const server = createApolloServer() // Create the Apollo Server instance
-    await server.start() // Start the Apollo Server
-
-    // Set up Koa middleware and routes
-    app
-      .use(cors()) // Enable CORS
-      .use(bodyParser()) // Parse request bodies
-      .use(router.routes()) // Add RESTful routes
-      .use(router.allowedMethods()) // Allow appropriate HTTP methods for routes
-      .use(
-        koaMiddleware(server, {
-          // Connect Apollo Server middleware to Koa
-          context: async ({ ctx }) => ({ token: ctx.headers.token }), // Set context for GraphQL resolvers
-        })
-      )
-
-    httpServer.listen({ port }) // Start the HTTP server
+    app.listen({ port }) // Start the HTTP server
   } catch (err) {
     if (err instanceof Error) {
-      logger.error(`🔴 ${err.message}`)
+      console.error(`🔴 ${err.message}`)
     } else {
-      logger.error(`🔴 An unknown error occurred`)
+      console.error(`🔴 An unknown error occurred`)
       console.assert(err)
     }
   }
 }
 
 // Run the server with the specified port
-run(PORT).catch((err) => logger.error(`🔴 ${err.message}`))
-
-app.use(async (ctx, next) => {
-  try {
-    await errorMiddleware(ctx, next)
-  } catch (error) {
-    // If `errorMiddleware` has error
-    if (error instanceof Error) {
-      ctx.body = {
-        success: false,
-        status: 500,
-        message: error.message,
-      }
-      // TODO : Change this logger.error to winston log
-      logger.error({ message: error.message, statusCode: 500, type: 'ServerError' })
-    } else {
-      ctx.body = {
-        success: false,
-        status: 500,
-        message: 'An unknown error occurred at errorMiddleware',
-      }
-      // TODO : Change this logger.error to winston log
-      logger.error({
-        message: 'An unknown error occurred at errorMiddleware',
-        statusCode: 500,
-        type: 'ServerError',
-      })
-    }
-  }
-})
+run(PORT)
+  .then(() => {
+    console.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`)
+    // console.info(`🧩 GraphQL Server ready at:\t http://localhost:${PORT}/graphql/`)
+  })
+  .catch((err) => console.error(`🔴 ${err.message}`))
