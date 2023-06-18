@@ -11,7 +11,7 @@ const subSchemas = loadFilesSync(join(process.cwd(), 'src/modules/**/*.graphql')
 // import { loadSchemaSync } from '@graphql-tools/load'
 // import { UrlLoader } from '@graphql-tools/url-loader'
 
-// const microserviceExternalSchema = loadSchemaSync('https://api.spacex.land/graphql/', {
+// const microserviceExternalSchema = loadSchemaSync('https://ch1.graphql.guide/graphql', {
 //   loaders: [new UrlLoader()],
 // })
 // subSchemas.push(microserviceExternalSchema)
