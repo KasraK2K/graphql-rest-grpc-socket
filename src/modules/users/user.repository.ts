@@ -1,8 +1,7 @@
 /* ------------------------------ Dependencies ------------------------------ */
 
-import { IUser } from './constants/interfaces'
-
 /* --------------------------------- Modules -------------------------------- */
+import { IUser } from './constants/interfaces'
 
 const database = {
   users: [

@@ -1,17 +1,14 @@
+import userService from '../modules/users/user.service'
 import userRepository from '../modules/users/user.repository'
 
 export interface Context {
   dataSource: {
-    repo: {
-      user: typeof userRepository
-    }
+    user: { repo: typeof userRepository; service: typeof userService }
   }
 }
 
 export const context: Context = {
   dataSource: {
-    repo: {
-      user: userRepository,
-    },
+    user: { repo: userRepository, service: userService },
   },
 }

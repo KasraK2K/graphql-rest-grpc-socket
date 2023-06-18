@@ -6,7 +6,7 @@ import { IUser } from './constants/interfaces'
 
 class UserService {
   findAll({ dataSource }: Context): IUser[] {
-    return dataSource.repo.user.findAll()
+    return dataSource.user.repo.findAll()
   }
 }
 
