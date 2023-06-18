@@ -5,6 +5,7 @@ import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { Logger } from '@apollo/utils.logger'
 import { makeExecutableSchema } from '@graphql-tools/schema'
+import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheControl'
 
 /* --------------------------------- Modules -------------------------------- */
 import resolvers from './graphql/resolvers'
@@ -64,7 +65,14 @@ app.on('error', (err: Error | AppError): void => {
 const createApolloServer = (): ApolloServer => {
   const server = new ApolloServer({
     schema: makeExecutableSchema({ typeDefs, resolvers }),
-    includeStacktraceInErrorResponses: true,
+    plugins: [
+      ApolloServerPluginCacheControl({
+        // Cache everything for 1 second by default.
+        defaultMaxAge: 1,
+        // Don't send the `cache-control` response header.
+        calculateHttpHeaders: false,
+      }),
+    ],
   })
   logger = server.logger
   return server
@@ -76,7 +84,6 @@ const createApolloServer = (): ApolloServer => {
 // Function to run the server
 const run = (port: number) => {
   const server = createApolloServer() // Create the Apollo Server instance
-  // await server.start() // Start the Apollo Server
 
   startStandaloneServer(server, {
     context: async () => context,
