@@ -1,0 +1,8 @@
+type Query {
+  users: [UserResponse]
+}
+
+type UserResponse {
+  id: Int
+  name: String
+}

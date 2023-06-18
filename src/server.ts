@@ -1,100 +1,98 @@
 /* ------------------------------ Dependencies ------------------------------ */
-// import http from 'node:http'
 import Koa from 'koa'
-import bodyParser from 'koa-bodyparser'
-import cors from '@koa/cors'
+import chalk from 'chalk'
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
+import { Logger } from '@apollo/utils.logger'
+import { makeExecutableSchema } from '@graphql-tools/schema'
 
 /* --------------------------------- Modules -------------------------------- */
-import router from './restful/router'
+import resolvers from './graphql/resolvers'
+import typeDefs from './graphql/typeDefs'
 import errorMiddleware from './middlewares/errorMiddleware'
 import AppError from './common/helpers/errors/AppError'
+import { context } from './graphql/context'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
-// const httpServer = http.createServer(app.callback())
 
 const PORT = Number(process.env.PORT) || 3000
+let logger: Logger
+const gqlStyle = chalk.hex('#f6009b')
+const errStyle = chalk.hex('#FF0000').bold
+const warnStyle = chalk.hex('#FFFF00').bold
+const successStyle = chalk.hex('#00FF00')
 
-// `Set up Koa middleware and routes
-app
-  .use(async (ctx, next) => {
-    try {
-      await errorMiddleware(ctx, next)
-    } catch (error) {
-      // If `errorMiddleware` has error
-      if (error instanceof Error) {
-        ctx.body = {
-          success: false,
-          status: 500,
-          message: error.message,
-        }
-        // TODO : Change this console.error to winston log
-        console.error({ message: error.message, statusCode: 500, type: 'ServerError' })
-      } else {
-        ctx.body = {
-          success: false,
-          status: 500,
-          message: 'An unknown error occurred at errorMiddleware',
-        }
-        // TODO : Change this console.error to winston log
-        console.error({
-          message: 'An unknown error occurred at errorMiddleware',
-          statusCode: 500,
-          type: 'ServerError',
-        })
+app.use(async (ctx, next) => {
+  try {
+    await errorMiddleware(ctx, next)
+  } catch (error) {
+    // If `errorMiddleware` has error
+    if (error instanceof Error) {
+      ctx.body = {
+        success: false,
+        status: 500,
+        message: error.message,
       }
+      // TODO : Change this logger.error to winston log
+      logger.error({ message: error.message, statusCode: 500, type: 'ServerError' })
+    } else {
+      ctx.body = {
+        success: false,
+        status: 500,
+        message: 'An unknown error occurred at errorMiddleware',
+      }
+      // TODO : Change this logger.error to winston log
+      logger.error({
+        message: 'An unknown error occurred at errorMiddleware',
+        statusCode: 500,
+        type: 'ServerError',
+      })
     }
-  }) // Error Handler
-  .use(
-    cors({
-      origin: (ctx) => {
-        // TODO : Fill `blockDomains` array using Redis for block how doesn't have enough license
-        const blockDomains: string[] = ['http://localhost:5000']
-        const blockMethods: string[] = []
-        const isBlocked = blockDomains.some((domainAddress) => ctx.origin.includes(domainAddress))
-        const isBlockedMethod = blockMethods.some((method) => ctx.method.includes(method))
-        if (isBlocked) throw new AppError('Forbidden', 403)
-        else if (isBlockedMethod) throw new AppError('Method Not Allowed', 405)
-        else return ctx.origin
-      },
-    })
-  ) // Enable CORS
-  .use(bodyParser()) // Parse request bodies
-  .use(router.routes()) // Add RESTful routes
-  .use(router.allowedMethods()) // Allow appropriate HTTP methods for routes
+  }
+})
 
 app.on('error', (err: Error | AppError): void => {
-  // TODO : Change this console.error to winston log
-  console.error('🔴 Error event raised')
-  console.warn(err.stack)
+  // TODO : Change this logger.error to winston log
+  logger.error('🔴 Error event raised')
+  logger.warn(err.stack)
 })
 
 /* -------------------------------------------------------------------------- */
 /*                            Create Apollo Server                            */
 /* -------------------------------------------------------------------------- */
-// TODO : GraphQL Implementation
+const createApolloServer = (): ApolloServer => {
+  const server = new ApolloServer({
+    schema: makeExecutableSchema({ typeDefs, resolvers }),
+    includeStacktraceInErrorResponses: true,
+  })
+  logger = server.logger
+  return server
+}
 
 /* -------------------------------------------------------------------------- */
 /*                             Run Server Function                            */
 /* -------------------------------------------------------------------------- */
 // Function to run the server
-const run = async (port: number) => {
-  try {
-    app.listen({ port }) // Start the HTTP server
-  } catch (err) {
-    if (err instanceof Error) {
-      console.error(`🔴 ${err.message}`)
-    } else {
-      console.error(`🔴 An unknown error occurred`)
-      console.assert(err)
-    }
-  }
+const run = (port: number) => {
+  const server = createApolloServer() // Create the Apollo Server instance
+  // await server.start() // Start the Apollo Server
+
+  startStandaloneServer(server, {
+    context: async () => context,
+    listen: { port },
+  })
+    .then(({ url }) => {
+      logger.info(`${gqlStyle('GraphQL')} server ready at: ${gqlStyle.underline(url)}`)
+    })
+    .catch((err) => {
+      if (err instanceof Error) {
+        logger.error(errStyle(`🔴 ${err.message}`))
+      } else {
+        logger.error(`🔴 An unknown error occurred`)
+        console.assert(err)
+      }
+    })
 }
 
-// Run the server with the specified port
-run(PORT)
-  .then(() => {
-    console.info(`🧩 Rest server ready at:\t http://localhost:${PORT}/`)
-    // console.info(`🧩 GraphQL Server ready at:\t http://localhost:${PORT}/graphql/`)
-  })
-  .catch((err) => console.error(`🔴 ${err.message}`))
+run(PORT) // Run the server with the specified port

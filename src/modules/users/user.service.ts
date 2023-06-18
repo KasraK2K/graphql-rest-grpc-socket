@@ -1,11 +1,12 @@
 /* ------------------------------ Dependencies ------------------------------ */
+
 /* --------------------------------- Modules -------------------------------- */
-import userRepository from './user.repository'
+import { Context } from '../../graphql/context'
+import { IUser } from './constants/interfaces'
 
 class UserService {
-  findAll(parent: any, args: any, contextValue: any, info: any) {
-    console.log({ parent, args, contextValue, info })
-    return userRepository.findAll()
+  findAll({ dataSource }: Context): IUser[] {
+    return dataSource.repo.user.findAll()
   }
 }
 

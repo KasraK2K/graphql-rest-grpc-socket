@@ -1,5 +1,6 @@
-import { resolvers as userResolvers } from '../modules/users/user.graphql'
+import { join } from 'node:path'
+import { loadFilesSync } from '@graphql-tools/load-files'
 
-const resolvers = [userResolvers]
+const subResolvers = loadFilesSync(join(process.cwd(), 'src/modules/**/*.resolver.ts'))
 
-export default resolvers
+export default subResolvers

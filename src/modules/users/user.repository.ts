@@ -1,5 +1,9 @@
 /* ------------------------------ Dependencies ------------------------------ */
+
+import { IUser } from './constants/interfaces'
+
 /* --------------------------------- Modules -------------------------------- */
+
 const database = {
   users: [
     { id: 1, name: 'user 1' },
@@ -9,7 +13,7 @@ const database = {
 }
 
 class UserRepository {
-  findAll() {
+  findAll(): IUser[] {
     return database.users
   }
 }
