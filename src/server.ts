@@ -10,9 +10,9 @@ import { ApolloServerPluginCacheControl } from '@apollo/server/plugin/cacheContr
 /* --------------------------------- Modules -------------------------------- */
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
-import errorMiddleware from './middlewares/errorMiddleware'
-import AppError from './common/helpers/errors/AppError'
+// import errorMiddleware from './middlewares/errorMiddleware'
 import { context } from './graphql/context'
+import { GraphQLError } from 'graphql/error/GraphQLError'
 
 /* -------------------------------- Constants ------------------------------- */
 const app = new Koa()
@@ -24,36 +24,36 @@ const errStyle = chalk.hex('#FF0000').bold
 const warnStyle = chalk.hex('#FFFF00').bold
 const successStyle = chalk.hex('#00FF00')
 
-app.use(async (ctx, next) => {
-  try {
-    await errorMiddleware(ctx, next)
-  } catch (error) {
-    // If `errorMiddleware` has error
-    if (error instanceof Error) {
-      ctx.body = {
-        success: false,
-        status: 500,
-        message: error.message,
-      }
-      // TODO : Change this logger.error to winston log
-      logger.error({ message: error.message, statusCode: 500, type: 'ServerError' })
-    } else {
-      ctx.body = {
-        success: false,
-        status: 500,
-        message: 'An unknown error occurred at errorMiddleware',
-      }
-      // TODO : Change this logger.error to winston log
-      logger.error({
-        message: 'An unknown error occurred at errorMiddleware',
-        statusCode: 500,
-        type: 'ServerError',
-      })
-    }
-  }
-})
+// app.use(async (ctx, next) => {
+//   try {
+//     await errorMiddleware(ctx, next)
+//   } catch (error) {
+//     // If `errorMiddleware` has error
+//     if (error instanceof Error) {
+//       ctx.body = {
+//         success: false,
+//         status: 500,
+//         message: error.message,
+//       }
+//       // TODO : Change this logger.error to winston log
+//       logger.error({ message: error.message, statusCode: 500, type: 'ServerError' })
+//     } else {
+//       ctx.body = {
+//         success: false,
+//         status: 500,
+//         message: 'An unknown error occurred at errorMiddleware',
+//       }
+//       // TODO : Change this logger.error to winston log
+//       logger.error({
+//         message: 'An unknown error occurred at errorMiddleware',
+//         statusCode: 500,
+//         type: 'ServerError',
+//       })
+//     }
+//   }
+// })
 
-app.on('error', (err: Error | AppError): void => {
+app.on('error', (err: Error | GraphQLError): void => {
   // TODO : Change this logger.error to winston log
   logger.error('🔴 Error event raised')
   logger.warn(err.stack)
