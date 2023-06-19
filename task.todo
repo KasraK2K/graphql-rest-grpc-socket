@@ -1,0 +1,89 @@
+{
+  "todotree": {
+    "tree": [
+      {
+        "key": 1687157498514,
+        "children": [],
+        "todo": {
+          "content": "Change Apollo GraphQL to GraphQL Yoga",
+          "id": 1687157498514,
+          "level": "danger",
+          "done": false,
+          "start": 1687157498514
+        }
+      },
+      {
+        "key": 1687093977768,
+        "children": [],
+        "todo": {
+          "content": "Check Other type of error (new Error) for errorFilePath function",
+          "id": 1687093977768,
+          "level": "danger",
+          "done": false,
+          "start": 1687093977768,
+          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/common/helpers/errors/errorFilePath.ts"
+        }
+      },
+      {
+        "key": 1687093823347,
+        "children": [],
+        "todo": {
+          "content": "Create logger",
+          "id": 1687093823347,
+          "level": "warning",
+          "done": false,
+          "start": 1687093823347
+        }
+      },
+      {
+        "key": 1687093852421,
+        "children": [],
+        "todo": {
+          "content": "Move colours from server.ts to logger function",
+          "id": 1687093852421,
+          "level": "success",
+          "done": false,
+          "start": 1687093852421,
+          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/server.ts"
+        }
+      },
+      {
+        "key": 1687093936930,
+        "children": [],
+        "todo": {
+          "content": "User logger (winston) in error.handler.ts",
+          "id": 1687093936930,
+          "level": "default",
+          "done": false,
+          "start": 1687093936930,
+          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/common/helpers/errors/error.handler.ts"
+        }
+      },
+      {
+        "key": 1687093903778,
+        "children": [],
+        "todo": {
+          "content": "Remove unnecessary middlewares and catch errors in server file",
+          "id": 1687093903778,
+          "level": "default",
+          "done": false,
+          "start": 1687093903778,
+          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/server.ts"
+        }
+      }
+    ],
+    "expandKeys": [],
+    "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
+    "add_mode": "bottom",
+    "virtual": false,
+    "showLine": false,
+    "restDays": [],
+    "playFontSize": 24,
+    "title": "task",
+    "autoSort": false,
+    "showEndTime": false,
+    "lang": "en",
+    "desc": "Koa GraphQL Boilerplate",
+    "version": "1687157592085"
+  }
+}
