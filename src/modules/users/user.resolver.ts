@@ -7,8 +7,8 @@ import { IUser } from './constants/interfaces'
 
 const resolvers = {
   Query: {
-    users: (_: IUser, __: GraphQLArgs, contextValue: Context, ___: GraphQLResolveInfo): IUser[] =>
-      contextValue.dataSource.user.service.findAll(contextValue),
+    users: (_: IUser, __: GraphQLArgs, contextValue: Context, info: GraphQLResolveInfo): IUser[] =>
+      contextValue.dataSource.user.service.findAll(contextValue, info),
   },
 }
 

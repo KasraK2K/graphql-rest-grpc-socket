@@ -1,19 +1,20 @@
 /* ------------------------------ Dependencies ------------------------------ */
-import { Context } from 'koa'
+import { GraphQLError } from 'graphql'
 
-/* --------------------------------- Modules -------------------------------- */
-import AppError from './AppError'
+const errorFilePath = (error: unknown | Error | GraphQLError) => {
+  if ((error instanceof Error || error instanceof GraphQLError) && error.stack) {
+    const stack = error.stack.split('\n').map((line) => line.trim())
+    let line: string
 
-const errorFilePath = (error: unknown | Error | AppError, ctx: Context) => {
-  if ((error instanceof Error || error instanceof AppError) && error.stack) {
-    let stack = error.stack.split('\n').map((line) => line.trim())
-    const file_path = stack[1].substring(
-      stack[1].indexOf('(') + process.cwd().length + 2,
-      stack[1].lastIndexOf(')')
+    error instanceof GraphQLError || error instanceof Error ? (line = stack[3]) : (line = stack[1])
+
+    const file_path = line.substring(
+      line.indexOf('(') + process.cwd().length + 2,
+      line.lastIndexOf(')')
     )
     const file_name = file_path.substring(file_path.lastIndexOf('/') + 1, file_path.indexOf(':'))
     return { file_name, file_path }
-  } else return {}
+  } else return { file_name: 'unknown', file_path: 'unknown' }
 }
 
 export default errorFilePath
