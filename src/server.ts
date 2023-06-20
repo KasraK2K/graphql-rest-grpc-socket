@@ -42,7 +42,7 @@ const yoga = createYoga({
         endpoint: '/openapi.json',
       },
     }),
-    useResponseCache({ session: () => null, ttl: 1_000 }),
+    // useResponseCache({ session: () => null, ttl: 1_000 }),
   ],
 })
 
