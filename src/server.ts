@@ -1,31 +1,33 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { createServer } from 'node:http'
-import { createYoga } from 'graphql-yoga'
+import { createYoga, createSchema } from 'graphql-yoga'
+import { useResponseCache } from '@graphql-yoga/plugin-response-cache'
 import chalk from 'chalk'
-import { makeExecutableSchema } from '@graphql-tools/schema'
 
 /* --------------------------------- Modules -------------------------------- */
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
-import { context } from './graphql/context'
-import { GraphQLError } from 'graphql/error/GraphQLError'
+import { Context, context } from './graphql/context'
+import { YogaSchemaDefinition } from 'graphql-yoga/typings/plugins/use-schema'
 
 /* -------------------------------- Constants ------------------------------- */
+const schema: YogaSchemaDefinition<Context> = createSchema({ typeDefs, resolvers })
 const PORT = Number(process.env.PORT) || 3000
 const gqlStyle = chalk.hex('#f6009b')
-const errStyle = chalk.hex('#FF0000').bold
-const warnStyle = chalk.hex('#FFFF00').bold
-const successStyle = chalk.hex('#00FF00')
+// const errStyle = chalk.hex('#FF0000').bold
+// const warnStyle = chalk.hex('#FFFF00').bold
+// const successStyle = chalk.hex('#00FF00')
 
 /* -------------------------------------------------------------------------- */
 /*                               GraphQL Server                               */
 /* -------------------------------------------------------------------------- */
 // Create a Yoga instance with a GraphQL schema.
 const yoga = createYoga({
-  schema: makeExecutableSchema({ typeDefs, resolvers }),
+  schema,
   context,
   landingPage: false,
   graphqlEndpoint: '/',
+  plugins: [useResponseCache({ session: () => null, ttl: 1_000 })],
 })
 
 // Pass it into a server to hook into request handlers.
