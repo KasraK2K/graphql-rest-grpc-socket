@@ -1,4 +1,4 @@
-type Query @cacheControl(maxAge: 240) {
+type Query {
   users: [UserResponse]
 }
 

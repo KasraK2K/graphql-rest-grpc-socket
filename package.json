@@ -1,5 +1,5 @@
 {
-  "name": "koa-boilerplate",
+  "name": "graphql-boilerplate",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
@@ -16,9 +16,6 @@
   "author": "Kasra Karami <Kasra.Karami.KK@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.7.4",
-    "@apollo/utils.logger": "^3.0.0",
-    "@graphql-tools/load": "^8.0.0",
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/url-loader": "^8.0.0",
@@ -26,10 +23,9 @@
     "graphql": "^16.6.0",
     "graphql-scalars": "^1.22.2",
     "graphql-tag": "^2.12.6",
-    "koa": "^2.14.2"
+    "graphql-yoga": "^4.0.1"
   },
   "devDependencies": {
-    "@types/koa": "^2.13.6",
     "@types/node": "^20.3.1",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",

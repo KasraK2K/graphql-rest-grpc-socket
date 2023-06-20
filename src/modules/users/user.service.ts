@@ -8,7 +8,7 @@ import graphErrorHandler from '../../common/helpers/errors/error.handler'
 
 class UserService {
   findAll({ dataSource }: Context, info: GraphQLResolveInfo): IUser[] {
-    // graphErrorHandler(info, 410)
+    graphErrorHandler(info, 410)
     return dataSource.user.repo.findAll()
   }
 }
