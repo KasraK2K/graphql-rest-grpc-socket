@@ -1,6 +1,7 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { createServer } from 'node:http'
 import { createYoga, createSchema } from 'graphql-yoga'
+import { useSofa } from '@graphql-yoga/plugin-sofa'
 import { useResponseCache } from '@graphql-yoga/plugin-response-cache'
 import chalk from 'chalk'
 
@@ -27,7 +28,22 @@ const yoga = createYoga({
   context,
   landingPage: false,
   graphqlEndpoint: '/',
-  plugins: [useResponseCache({ session: () => null, ttl: 1_000 })],
+  plugins: [
+    useSofa({
+      basePath: '/rest',
+      swaggerUI: {
+        endpoint: '/swagger',
+      },
+      openAPI: {
+        info: {
+          title: 'Graphql Boilerplate API',
+          version: '1.0.0',
+        },
+        endpoint: '/openapi.json',
+      },
+    }),
+    useResponseCache({ session: () => null, ttl: 1_000 }),
+  ],
 })
 
 // Pass it into a server to hook into request handlers.

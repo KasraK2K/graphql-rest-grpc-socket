@@ -19,6 +19,7 @@
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/url-loader": "^8.0.0",
     "@graphql-yoga/plugin-response-cache": "^2.0.1",
+    "@graphql-yoga/plugin-sofa": "^2.0.1",
     "chalk": "4.1.2",
     "graphql": "^16.6.0",
     "graphql-scalars": "^1.22.2",
