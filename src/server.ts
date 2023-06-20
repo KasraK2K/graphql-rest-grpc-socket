@@ -41,6 +41,9 @@ const yoga = createYoga({
         },
         endpoint: '/openapi.json',
       },
+      // routes: {
+      //   'Query.users': { method: 'POST' },
+      // },
     }),
     // useResponseCache({ session: () => null, ttl: 1_000 }),
   ],
