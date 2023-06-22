@@ -1,14 +1,14 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLResolveInfo } from 'graphql'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { Context } from '../../graphql/context'
+import { IContext } from '../../graphql/context'
 import { IUser } from './constants/interfaces'
-import graphErrorHandler from '../../common/helpers/errors/error.handler'
+// import graphErrorHandler from '../../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
-  findAll({ dataSource }: Context, info: GraphQLResolveInfo): IUser[] {
-    graphErrorHandler(info, 404)
+  findAll({ dataSource }: IContext, info: GraphQLResolveInfo): IUser[] {
+    // graphErrorHandler(info, 404)
     for (const item in Array(10000000).fill(0)) {
     }
     return dataSource.user.repo.findAll()
