@@ -13,7 +13,9 @@ import { YogaSchemaDefinition } from 'graphql-yoga/typings/plugins/use-schema'
 
 /* -------------------------------- Constants ------------------------------- */
 const schema: YogaSchemaDefinition<Context> = createSchema({ typeDefs, resolvers })
-const PORT = Number(process.env.PORT) || 3000
+const GRAPHQL_PORT = Number(process.env.PORT) || 3000
+const REST_PORT = Number(process.env.PORT) || 3500
+
 const gqlStyle = chalk.hex('#f6009b')
 // const errStyle = chalk.hex('#FF0000').bold
 // const warnStyle = chalk.hex('#FFFF00').bold
@@ -28,35 +30,53 @@ const yoga = createYoga({
   context,
   landingPage: false,
   graphqlEndpoint: '/',
+  plugins: [useResponseCache({ session: () => null, ttl: 1_000 })],
+})
+
+// Create a Yoga RestAPI instance.
+const yogaRest = createYoga({
+  schema,
+  context,
+  landingPage: false,
+  graphiql: false,
+  graphqlEndpoint: '/',
   plugins: [
     useSofa({
-      basePath: '/rest',
-      swaggerUI: {
-        endpoint: '/swagger',
-      },
+      basePath: '/',
+      swaggerUI: { endpoint: '/swagger' },
       openAPI: {
-        info: {
-          title: 'Graphql Boilerplate API',
-          version: '1.0.0',
-        },
+        info: { title: 'Graphql Boilerplate API', version: '1.0.0' },
         endpoint: '/openapi.json',
       },
-      // routes: {
-      //   'Query.users': { method: 'POST' },
-      // },
+      routes: {
+        'Query.users': { method: 'POST' },
+      },
     }),
-    // useResponseCache({ session: () => null, ttl: 1_000 }),
   ],
 })
 
-// Pass it into a server to hook into request handlers.
-const server = createServer(yoga)
-
-server
-  .listen(PORT)
+const yogaServer = createServer(yoga)
+yogaServer
+  .listen(GRAPHQL_PORT)
   .on('listening', () =>
     console.info(
-      `${gqlStyle('GraphQL')} server ready at: ${gqlStyle.underline(`http://localhost:${PORT}`)}`
+      `${gqlStyle('GraphQL')}\t server ready at: ${gqlStyle.underline(
+        `http://localhost:${GRAPHQL_PORT}`
+      )}`
+    )
+  )
+  .on('error', (err) => {
+    console.error('on error', err)
+  })
+
+const yogaRestServer = createServer(yogaRest)
+yogaRestServer
+  .listen(REST_PORT)
+  .on('listening', () =>
+    console.info(
+      `${gqlStyle('HTTP')}\t server ready at: ${gqlStyle.underline(
+        `http://localhost:${REST_PORT}`
+      )}`
     )
   )
   .on('error', (err) => {
