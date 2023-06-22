@@ -1,15 +1,16 @@
-/* ------------------------------ Dependencies ------------------------------ */
+/* ------------------------------ Node Modules ------------------------------ */
 import { createServer } from 'node:http'
+/* ------------------------------ Dependencies ------------------------------ */
 import { createYoga, createSchema } from 'graphql-yoga'
 import { useSofa } from '@graphql-yoga/plugin-sofa'
 import { useResponseCache } from '@graphql-yoga/plugin-response-cache'
 import chalk from 'chalk'
-
-/* --------------------------------- Modules -------------------------------- */
+/* ----------------------------- Custom Modules ----------------------------- */
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
 import { Context, context } from './graphql/context'
 import { YogaSchemaDefinition } from 'graphql-yoga/typings/plugins/use-schema'
+/* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Constants ------------------------------- */
 const schema: YogaSchemaDefinition<Context> = createSchema({ typeDefs, resolvers })

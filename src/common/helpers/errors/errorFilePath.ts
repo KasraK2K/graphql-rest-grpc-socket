@@ -1,5 +1,6 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLError } from 'graphql'
+/* -------------------------------------------------------------------------- */
 
 const errorFilePath = (error: unknown | Error | GraphQLError) => {
   if ((error instanceof Error || error instanceof GraphQLError) && error.stack) {

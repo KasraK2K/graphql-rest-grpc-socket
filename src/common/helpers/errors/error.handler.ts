@@ -1,6 +1,9 @@
+/* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLResolveInfo } from 'graphql'
+/* ----------------------------- Custom Modules ----------------------------- */
 import GraphQLAppError from './GraphQLAppError'
 import errorFilePath from './errorFilePath'
+/* -------------------------------------------------------------------------- */
 
 const graphErrorHandler = (info: GraphQLResolveInfo, statusCode: number, message?: string) => {
   // Fill needed Constants

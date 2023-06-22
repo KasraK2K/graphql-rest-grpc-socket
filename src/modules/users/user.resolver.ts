@@ -1,9 +1,9 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLArgs, GraphQLResolveInfo } from 'graphql'
-
-/* --------------------------------- Modules -------------------------------- */
+/* ------------------------------ Node Modules ------------------------------ */
 import { Context } from '../../graphql/context'
 import { IUser } from './constants/interfaces'
+/* -------------------------------------------------------------------------- */
 
 const resolvers = {
   Query: {

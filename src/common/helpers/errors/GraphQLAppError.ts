@@ -1,4 +1,6 @@
+/* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLError, GraphQLErrorExtensions, GraphQLResolveInfo } from 'graphql'
+/* -------------------------------------------------------------------------- */
 
 class GraphQLAppError extends GraphQLError {
   extensions: GraphQLErrorExtensions
