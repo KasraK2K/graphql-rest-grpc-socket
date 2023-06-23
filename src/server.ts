@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import graphqlServer from './applications/graph.app'
-import restApiServer from './applications/rest.app'
+import yogaServer from './applications/yoga.app'
+import sofaServer from './applications/sofa.app'
 
-graphqlServer()
-restApiServer()
+yogaServer()
+sofaServer()

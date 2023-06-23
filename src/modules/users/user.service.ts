@@ -9,8 +9,8 @@ import { IUser } from './constants/interfaces'
 class UserService {
   findAll({ dataSource }: IContext, info: GraphQLResolveInfo): IUser[] {
     // graphErrorHandler(info, 404)
-    for (const item in Array(10000000).fill(0)) {
-    }
+    // for (const item in Array(10000000).fill(0)) {
+    // }
     return dataSource.user.repo.findAll()
   }
 }

@@ -5,10 +5,12 @@ export interface IContext {
   dataSource: {
     user: { repo: typeof userRepository; service: typeof userService }
   }
+  token: string
 }
 
 export const context: IContext = {
   dataSource: {
     user: { repo: userRepository, service: userService },
   },
+  token: '',
 }
