@@ -4,7 +4,7 @@ export enum Gender {
   OTHER = 'OTHER',
 }
 
-export enum     ModuleName {
+export enum       ModuleName {
   DEFAULT = 'default',
   GENERAL = 'general',
 }
