@@ -17,14 +17,12 @@ import { useSofa } from 'sofa-api'
 import schema from '../graphql/schema'
 import { context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
-/* -------------------------------- Constants ------------------------------- */
-const REST_PORT = process.env.PORT || '3500'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------- */
 /*                                 Sofa Server                                */
 /* -------------------------------------------------------------------------- */
-function main() {
+function main(port: string) {
   const app = express()
   const sofa = useSofa({
     schema,
@@ -44,11 +42,11 @@ function main() {
   const restAppServer = createServer(app)
 
   restAppServer
-    .listen(REST_PORT)
+    .listen(port)
     .on('listening', () =>
       console.info(
         `${colour.love('HTTP')}\t server ready at: ${colour.love.underline(
-          `http://localhost:${REST_PORT}`
+          `http://localhost:${port}`
         )}`
       )
     )

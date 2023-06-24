@@ -17,11 +17,10 @@ import { useResponseCache } from '@graphql-yoga/plugin-response-cache'
 import schema from '../graphql/schema'
 import { context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
-/* -------------------------------- Constants ------------------------------- */
-const GRAPHQL_PORT = process.env.PORT || '3000'
+import logger from '../common/helpers/logger.helper'
 /* -------------------------------------------------------------------------- */
 
-function main() {
+function main(port: string) {
   const yoga = createYoga({
     schema,
     async context(req: any) {
@@ -36,15 +35,29 @@ function main() {
     graphqlEndpoint: '/',
     batching: true,
     plugins: [useResponseCache({ session: () => null, ttl: 10_000 })],
+    logging: {
+      debug(message: string, args: Record<string, any>) {
+        logger.debug(message, args)
+      },
+      info(message: string, args: Record<string, any>) {
+        logger.info(message, args)
+      },
+      warn(message: string, args: Record<string, any>) {
+        logger.warn(message, args)
+      },
+      error(message: string, args: Record<string, any>) {
+        logger.error(message, args)
+      },
+    },
   })
 
   const server = createServer(yoga)
   server
-    .listen(GRAPHQL_PORT)
+    .listen(port)
     .on('listening', () =>
       console.info(
         `${colour.love('GraphQL')}\t server ready at: ${colour.love.underline(
-          `http://localhost:${GRAPHQL_PORT}`
+          `http://localhost:${port}`
         )}`
       )
     )
