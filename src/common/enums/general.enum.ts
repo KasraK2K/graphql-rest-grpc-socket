@@ -4,11 +4,7 @@ export enum Gender {
   OTHER = 'OTHER',
 }
 
-
-
-
-
-export enum       ModuleName {
+              export enum ModuleName {
   DEFAULT = 'default',
   GENERAL = 'general',
 }
@@ -16,11 +12,10 @@ export enum       ModuleName {
 export enum TokenType {
   TOKEN,
 
-  
   REFRESH,
 }
 
-export enum       TokenMode {
+export enum TokenMode {
   APP_USER,
   PORTAL_USER,
 }
