@@ -1,5 +1,5 @@
 type Query {
-  users: [UserResponse] @cacheControl(maxAge: 10)
+  users: [UserResponse] @cacheControl(maxAge: 20)
 }
 
 type UserResponse {

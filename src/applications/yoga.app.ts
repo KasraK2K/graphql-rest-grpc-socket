@@ -30,8 +30,11 @@ function main(port: string) {
       // else {
       //   const token = authorization.slice(7)
       //   // TODO : check token role/permission
-      //   // if (false) graphErrorHandler(403)
+      //   if (false) graphErrorHandler(403)
       // }
+
+      // // TODO : Remove redis cache on logout
+      // console.log(context.cacheKey)
 
       return context
     },

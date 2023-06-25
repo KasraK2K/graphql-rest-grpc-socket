@@ -13,6 +13,7 @@ export interface IContext {
   params: Record<string, any>
 
   token?: string
+  cacheKey?: string
 }
 
 export const context: Partial<IContext> = {
