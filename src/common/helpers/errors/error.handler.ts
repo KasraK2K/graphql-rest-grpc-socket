@@ -1,21 +1,27 @@
-/* ------------------------------ Dependencies ------------------------------ */
-import { GraphQLResolveInfo } from 'graphql'
 /* ----------------------------- Custom Modules ----------------------------- */
 import GraphQLAppError from './GraphQLAppError'
 import errorFilePath from './errorFilePath'
 /* -------------------------------------------------------------------------- */
 
-const graphErrorHandler = (info: GraphQLResolveInfo, statusCode: number, message?: string) => {
+const graphErrorHandler = (statusCode: number, message?: string, batch_message?: string[]) => {
   // Fill needed Constants
   const { code, message: defaultMessage } = getErrorObject(statusCode)!
-  const error = new GraphQLAppError(info, statusCode, message ?? defaultMessage)
+  const error = new GraphQLAppError(statusCode, message ?? defaultMessage)
   const errorPaths = errorFilePath(error)
   // Fill Extensions
   error.extensions.code = code
-  error.extensions.file_name = errorPaths.file_name
-  error.extensions.file_path = errorPaths.file_path
+  error.extensions.path = errorPaths
   // TODO : use winston log to create log or send to prometheus
-  console.log({ success: false, statusCode, message, ...errorPaths })
+
+  const logObject: Record<string, any> = {
+    success: false,
+    statusCode,
+    message: error.message,
+    path: errorPaths,
+  }
+  batch_message && batch_message.length && logObject.push(batch_message)
+  console.log(logObject)
+
   throw error
 }
 

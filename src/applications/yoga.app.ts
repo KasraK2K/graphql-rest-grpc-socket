@@ -18,13 +18,21 @@ import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import logger from '../common/helpers/logger.helper'
 import { useCache, useToken } from './plugins'
+// import graphErrorHandler from '../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 function main(port: string) {
   const yoga = createYoga({
     schema,
-    context: async (_ctx: IContext) => {
-      // const authorization: string = ctx.params.extensions.headers.authorization
+    context: async (ctx: IContext) => {
+      // const authorization = ctx.request.headers.get('authorization')
+      // if (!authorization) graphErrorHandler(401)
+      // else {
+      //   const token = authorization.slice(7)
+      //   // TODO : check token role/permission
+      //   // if (false) graphErrorHandler(403)
+      // }
+
       return context
     },
     landingPage: false,

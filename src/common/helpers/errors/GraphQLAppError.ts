@@ -1,17 +1,16 @@
 /* ------------------------------ Dependencies ------------------------------ */
-import { GraphQLError, GraphQLErrorExtensions, GraphQLResolveInfo } from 'graphql'
+import { GraphQLError, GraphQLErrorExtensions } from 'graphql'
 /* -------------------------------------------------------------------------- */
 
 class GraphQLAppError extends GraphQLError {
   extensions: GraphQLErrorExtensions
 
-  constructor(info: GraphQLResolveInfo, statusCode: number, message: string) {
+  constructor(statusCode: number, message: string) {
     super(message)
 
-    const { path } = info
     this.extensions = {
       statusCode,
-      path,
+      path: undefined,
     }
   }
 }

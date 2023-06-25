@@ -16,7 +16,7 @@ const authMiddleware = async (
   context.token = authorization && authorization.length ? authorization.slice(7) : undefined
 
   /* ----------------------------- Token Not Found ---------------------------- */
-  !context.token && graphErrorHandler(info, 401)
+  !context.token && graphErrorHandler(401)
 
   /* --------------------- Has Not Enough Role/Permission --------------------- */
   // <check permission> && graphErrorHandler(info, 403)
