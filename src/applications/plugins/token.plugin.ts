@@ -1,10 +1,10 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { Plugin } from 'graphql-yoga'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { context } from './../../graphql/context'
+import { context } from '../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
-const useAuth = (): Plugin => {
+const useToken = (): Plugin => {
   return {
     onRequest({ request }) {
       const authorization: string | undefined = request.headers.get('authorization') || undefined
@@ -13,4 +13,4 @@ const useAuth = (): Plugin => {
   }
 }
 
-export default useAuth
+export default useToken

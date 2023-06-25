@@ -12,33 +12,29 @@
 import { createServer } from 'node:http'
 /* ------------------------------ Dependencies ------------------------------ */
 import { createYoga } from 'graphql-yoga'
-import { useResponseCache } from '@graphql-yoga/plugin-response-cache'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
-import { context } from '../graphql/context'
+import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import logger from '../common/helpers/logger.helper'
+import { useCache, useToken } from './plugins'
 /* -------------------------------------------------------------------------- */
 
 function main(port: string) {
   const yoga = createYoga({
     schema,
-    async context(req: any) {
-      console.log({ headers: req.headers })
-      const token = req.headers?.authorization
-      return {
-        ...context,
-        token,
-      }
+    context: async (_ctx: IContext) => {
+      // const authorization: string = ctx.params.extensions.headers.authorization
+      return context
     },
     landingPage: false,
     graphqlEndpoint: '/',
     batching: true,
-    plugins: [useResponseCache({ session: () => null, ttl: 10_000 })],
     logging: {
-      debug(message: string, args: Record<string, any>) {
-        logger.debug(message, args)
-      },
+      debug: () => false,
+      // debug(message: string, args: Record<string, any>) {
+      //   logger.debug(message, args)
+      // },
       info(message: string, args: Record<string, any>) {
         logger.info(message, args)
       },
@@ -49,6 +45,7 @@ function main(port: string) {
         logger.error(message, args)
       },
     },
+    plugins: [useCache(), useToken()],
   })
 
   const server = createServer(yoga)

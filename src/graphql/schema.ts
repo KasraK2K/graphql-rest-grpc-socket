@@ -18,9 +18,15 @@ const schema = createSchema({ typeDefs, resolvers }) as GraphQLSchemaWithContext
 
 const schemaWithMiddleware = applyMiddleware(
   schema,
-  /* middleware.logInput, middleware.logResult, */ {
+  // middleware.logInput,
+  // middleware.logResult,
+  // middleware.authMiddleware,
+  {
+    // Query: {
+    //   users: middleware.authMiddleware,
+    // },
     UserResponse: {
-      name: middleware.uppercaseTitle,
+      name: middleware.uppercaseText, // Make name field uppercase
     },
   }
 )

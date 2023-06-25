@@ -1,4 +1,4 @@
 import useCache from './cache.plugin'
-import useAuth from './auth.plugin'
+import useToken from './token.plugin'
 
-export { useCache, useAuth }
+export { useCache, useToken }
