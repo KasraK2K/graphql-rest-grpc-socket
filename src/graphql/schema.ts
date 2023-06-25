@@ -6,7 +6,12 @@ import { applyMiddleware } from 'graphql-middleware'
 import { IContext } from './context'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
-import middleware from './middleware'
+import {
+  authMiddleware,
+  logInputMiddleware,
+  logResultMiddleware,
+  uppercaseMiddleware,
+} from '../middlewares/index'
 /* -------------------------------------------------------------------------- */
 
 // const schema = createSchema({
@@ -18,15 +23,15 @@ const schema = createSchema({ typeDefs, resolvers }) as GraphQLSchemaWithContext
 
 const schemaWithMiddleware = applyMiddleware(
   schema,
-  // middleware.logInput,
-  // middleware.logResult,
-  // middleware.authMiddleware,
+  // logInputMiddleware,
+  // logResultMiddleware,
+  // authMiddleware,
   {
     // Query: {
-    //   users: middleware.authMiddleware,
+    //   users: authMiddleware,
     // },
     UserResponse: {
-      name: middleware.uppercaseText, // Make name field uppercase
+      name: uppercaseMiddleware, // Make name field uppercase
     },
   }
 )
