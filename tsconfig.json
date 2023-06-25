@@ -19,7 +19,7 @@
     "rootDir": "./",
     "baseUrl": "./",
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": ["reflect-metadata"],
+    // "types": ["reflect-metadata"],
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "importHelpers": true,
