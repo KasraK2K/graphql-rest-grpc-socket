@@ -11,9 +11,7 @@ const database = {
 }
 
 class UserRepository {
-  findAll(): IUser[] {
-    return database.users
-  }
+  findAll = (): IUser[] => database.users
 }
 
 export default new UserRepository()
