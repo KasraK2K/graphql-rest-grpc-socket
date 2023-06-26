@@ -22,7 +22,7 @@
     // "types": ["reflect-metadata"],
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "importHelpers": true,
+    // "importHelpers": true,
     "importsNotUsedAsValues": "remove"
   },
   "include": ["src"],
