@@ -12,10 +12,10 @@ class MongoRepository {
         args: Record<string, any> = {},
         omits: string[] = []
     ): Promise<Record<string, any>[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .find(args, { projection: this.generateProjection(omits) })
                 .toArray()
@@ -32,10 +32,10 @@ class MongoRepository {
         args: Record<string, any> = {},
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .findOne(args, { projection: this.generateProjection(omits) })
                 .then((result) => {
@@ -51,11 +51,11 @@ class MongoRepository {
         args: Record<string, any>,
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
             _.assign(args, { createdAt: new Date(), updatedAt: new Date() })
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .insertOne(args)
                 .then(async (result) =>
@@ -72,11 +72,11 @@ class MongoRepository {
         args: Record<string, any>,
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             findArgs = this.sanitizeArgs(findArgs)
             args = this.sanitizeArgs(args)
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .updateOne(findArgs, { $set: args, $currentDate: { updatedAt: true } })
                 .then(async () => resolve(await this.findOne(tableName, findArgs, omits)))
@@ -91,13 +91,13 @@ class MongoRepository {
         args: Record<string, any>,
         options: { upsert: boolean; omits: string[] } = { upsert: true, omits: [] }
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const { upsert, omits } = options
             findArgs = this.sanitizeArgs(findArgs)
             args = this.sanitizeArgs(args)
             const date = new Date()
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .updateOne(
                     findArgs,
@@ -115,11 +115,11 @@ class MongoRepository {
         args: Record<string, any>,
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
             const date = new Date()
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .updateOne(
                     {
@@ -138,10 +138,10 @@ class MongoRepository {
         args: Record<string, any>,
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .deleteOne(args)
                 .then(async () => resolve(await this.findOne(tableName, args, omits)))
@@ -155,10 +155,10 @@ class MongoRepository {
         args: Record<string, any>,
         omits: string[] = []
     ): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
-            await mongo
+            mongo
                 .collection(tableName)
                 .updateOne(
                     {

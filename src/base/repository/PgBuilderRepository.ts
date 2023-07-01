@@ -223,7 +223,7 @@ class PgBuilderRepository {
                 break
 
             default:
-                this.selectQuery = /* SQL */ `SELECT *`
+                this.selectQuery = /* SQL */ 'SELECT *'
                 break
         }
         return this
@@ -260,12 +260,12 @@ class PgBuilderRepository {
                         )
                         .join(' AND ')}`
                 } else {
-                    this.whereQuery = ``
+                    this.whereQuery = ''
                 }
                 break
 
             default:
-                this.whereQuery = ``
+                this.whereQuery = ''
                 logger.warn(
                     `${this.name}: where argument is not a string or string[] and we are not handling it`,
                     {
@@ -300,7 +300,7 @@ class PgBuilderRepository {
                         this.orderByParams.push(sort[i])
                     }
                 } else {
-                    this.orderByQuery = ``
+                    this.orderByQuery = ''
                     logger.error(
                         `${this.name}: orderArgs and sort arguments are not the same type and length (in array mode)`,
                         {
@@ -311,7 +311,7 @@ class PgBuilderRepository {
                 break
 
             default:
-                this.orderByQuery = ``
+                this.orderByQuery = ''
                 logger.warn(
                     `${this.name}: orderBy argument is not a string or string[] and we are not handling it`,
                     {
@@ -339,7 +339,7 @@ class PgBuilderRepository {
                 break
 
             default:
-                this.groupByQuery = ``
+                this.groupByQuery = ''
                 logger.warn(
                     `${this.name}: groupBy argument is not a string or string[] and we are not handling it`,
                     {
@@ -428,9 +428,9 @@ class PgBuilderRepository {
     //   :::::: G E T   M A N Y : :  :   :    :     :        :          :
     // ──────────────────────────────────────────────────────────────────
     protected getMany(): Promise<Record<string, any>[]> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = this.getSQL()
-            await this.executeQuery({ query })
+            this.executeQuery({ query })
                 .then((result) => resolve(result.rows))
                 .catch((err) => reject(err))
         })
@@ -440,9 +440,9 @@ class PgBuilderRepository {
     //   :::::: G E T   O N E : :  :   :    :     :        :          :
     // ────────────────────────────────────────────────────────────────
     protected getOne(): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = this.getSQL()
-            await this.executeQuery({ query })
+            this.executeQuery({ query })
                 .then((result) => resolve(result.rows[0]))
                 .catch((err) => reject(err))
         })
@@ -452,10 +452,9 @@ class PgBuilderRepository {
     //   :::::: G E T   R E S U L T : :  :   :    :     :        :          :
     // ──────────────────────────────────────────────────────────────────────
     protected getResult(): Promise<Record<string, any>> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = this.getSQL()
-            await pool
-                .query(query)
+            pool.query(query)
                 .then((result) => resolve(result))
                 .catch((err) => reject(err))
         })
@@ -468,9 +467,8 @@ class PgBuilderRepository {
         const { query, parameters = [], omits = [] } = options
         const doNotReturn = _.includes(omits, '*')
 
-        return new Promise(async (resolve, reject) => {
-            await pool
-                .query(query, parameters)
+        return new Promise((resolve, reject) => {
+            pool.query(query, parameters)
                 .then((result) => {
                     if (doNotReturn) return resolve({ rowCount: result.rowCount, rows: [] })
                     else {
@@ -488,9 +486,9 @@ class PgBuilderRepository {
     protected exec(options: IExecuteOptions = { omits: [] }): Promise<any> {
         const { omits } = options
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const query = this.getSQL()
-            await this.executeQuery({ query, omits })
+            this.executeQuery({ query, omits })
                 .then((result) => resolve(result.rows))
                 .catch((err) => reject(err))
         })
