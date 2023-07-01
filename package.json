@@ -1,5 +1,5 @@
 {
-  "name": "graphql-boilerplate",
+  "name": "graphql-rest-together",
   "version": "1.0.0",
   "description": "New boilerplate to handle error, validation, logging, monitoring and etc to create backend from scratch with rest and graphql together",
   "main": "src/server.ts",
