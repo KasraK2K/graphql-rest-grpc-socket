@@ -44,8 +44,8 @@ database:
         port: 5432
         idleTimeoutMillis: 10000
         connectionTimeoutMillis: 10000
-        ssl:
-            rejectUnauthorized: false
+        # ssl:
+        #     rejectUnauthorized: false
     redis:
         uri: 'redis://localhost:6379'
     ioRedis:
