@@ -17,25 +17,25 @@ import crypto from '../utils/crypto.util'
 /* -------------------------------------------------------------------------- */
 
 class Token {
-  public sign(payload: Record<string, any>, options?: SignOptions | undefined): string {
-    return crypto.encrypt(jwt.payloadToJwt(payload, options))
-  }
-
-  public decode(
-    encryptedToken: string,
-    options?: DecodeOptions | undefined
-  ): string | JwtPayload | null {
-    return jwt.jwtToPayload(crypto.decrypt(encryptedToken), options)
-  }
-
-  public verify(encryptedText: string): IJwtVerify {
-    try {
-      const jwtToken = crypto.decrypt(encryptedText)
-      return jwt.verifyJwt(jwtToken)
-    } catch {
-      return { valid: false, data: {} }
+    public sign(payload: Record<string, any>, options?: SignOptions | undefined): string {
+        return crypto.encrypt(jwt.payloadToJwt(payload, options))
     }
-  }
+
+    public decode(
+        encryptedToken: string,
+        options?: DecodeOptions | undefined
+    ): string | JwtPayload | null {
+        return jwt.jwtToPayload(crypto.decrypt(encryptedToken), options)
+    }
+
+    public verify(encryptedText: string): IJwtVerify {
+        try {
+            const jwtToken = crypto.decrypt(encryptedText)
+            return jwt.verifyJwt(jwtToken)
+        } catch {
+            return { valid: false, data: {} }
+        }
+    }
 }
 
 export default new Token()

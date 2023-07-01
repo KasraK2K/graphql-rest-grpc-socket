@@ -28,60 +28,60 @@ import BuiltinRequest, { IOptions } from 'builtin-request'
 /* -------------------------------------------------------------------------- */
 
 export const getRequest = (baseUrl: string, path: string) => {
-  const request = new BuiltinRequest(baseUrl)
-  return request.get(path)
+    const request = new BuiltinRequest(baseUrl)
+    return request.get(path)
 }
 
 export const postRequest = (baseUrl: string, path: string, data: any) => {
-  const request = new BuiltinRequest(baseUrl)
-  return request.post(path, data)
+    const request = new BuiltinRequest(baseUrl)
+    return request.post(path, data)
 }
 
 export const putRequest = (baseUrl: string, path: string, data: any) => {
-  const request = new BuiltinRequest(baseUrl)
-  return request.put(path, data)
+    const request = new BuiltinRequest(baseUrl)
+    return request.put(path, data)
 }
 
 export const patchRequest = (baseUrl: string, path: string, data: any) => {
-  const request = new BuiltinRequest(baseUrl)
-  return request.patch(path, data)
+    const request = new BuiltinRequest(baseUrl)
+    return request.patch(path, data)
 }
 
 export const deleteRequest = (baseUrl: string, path: string, data: any) => {
-  const request = new BuiltinRequest(baseUrl)
-  return request.delete(path, data)
+    const request = new BuiltinRequest(baseUrl)
+    return request.delete(path, data)
 }
 
 class Request {
-  private request: BuiltinRequest
+    private request: BuiltinRequest
 
-  constructor(private baseUrl?: string) {
-    this.request = new BuiltinRequest(this.baseUrl)
-  }
+    constructor(private baseUrl?: string) {
+        this.request = new BuiltinRequest(this.baseUrl)
+    }
 
-  execute(options: IOptions) {
-    return this.request.execute(options)
-  }
+    execute(options: IOptions) {
+        return this.request.execute(options)
+    }
 
-  get(path: string) {
-    return this.request.get(path)
-  }
+    get(path: string) {
+        return this.request.get(path)
+    }
 
-  post(path: string, data: any) {
-    return this.request.post(path, data)
-  }
+    post(path: string, data: any) {
+        return this.request.post(path, data)
+    }
 
-  put(path: string, data: any) {
-    return this.request.put(path, data)
-  }
+    put(path: string, data: any) {
+        return this.request.put(path, data)
+    }
 
-  patch(path: string, data: any) {
-    return this.request.patch(path, data)
-  }
+    patch(path: string, data: any) {
+        return this.request.patch(path, data)
+    }
 
-  delete(path: string, data: any) {
-    return this.request.delete(path, data)
-  }
+    delete(path: string, data: any) {
+        return this.request.delete(path, data)
+    }
 }
 
 export default Request

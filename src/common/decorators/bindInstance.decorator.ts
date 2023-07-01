@@ -19,16 +19,16 @@
  * @return {*}
  */
 function BindInstance<T extends { new (...args: any[]): any }>(constructor: T) {
-  return class extends constructor {
-    constructor(...args: any[]) {
-      super(...args)
-      Object.getOwnPropertyNames(constructor.prototype)
-        .filter((key) => typeof this[key] === 'function')
-        .forEach((key) => {
-          this[key] = this[key].bind(this)
-        })
+    return class extends constructor {
+        constructor(...args: any[]) {
+            super(...args)
+            Object.getOwnPropertyNames(constructor.prototype)
+                .filter((key) => typeof this[key] === 'function')
+                .forEach((key) => {
+                    this[key] = this[key].bind(this)
+                })
+        }
     }
-  }
 }
 
 export default BindInstance

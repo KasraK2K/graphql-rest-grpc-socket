@@ -15,24 +15,24 @@ import config from 'config'
 const redisConfig: IRedisConfig = config.get('database.redis')
 
 export const createRedisClient = async () => {
-  const client = createClient({ url: redisConfig.uri })
+    const client = createClient({ url: redisConfig.uri })
 
-  client
-    .on('connect', () => console.log('Redis client connected'))
-    .on('ready', () => console.log('Redis Client Ready'))
-    .on('error', (err) => {
-      if (err.code === 'ECONNREFUSED') {
-        console.error('Redis server refused the connection')
-        process.exit(1)
-      }
-      console.error('Redis Client Error:', err)
-    })
-    .on('end', () => console.log('Redis client disconnected'))
-    .on('reconnecting', () => console.log('Redis client reconnecting'))
+    client
+        .on('connect', () => console.log('Redis client connected'))
+        .on('ready', () => console.log('Redis Client Ready'))
+        .on('error', (err) => {
+            if (err.code === 'ECONNREFUSED') {
+                console.error('Redis server refused the connection')
+                process.exit(1)
+            }
+            console.error('Redis Client Error:', err)
+        })
+        .on('end', () => console.log('Redis client disconnected'))
+        .on('reconnecting', () => console.log('Redis client reconnecting'))
 
-  await client.connect()
+    await client.connect()
 
-  return client
+    return client
 }
 
 export default { createRedisClient }

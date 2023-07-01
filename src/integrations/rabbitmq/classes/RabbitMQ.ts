@@ -4,10 +4,10 @@ import { Ack } from '..'
 // import Rpc from './Rpc'
 
 class RabbitMQ {
-  constructor(public uri: string = String(process.env.RBBITMQ_URI)) {}
+    constructor(public uri: string = String(process.env.RBBITMQ_URI)) {}
 
-  public amqp = amqp
-  public ack = new Ack(this)
+    public amqp = amqp
+    public ack = new Ack(this)
 }
 
 export default RabbitMQ

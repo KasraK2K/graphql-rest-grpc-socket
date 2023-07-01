@@ -46,18 +46,18 @@ import { IPostgresConfig } from '../../config/config.interface'
 const pgConfig: IPostgresConfig = config.get('database.postgres')
 
 const knex = Knex({
-  client: 'pg',
-  connection: {
-    host: pgConfig.host,
-    user: pgConfig.user,
-    password: pgConfig.password,
-    database: pgConfig.database,
-    domain: 'domain-name',
-    instanceName: 'instance-name',
-    debug: true,
-  },
-  searchPath: ['knex', 'public'],
-  jsonbSupport: true,
+    client: 'pg',
+    connection: {
+        host: pgConfig.host,
+        user: pgConfig.user,
+        password: pgConfig.password,
+        database: pgConfig.database,
+        domain: 'domain-name',
+        instanceName: 'instance-name',
+        debug: true
+    },
+    searchPath: ['knex', 'public'],
+    jsonbSupport: true
 })
 
 export default knex

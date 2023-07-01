@@ -1,8 +1,8 @@
 type Query {
-  users: [UserResponse] @cacheControl(maxAge: 20)
+    users: [UserResponse] @cacheControl(maxAge: 20)
 }
 
 type UserResponse {
-  id: Int
-  name: String
+    id: Int
+    name: String
 }

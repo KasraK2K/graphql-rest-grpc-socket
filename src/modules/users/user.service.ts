@@ -7,12 +7,12 @@ import { IUser } from './constants/interfaces'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
-  findAll({ dataSource }: IContext, _info: GraphQLResolveInfo): IUser[] {
-    // graphErrorHandler(404)
-    for (const _ in Array(10000000).fill(0)) {
+    findAll({ dataSource }: IContext, _info: GraphQLResolveInfo): IUser[] {
+        // graphErrorHandler(404)
+        for (const _ in Array(10000000).fill(0)) {
+        }
+        return dataSource.user.repo.findAll()
     }
-    return dataSource.user.repo.findAll()
-  }
 }
 
 export default new UserService()

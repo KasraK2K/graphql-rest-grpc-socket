@@ -17,22 +17,22 @@
  * @param {*} instance
  */
 function autobind(instance) {
-  const proto = Object.getPrototypeOf(instance)
-  const propertyNames = Object.getOwnPropertyNames(proto)
+    const proto = Object.getPrototypeOf(instance)
+    const propertyNames = Object.getOwnPropertyNames(proto)
 
-  for (const name of propertyNames) {
-    const descriptor = Object.getOwnPropertyDescriptor(proto, name)
+    for (const name of propertyNames) {
+        const descriptor = Object.getOwnPropertyDescriptor(proto, name)
 
-    if (descriptor)
-      if (typeof descriptor.value === 'function' && name !== 'constructor') {
-        Object.defineProperty(instance, name, {
-          value: descriptor.value.bind(instance),
-          configurable: true,
-          enumerable: false,
-          writable: true,
-        })
-      }
-  }
+        if (descriptor)
+            if (typeof descriptor.value === 'function' && name !== 'constructor') {
+                Object.defineProperty(instance, name, {
+                    value: descriptor.value.bind(instance),
+                    configurable: true,
+                    enumerable: false,
+                    writable: true
+                })
+            }
+    }
 }
 
 export default autobind

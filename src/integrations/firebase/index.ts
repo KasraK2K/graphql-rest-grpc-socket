@@ -1,10 +1,10 @@
 import Firebase from './classes/Firebase'
 import Messaging from './classes/Messaging'
 import {
-  DataMessagePayload,
-  MessagingPayload,
-  MessagingOptions,
-  NotificationMessagePayload,
+    DataMessagePayload,
+    MessagingPayload,
+    MessagingOptions,
+    NotificationMessagePayload
 } from 'firebase-admin/messaging'
 import { toChunk } from './functions/toChunk'
 

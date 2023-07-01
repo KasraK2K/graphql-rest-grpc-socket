@@ -7,23 +7,26 @@ import { basename } from 'node:path'
 /* -------------------------------------------------------------------------- */
 
 interface IDeleteFile {
-  service?: string
-  dest?: string
+    service?: string
+    dest?: string
 }
 
 export const deleteFile = (
-  filePath: string,
-  options: IDeleteFile = { service: ModuleName.DEFAULT, dest: basename(__filename) }
+    filePath: string,
+    options: IDeleteFile = { service: ModuleName.DEFAULT, dest: basename(__filename) }
 ) => {
-  const { service, dest } = options
+    const { service, dest } = options
 
-  if (fs.existsSync(filePath)) {
-    setImmediate(() => fs.unlinkSync(filePath))
-    return true
-  } else {
-    logger.warn(`File path "${filePath}" does not exist so failed to unlink it`, { service, dest })
-    return false
-  }
+    if (fs.existsSync(filePath)) {
+        setImmediate(() => fs.unlinkSync(filePath))
+        return true
+    } else {
+        logger.warn(`File path "${filePath}" does not exist so failed to unlink it`, {
+            service,
+            dest
+        })
+        return false
+    }
 }
 
 export default deleteFile

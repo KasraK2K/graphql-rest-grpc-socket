@@ -20,8 +20,8 @@ if (!fs.existsSync(directory)) fs.mkdirSync(directory)
 const logLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug'
 
 const options = {
-  ...loggerConfig.winston,
-  dirname: directory,
+    ...loggerConfig.winston,
+    dirname: directory
 }
 /* -------------------------------------------------------------------------- */
 
@@ -29,18 +29,18 @@ const options = {
 let errorTransport: DailyRotateFile = {} as DailyRotateFile
 
 if (loggerConfig.logOnFile) {
-  errorTransport = new DailyRotateFile({
-    level: 'error',
-    filename: '%DATE%__error',
-    ...options,
-  })
+    errorTransport = new DailyRotateFile({
+        level: 'error',
+        filename: '%DATE%__error',
+        ...options
+    })
 
-  // errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
-  // errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  errorTransport.on('rotate', (oldFilename) =>
-    deleteFile(oldFilename, { dest: 'logger.helper.ts' })
-  )
-  // errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
+    // errorTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+    // errorTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
+    errorTransport.on('rotate', (oldFilename) =>
+        deleteFile(oldFilename, { dest: 'logger.helper.ts' })
+    )
+    // errorTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
@@ -48,53 +48,53 @@ if (loggerConfig.logOnFile) {
 let combinedTransport: DailyRotateFile = {} as DailyRotateFile
 
 if (loggerConfig.logOnFile) {
-  combinedTransport = new DailyRotateFile({
-    filename: '%DATE%__combined',
-    ...options,
-  })
+    combinedTransport = new DailyRotateFile({
+        filename: '%DATE%__combined',
+        ...options
+    })
 
-  // combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
-  // combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
-  combinedTransport.on('rotate', (oldFilename) =>
-    deleteFile(oldFilename, { dest: 'logger.helper.ts' })
-  )
-  // combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
+    // combinedTransport.on("new", (newFilename) => console.log(`${newFilename} Created`))
+    // combinedTransport.on("archive", (zipFilename) => console.log(`${zipFilename} Archived`))
+    combinedTransport.on('rotate', (oldFilename) =>
+        deleteFile(oldFilename, { dest: 'logger.helper.ts' })
+    )
+    // combinedTransport.on("logRemoved", (removedFilename) => console.log(`${removedFilename} Removed`))
 }
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Formatter ------------------------------- */
 const jsonLogFileFormat =
-  process.env.NODE_ENV === 'production'
-    ? format.combine(format.errors({ stack: true }), format.timestamp(), format.json())
-    : format.combine(format.errors({ stack: true }), format.timestamp(), format.prettyPrint())
+    process.env.NODE_ENV === 'production'
+        ? format.combine(format.errors({ stack: true }), format.timestamp(), format.json())
+        : format.combine(format.errors({ stack: true }), format.timestamp(), format.prettyPrint())
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ Create Logger ----------------------------- */
 const logger = createLogger({
-  level: logLevel,
-  format: jsonLogFileFormat,
-  defaultMeta: { service: ModuleName.DEFAULT },
-  transports: loggerConfig.logOnFile ? [errorTransport, combinedTransport] : [],
-  // exceptionHandlers: any
-  // rejectionHandlers: any
-  exitOnError: false,
+    level: logLevel,
+    format: jsonLogFileFormat,
+    defaultMeta: { service: ModuleName.DEFAULT },
+    transports: loggerConfig.logOnFile ? [errorTransport, combinedTransport] : [],
+    // exceptionHandlers: any
+    // rejectionHandlers: any
+    exitOnError: false
 })
 /* -------------------------------------------------------------------------- */
 
 /* ----------------------------- Log on Console ----------------------------- */
 if (loggerConfig.logOnConsole) {
-  logger.add(
-    new transports.Console({
-      format: format.combine(
-        format.errors({ stack: true }),
-        format.colorize(),
-        format.printf(({ level, message, timestamp, stack }) => {
-          if (stack) return `${timestamp} ${level}: ${message} - ${stack}`
-          else return `${timestamp} ${level}: ${message}`
+    logger.add(
+        new transports.Console({
+            format: format.combine(
+                format.errors({ stack: true }),
+                format.colorize(),
+                format.printf(({ level, message, timestamp, stack }) => {
+                    if (stack) return `${timestamp} ${level}: ${message} - ${stack}`
+                    else return `${timestamp} ${level}: ${message}`
+                })
+            )
         })
-      ),
-    })
-  )
+    )
 }
 /* -------------------------------------------------------------------------- */
 export default logger

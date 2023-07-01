@@ -4,25 +4,25 @@ import errorFilePath from './errorFilePath'
 /* -------------------------------------------------------------------------- */
 
 const graphErrorHandler = (statusCode: number, message?: string, batch_message?: string[]) => {
-  // Fill needed Constants
-  const { code, message: defaultMessage } = getErrorObject(statusCode)!
-  const error = new GraphQLAppError(statusCode, message ?? defaultMessage)
-  const errorPaths = errorFilePath(error)
-  // Fill Extensions
-  error.extensions.code = code
-  error.extensions.path = errorPaths
-  // TODO : use winston log to create log or send to prometheus
+    // Fill needed Constants
+    const { code, message: defaultMessage } = getErrorObject(statusCode)!
+    const error = new GraphQLAppError(statusCode, message ?? defaultMessage)
+    const errorPaths = errorFilePath(error)
+    // Fill Extensions
+    error.extensions.code = code
+    error.extensions.path = errorPaths
+    // TODO : use winston log to create log or send to prometheus
 
-  const logObject: Record<string, any> = {
-    success: false,
-    statusCode,
-    message: error.message,
-    path: errorPaths,
-  }
-  batch_message && batch_message.length && logObject.push(batch_message)
-  console.log(logObject)
+    const logObject: Record<string, any> = {
+        success: false,
+        statusCode,
+        message: error.message,
+        path: errorPaths
+    }
+    batch_message && batch_message.length && logObject.push(batch_message)
+    console.log(logObject)
 
-  throw error
+    throw error
 }
 
 // prettier-ignore
@@ -47,7 +47,7 @@ const statusMap = new Map([
 ])
 
 const getErrorObject = (statusCode: number) => {
-  return statusMap.has(statusCode) ? statusMap.get(statusCode) : statusMap.get(500)
+    return statusMap.has(statusCode) ? statusMap.get(statusCode) : statusMap.get(500)
 }
 
 export default graphErrorHandler
