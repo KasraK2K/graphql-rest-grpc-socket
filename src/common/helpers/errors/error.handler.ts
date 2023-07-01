@@ -10,7 +10,7 @@ const graphErrorHandler = (statusCode: number, message?: string, batch_message?:
     const errorPaths = errorFilePath(error)
     // Fill Extensions
     error.extensions.code = code
-    error.extensions.path = errorPaths
+    process.env.NODE_ENV !== 'production' && (error.extensions.path = errorPaths)
     // TODO : use winston log to create log or send to prometheus
 
     const logObject: Record<string, any> = {
@@ -21,11 +21,19 @@ const graphErrorHandler = (statusCode: number, message?: string, batch_message?:
     }
     batch_message && batch_message.length && logObject.push(batch_message)
 
+    console.log(logObject)
+
     return error
 }
 
+type IStatusMapKey = string | number
+interface IStatusMapObject {
+    code: string
+    message: string
+}
+
 // prettier-ignore
-const statusMap = new Map([
+const statusMap = new Map<IStatusMapKey, IStatusMapObject>([
     /* ----------------------------- Original Errors ---------------------------- */
     [400, { code: 'BAD_REQUEST',                      message: 'The server cannot or will not process the request due to something that is perceived to be a client error.' } ],
     [401, { code: 'UNAUTHORIZED',                     message: 'The client must authenticate itself to get the requested response.' } ],
@@ -43,7 +51,7 @@ const statusMap = new Map([
     [502, { code: 'BAD_GATEWAY',                      message: 'That the server, while working as a gateway to get a response needed to handle the request, got an invalid response.' }],
     [503, { code: 'SERVICE_UNAVAILABLE',              message: 'The server is not ready to handle the request.' }],
     [504, { code: 'GATEWAY_TIMEOUT',                  message: 'The server is acting as a gateway and cannot get a response in time.' }],
-    [511, { code: 'NETWORK_AUTHENTICATION_REQUIRED', message: 'Indicates that the client needs to authenticate to gain network access' }],
+    [511, { code: 'NETWORK_AUTHENTICATION_REQUIRED',  message: 'Indicates that the client needs to authenticate to gain network access' }],
 ])
 
 const getErrorObject = (statusCode: number) => {

@@ -9,24 +9,18 @@ import { IUser } from './constants/interfaces'
 const resolvers = {
     Query: {
         addUser: async (
-            _: IUser,
+            _parent: IUser,
             args: { email: string; password: string },
-            __: IContext,
-            ___: GraphQLResolveInfo
-        ): Promise<IUser> => {
-            const user = await userService.addUser(args)
-            return user
-        },
+            _context: IContext,
+            _info: GraphQLResolveInfo
+        ): Promise<IUser> => await userService.addUser(args),
 
         user: async (
-            _: IUser,
+            _parent: IUser,
             args: { email: string },
-            __: IContext,
-            ___: GraphQLResolveInfo
-        ): Promise<IUser> => {
-            const user = await userService.getUser(args)
-            return user
-        }
+            _context: IContext,
+            _info: GraphQLResolveInfo
+        ): Promise<IUser> => await userService.getUser(args)
     }
 }
 
