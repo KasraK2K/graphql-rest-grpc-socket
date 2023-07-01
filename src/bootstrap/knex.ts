@@ -18,7 +18,7 @@ import { IPostgresConfig } from '../../config/config.interface'
 
 /* Raw Select */
 // const result = await knex.raw('SELECT * FROM ?? LIMIT ??', ['users', 1])
-// console.log({ count: result.rowCount, result: result.rows })
+// console.log({ row_count: result.rowCount, result: result.rows })
 
 /* Raw Insert */
 // knex.raw(
@@ -37,7 +37,7 @@ import { IPostgresConfig } from '../../config/config.interface'
 //   trx
 //     .raw('SELECT * FROM ??', ['users'])
 //     .then((result) => {
-//       console.log({ count: result.rowCount, result: result.rows })
+//       console.log({ row_count: result.rowCount, result: result.rows })
 //       trx.commit
 //     })
 //     .catch(trx.rollback)

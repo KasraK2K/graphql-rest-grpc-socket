@@ -2,18 +2,22 @@
 import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { IFilter, IPagination } from '../../common/interfaces/general.interface'
-import { IPaginate, IQueryGenerator } from '../../common/interfaces/repository.interface'
+import {
+    IDefaultResponse,
+    IPaginate,
+    IQueryGenerator
+} from '../../common/interfaces/repository.interface'
 import PgBuilderRepository from './PgBuilderRepository'
 import logger from '../../common/helpers/logger.helper'
 /* -------------------------------------------------------------------------- */
 
 class PgRepository extends PgBuilderRepository {
     // ─── SELECT ALL ─────────────────────────────────────────────────────────────────
-    protected find(tableName: string, omits: string[] = []): Promise<Record<string, any>> {
+    protected find<T>(tableName: string, omits: string[] = []): Promise<IDefaultResponse<T>> {
         const query = /* SQL */ ` SELECT * FROM ${tableName}`
 
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, omits })
+            this.executeQuery<T>({ query, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -23,15 +27,15 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── SELECT ONE ─────────────────────────────────────────────────────────────────
-    protected findOne(
+    protected findOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
-        const { query, parameters } = this.getfindOneQuery(tableName, args)
+    ): Promise<IDefaultResponse<T>> {
+        const { query, parameters } = this.getFindOneQuery(tableName, args)
 
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, parameters, omits })
+            this.executeQuery<T>({ query, parameters, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -41,7 +45,7 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── GET SELECT ONE QUERY ───────────────────────────────────────────────────────
-    protected getfindOneQuery(tableName: string, args: Record<string, any>): IQueryGenerator {
+    protected getFindOneQuery(tableName: string, args: Record<string, any>): IQueryGenerator {
         let index = 0
         const parameters = _.values(args)
         const query = /* SQL */ `
@@ -55,17 +59,17 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── INSERT ─────────────────────────────────────────────────────────────────────
-    protected insertOne(
+    protected insertOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<IDefaultResponse<T>> {
         args = _.omit(args, ['api_key'])
         const { query, parameters } = this.getInsertQuery(tableName, args)
 
         return new Promise((resolve, reject) => {
             // TODO: FIX parameters
-            this.executeQuery({ query, parameters, omits })
+            this.executeQuery<T>({ query, parameters, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -89,15 +93,15 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── UPDATE ─────────────────────────────────────────────────────────────────────
-    protected updateOne(
+    protected updateOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<IDefaultResponse<T>> {
         const { query, parameters } = this.getUpdateQuery(tableName, args, omits)
 
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, parameters })
+            this.executeQuery<T>({ query, parameters })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -129,15 +133,15 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── SAFE DELETE ────────────────────────────────────────────────────────────────
-    protected safeDeleteOne(
+    protected safeDeleteOne<T>(
         tableName: string,
         id: string,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<IDefaultResponse<T>> {
         const { query, parameters } = this.getSafeDeleteOneQuery(tableName, id)
 
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, parameters, omits })
+            this.executeQuery<T>({ query, parameters, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -159,14 +163,14 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── RESTORE ONE ────────────────────────────────────────────────────────────────
-    protected restoreOne(
+    protected restoreOne<T>(
         tableName: string,
         id: string,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<IDefaultResponse<T>> {
         const { query, parameters } = this.getRestoreOneQuery(tableName, id)
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, parameters, omits })
+            this.executeQuery<T>({ query, parameters, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -188,14 +192,14 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── DELETE ONE ─────────────────────────────────────────────────────────────────
-    protected deleteOne(
+    protected deleteOne<T>(
         tableName: string,
         id: string,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<IDefaultResponse<T>> {
         const { query, parameters } = this.getDeleteOneQuery(tableName, id)
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query, parameters, omits })
+            this.executeQuery<T>({ query, parameters, omits })
                 .then((result) => resolve(result))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })
@@ -217,23 +221,23 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── PAGINATION ─────────────────────────────────────────────────────────────────
-    protected paginate(
+    protected paginate<T>(
         tableName: string,
         pagination: IPagination = { limit: 200, page: 1, filter: {} },
         omits: string[] = []
-    ): Promise<IPaginate> {
+    ): Promise<IPaginate<T>> {
         const { limit, page } = pagination
         const { query, parameters } = this.getPaginateQuery(tableName, pagination)
 
         return new Promise((resolve, reject) => {
             let total_count: number
             let total_page: number
-            let paginateResult: IPaginate
+            let paginateResult: IPaginate<T>
 
             this.executeQuery({ query, parameters, omits })
-                .then((result) => {
+                .then((result: any) => {
                     if (result.rowCount) {
-                        paginateResult = { ...result }
+                        paginateResult = { ...result, rows: [] }
                         total_count = Number(result.rows[0].total_count)
                         total_page = Math.ceil(total_count / limit)
                         paginateResult.total_count = total_count
@@ -248,7 +252,7 @@ class PgRepository extends PgBuilderRepository {
                         return resolve(paginateResult)
                     } else {
                         paginateResult = {
-                            rowCount: 0,
+                            row_count: 0,
                             rows: [],
                             total_count: 0,
                             total_page: 0,
@@ -275,11 +279,11 @@ class PgRepository extends PgBuilderRepository {
         const { limit, page } = pagination
         const query = /* SQL */ `SELECT *, count(*) OVER() AS total_count FROM ${tableName} `
         const filter: IFilter = _.assign({ ...pagination.filter, limit, page })
-        return this.addFiltertoQuery(filter, query)
+        return this.addFilterToQuery(filter, query)
     }
 
     // ─── ADD FILTER TO QUERY ────────────────────────────────────────────────────────
-    protected addFiltertoQuery(filter: IFilter, query: string, index = 0): IQueryGenerator {
+    protected addFilterToQuery(filter: IFilter, query: string, index = 0): IQueryGenerator {
         const parameters: string[] = []
 
         // ───────────────────────────────────────────────── AND WHERE ─────
@@ -317,12 +321,12 @@ class PgRepository extends PgBuilderRepository {
     }
 
     // ─── TOTAL COUNT ────────────────────────────────────────────────────────────────
-    protected totalCount(tableName: string, whereQueries: string[] = []): Promise<number> {
+    protected totalCount<T>(tableName: string, whereQueries: string[] = []): Promise<number> {
         const query = /* SQL */ `SELECT COUNT(*) FROM ${tableName} ${
             whereQueries.length ? `WHERE ${whereQueries.join(' AND ')}` : ''
         }`
         return new Promise((resolve, reject) => {
-            this.executeQuery({ query })
+            this.executeQuery<T>({ query })
                 .then((result) => resolve(Number(result.rows[0].count)))
                 .catch((err) => {
                     logger.error(err, { dest: 'PgRepository.ts' })

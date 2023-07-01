@@ -2,7 +2,11 @@
 import _ from 'lodash'
 // import SqlString from "sqlstring"
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IExecuteOptions, IExecuteQueryOptions } from '../../common/interfaces/repository.interface'
+import {
+    IDefaultResponse,
+    IExecuteOptions,
+    IExecuteQueryOptions
+} from '../../common/interfaces/repository.interface'
 import logger from '../../common/helpers/logger.helper'
 import { pool } from '../../bootstrap/postgresql'
 /* -------------------------------------------------------------------------- */
@@ -427,7 +431,7 @@ class PgBuilderRepository {
     // ──────────────────────────────────────────────────────────────────
     //   :::::: G E T   M A N Y : :  :   :    :     :        :          :
     // ──────────────────────────────────────────────────────────────────
-    protected getMany(): Promise<Record<string, any>[]> {
+    protected getMany<T>(): Promise<Omit<T[], any>> {
         return new Promise((resolve, reject) => {
             const query = this.getSQL()
             this.executeQuery({ query })
@@ -461,21 +465,17 @@ class PgBuilderRepository {
     }
 
     // ─── EXECUTE QUERY ──────────────────────────────────────────────────────────────
-    protected executeQuery(
-        options: IExecuteQueryOptions
-    ): Promise<{ rowCount: number; rows: Record<string, any>[] }> {
+    protected executeQuery<T>(options: IExecuteQueryOptions): Promise<IDefaultResponse<T>> {
         const { query, parameters = [], omits = [] } = options
         const doNotReturn = _.includes(omits, '*')
 
         return new Promise((resolve, reject) => {
             pool.query(query, parameters)
                 .then((result) => {
-                    if (doNotReturn) return resolve({ rowCount: result.rowCount, rows: [] })
+                    if (doNotReturn) return resolve({ row_count: result.rowCount, rows: [] })
                     else {
-                        const rows: Record<string, any>[] = result.rows.map((row) =>
-                            _.omit(row, omits)
-                        )
-                        return resolve({ rowCount: result.rowCount, rows })
+                        const rows: Omit<T[], any> = result.rows.map((row) => _.omit(row, omits))
+                        return resolve({ row_count: result.rowCount, rows })
                     }
                 })
                 .catch((err: Record<string, any>) => reject(err))

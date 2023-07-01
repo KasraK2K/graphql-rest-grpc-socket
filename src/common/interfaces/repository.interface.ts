@@ -13,13 +13,18 @@ export interface IQueryGenerator {
     parameters: any[]
 }
 
-export interface IPaginate {
-    rowCount: number
-    rows: Record<string, any>[]
+export interface IPaginate<T> {
+    row_count: number
+    rows: T[]
     total_count?: number
     total_page?: number
     page?: number
     limit?: number
     nextPage?: number
     prevPage?: number
+}
+
+export interface IDefaultResponse<T> {
+    row_count: number
+    rows: Omit<T[], any>
 }
