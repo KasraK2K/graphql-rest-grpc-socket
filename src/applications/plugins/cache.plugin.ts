@@ -5,6 +5,7 @@ import { Plugin } from 'graphql-yoga'
 import { context } from './../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
+// NOTE: For set cache for each query or mutation separately we can use @cacheControl(maxAge: 10) in front of it response or  write it like example (1)
 const useCache = (): Plugin =>
     useResponseCache({
         includeExtensionMetadata: true,

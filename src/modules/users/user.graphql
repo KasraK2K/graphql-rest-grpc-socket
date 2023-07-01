@@ -1,8 +1,44 @@
-type Query {
-    users: [UserResponse] @cacheControl(maxAge: 20)
+type User {
+    "Basic database identification field useful most of the time."
+    id: ID!
+    "UUID to identify entity in logs and another type of database and it is helpful to find user in other places."
+    uid: UUID!
+
+    first_name: String
+    surname: String
+
+    email: String!
+    password: String!
+    "It is possible to anyone make itself activate or deactivate."
+    is_active: Boolean!
+    "At the first all users are un-verified and should click on the link sent to there email."
+    is_verified: Boolean!
+    "Admin should have ability to block unilingual users."
+    is_blocked: Boolean!
+    is_admin: Boolean!
+    "Users can't delete there own account but they can archive their data to hide from aggregations."
+    is_archived: Boolean!
+    "Array of role numbers and each role has many different permissions."
+    roles: [UUID!]!
+
+    "Record creation time and it change just when we create a record."
+    created_at: DateTime!
+    "Time of last update and it change every time use update itself."
+    updated_at: DateTime
+    "This field has relation with `is_archive` field in this entity and it is time of archive."
+    archived_at: DateTime
 }
 
-type UserResponse {
-    id: Int
-    name: String
+"Response of `registerLocalUser` or `loginLocalUser`"
+type LocalUserAuthResponse {
+    token: String!
+    user: User!
+}
+
+type Query {
+    "Register new users and send identification data to them"
+    registerLocalUser(email: String!, password: String!): LocalUserAuthResponse!
+
+    "Login new users and send identification data to them"
+    loginLocalUser(email: String!, password: String!): LocalUserAuthResponse!
 }

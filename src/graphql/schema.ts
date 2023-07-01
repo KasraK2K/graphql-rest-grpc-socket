@@ -6,12 +6,12 @@ import { applyMiddleware } from 'graphql-middleware'
 import { IContext } from './context'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
-import {
-    authMiddleware,
-    logInputMiddleware,
-    logResultMiddleware,
-    uppercaseMiddleware
-} from '../middlewares/index'
+// import {
+//     authMiddleware,
+//     logInputMiddleware,
+//     logResultMiddleware,
+//     uppercaseMiddleware
+// } from '../middlewares/index'
 /* -------------------------------------------------------------------------- */
 
 // const schema = createSchema({
@@ -30,9 +30,9 @@ const schemaWithMiddleware = applyMiddleware(
         // Query: {
         //   users: authMiddleware,
         // },
-        UserResponse: {
-            name: uppercaseMiddleware // Make name field uppercase
-        }
+        // UserResponse: {
+        //     name: uppercaseMiddleware // Make name field uppercase
+        // }
     }
 )
 
