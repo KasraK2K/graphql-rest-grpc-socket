@@ -6,20 +6,19 @@ type User {
 
     first_name: String
     surname: String
+    contact_number: String
 
     email: String!
-    password: String!
     "It is possible to anyone make itself activate or deactivate."
     is_active: Boolean!
     "At the first all users are un-verified and should click on the link sent to there email."
-    is_verified: Boolean!
+    is_verify: Boolean!
     "Admin should have ability to block unilingual users."
-    is_blocked: Boolean!
-    is_admin: Boolean!
+    is_block: Boolean!
     "Users can't delete there own account but they can archive their data to hide from aggregations."
-    is_archived: Boolean!
+    is_archive: Boolean!
     "Array of role numbers and each role has many different permissions."
-    roles: [UUID!]!
+    roles: [UUID]!
 
     "Record creation time and it change just when we create a record."
     created_at: DateTime!
@@ -29,16 +28,10 @@ type User {
     archived_at: DateTime
 }
 
-"Response of `registerLocalUser` or `loginLocalUser`"
-type LocalUserAuthResponse {
-    token: String!
-    user: User!
-}
-
 type Query {
-    "Register new users and send identification data to them"
-    registerLocalUser(email: String!, password: String!): LocalUserAuthResponse!
+    "Create new user and return it back"
+    addUser(email: String!, password: String!): User!
 
-    "Login new users and send identification data to them"
-    loginLocalUser(email: String!, password: String!): LocalUserAuthResponse!
+    "Get user"
+    user(email: String!): User!
 }

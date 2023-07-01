@@ -1,15 +1,15 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IContext } from '../../graphql/context'
+import userRepository from './user.repository'
 import { IUser } from './constants/interfaces'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
-    loginLocalUser({ dataSource }: IContext): IUser {
-        return dataSource.user.repo.findOneUser()
+    async addUser(args: { email: string; password: string }): Promise<IUser> {
+        return await userRepository.addUser(args)
     }
 
-    registerLocalUser({ dataSource }: IContext): IUser {
-        return dataSource.user.repo.findOneUser()
+    async getUser(args: { email: string }): Promise<IUser> {
+        return await userRepository.getUser(args)
     }
 }
 

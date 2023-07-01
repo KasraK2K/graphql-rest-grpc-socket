@@ -1,10 +1,5 @@
-import userService from '../modules/users/user.service'
-import userRepository from '../modules/users/user.repository'
-
 export interface IContext {
-    dataSource: {
-        user: { repo: typeof userRepository; service: typeof userService }
-    }
+    dataSource: Record<string, any>
 
     req: Record<string, any>
     res: Record<string, any>
@@ -17,7 +12,5 @@ export interface IContext {
 }
 
 export const context: Partial<IContext> = {
-    dataSource: {
-        user: { repo: userRepository, service: userService }
-    }
+    dataSource: {}
 }
