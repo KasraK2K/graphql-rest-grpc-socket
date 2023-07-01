@@ -7,17 +7,17 @@ import mongo from '../../bootstrap/mongodb'
 
 class MongoRepository {
     // ─── SELECT ALL ─────────────────────────────────────────────────────────────────
-    protected find(
+    protected find<T>(
         tableName: string,
         args: Record<string, any> = {},
         omits: string[] = []
-    ): Promise<Record<string, any>[]> {
+    ): Promise<T[]> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
             mongo
                 .collection(tableName)
-                .find(args, { projection: this.generateProjection(omits) })
+                .find<T>(args, { projection: this.generateProjection(omits) })
                 .toArray()
                 .then((result) => {
                     omits.includes('*') ? resolve([]) : resolve(result)
@@ -27,30 +27,30 @@ class MongoRepository {
     }
 
     // ─── SELECT ONE ─────────────────────────────────────────────────────────────────
-    protected findOne(
+    protected findOne<T>(
         tableName: string,
         args: Record<string, any> = {},
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
             mongo
                 .collection(tableName)
-                .findOne(args, { projection: this.generateProjection(omits) })
+                .findOne<T>(args, { projection: this.generateProjection(omits) })
                 .then((result) => {
-                    omits.includes('*') ? resolve([]) : resolve(result as Record<string, any>)
+                    omits.includes('*') ? resolve(null) : resolve(result)
                 })
                 .catch((err) => reject(err))
         })
     }
 
     // ─── INSERT ONE ─────────────────────────────────────────────────────────────────
-    protected insertOne(
+    protected insertOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
             _.assign(args, { createdAt: new Date(), updatedAt: new Date() })
@@ -59,19 +59,19 @@ class MongoRepository {
                 .collection(tableName)
                 .insertOne(args)
                 .then(async (result) =>
-                    resolve(await this.findOne(tableName, { _id: result.insertedId }, omits))
+                    resolve(await this.findOne<T>(tableName, { _id: result.insertedId }, omits))
                 )
                 .catch((err) => reject(err))
         })
     }
 
     // ─── UPDATE ONE ─────────────────────────────────────────────────────────────────
-    protected updateOne(
+    protected updateOne<T>(
         tableName: string,
         findArgs: Record<string, any>,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             findArgs = this.sanitizeArgs(findArgs)
             args = this.sanitizeArgs(args)
@@ -79,18 +79,18 @@ class MongoRepository {
             mongo
                 .collection(tableName)
                 .updateOne(findArgs, { $set: args, $currentDate: { updatedAt: true } })
-                .then(async () => resolve(await this.findOne(tableName, findArgs, omits)))
+                .then(async () => resolve(await this.findOne<T>(tableName, findArgs, omits)))
                 .catch((err) => reject(err))
         })
     }
 
     // ─── UPSERT ONE ─────────────────────────────────────────────────────────────────
-    protected upsertOne(
+    protected upsertOne<T>(
         tableName: string,
         findArgs: Record<string, any>,
         args: Record<string, any>,
         options: { upsert: boolean; omits: string[] } = { upsert: true, omits: [] }
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             const { upsert, omits } = options
             findArgs = this.sanitizeArgs(findArgs)
@@ -104,17 +104,17 @@ class MongoRepository {
                     { $set: { ...args, updatedAt: date }, $setOnInsert: { createdAt: date } },
                     { upsert }
                 )
-                .then(async () => resolve(await this.findOne(tableName, findArgs, omits)))
+                .then(async () => resolve(await this.findOne<T>(tableName, findArgs, omits)))
                 .catch((err) => reject(err))
         })
     }
 
     // ─── SAFE DELETE ────────────────────────────────────────────────────────────────
-    protected safeDeleteOne(
+    protected safeDeleteOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
             const date = new Date()
@@ -127,34 +127,34 @@ class MongoRepository {
                     },
                     { $set: { deletedAt: date, updatedAt: date } }
                 )
-                .then(async () => resolve(await this.findOne(tableName, args, omits)))
+                .then(async () => resolve(await this.findOne<T>(tableName, args, omits)))
                 .catch((err) => reject(err))
         })
     }
 
     // ─── DELETE ONE ─────────────────────────────────────────────────────────────────
-    protected deleteOne(
+    protected deleteOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
             mongo
                 .collection(tableName)
                 .deleteOne(args)
-                .then(async () => resolve(await this.findOne(tableName, args, omits)))
+                .then(async () => resolve(await this.findOne<T>(tableName, args, omits)))
                 .catch((err) => reject(err))
         })
     }
 
     // ─── RESTORE ONE ────────────────────────────────────────────────────────────────
-    protected restoreOne(
+    protected restoreOne<T>(
         tableName: string,
         args: Record<string, any>,
         omits: string[] = []
-    ): Promise<Record<string, any>> {
+    ): Promise<T | null> {
         return new Promise((resolve, reject) => {
             args = this.sanitizeArgs(args)
 
@@ -166,7 +166,7 @@ class MongoRepository {
                     },
                     { $unset: { deletedAt: '' }, $set: { updatedAt: new Date() } }
                 )
-                .then(() => resolve(this.findOne(tableName, args, omits)))
+                .then(() => resolve(this.findOne<T>(tableName, args, omits)))
                 .catch((err) => reject(err))
         })
     }
