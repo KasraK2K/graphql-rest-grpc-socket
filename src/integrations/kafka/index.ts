@@ -1,13 +1,10 @@
 /* ------------------------------ Dependencies ------------------------------ */
-export * from 'mailgun.js/Types'
+export * from 'kafkajs'
 /* ----------------------------- Custom Modules ----------------------------- */
-import MailGunJS from './classes/MailGunJS'
-import Message from './classes/Message'
+import ProducerFactory from './classes/Producer'
+import ConsumerFactory from './classes/Consumer'
 /* -------------------------------------------------------------------------- */
-
-export { MailGunJS }
-export { Message }
 
 export * from './libs/interface'
 
-export default new MailGunJS()
+export { ProducerFactory, ConsumerFactory }

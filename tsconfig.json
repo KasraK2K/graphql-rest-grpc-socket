@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
     "module": "CommonJS",
-    "lib": ["ES6", "ES7", "ESNext"],
+    "lib": ["ES6", "ES7", "ES2022"],
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
@@ -21,7 +21,11 @@
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
-    "importsNotUsedAsValues": "remove"
+    "importsNotUsedAsValues": "remove",
+    "strictPropertyInitialization": false,
+    "declaration": true,
+    "incremental": true,
+    "strictNullChecks": false
   },
   "include": ["src"],
   "exclude": ["node_modules"]
