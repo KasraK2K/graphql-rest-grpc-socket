@@ -2,6 +2,7 @@
 import { UserType } from './../common/enums/general.enum'
 import { ITokenPayload } from '../common/interfaces/general.interface'
 import { IUser } from '../common/interfaces/user.interface'
+import { knex } from '../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 interface ContextUser extends IUser {
@@ -17,7 +18,9 @@ export interface IContext {
     token_payload?: ITokenPayload
     user: ContextUser | ContextAdmin
 
-    dataSource: Record<string, any>
+    dataSource: {
+        knex: typeof knex
+    }
 
     req: Record<string, any>
     res: Record<string, any>
@@ -28,5 +31,5 @@ export interface IContext {
 
 export const context: Partial<IContext> = {
     user: Object.create(null),
-    dataSource: {}
+    dataSource: { knex }
 }
