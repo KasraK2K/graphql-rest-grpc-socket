@@ -10,8 +10,8 @@ export enum ModuleName {
 }
 
 export enum UserType {
-    USER = 'USER',
-    ADMIN = 'ADMIN'
+    USER,
+    ADMIN
 }
 
 export enum TokenType {
