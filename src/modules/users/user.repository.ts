@@ -1,7 +1,7 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
 import { IUser } from './constants/interfaces'
-import graphErrorHandler from '../../common/helpers/errors/error.handler'
+import errorHandler from '../../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 class UserRepository extends Repository {
@@ -9,7 +9,7 @@ class UserRepository extends Repository {
         return new Promise((resolve, reject) => {
             this.insertOne<IUser>('users', args)
                 .then((result) => resolve(result.rows[0]))
-                .catch((err) => reject(graphErrorHandler(500, err.message)))
+                .catch((err) => reject(errorHandler(500, err.message)))
         })
     }
 
@@ -17,7 +17,7 @@ class UserRepository extends Repository {
         return new Promise((resolve, reject) => {
             this.findOne('users', args)
                 .then((result) => resolve(result.rows[0]))
-                .catch((err) => reject(graphErrorHandler(500, err.message)))
+                .catch((err) => reject(errorHandler(500, err.message)))
         })
     }
 }

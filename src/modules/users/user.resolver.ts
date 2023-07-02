@@ -8,19 +8,21 @@ import { IUser } from './constants/interfaces'
 
 const resolvers = {
     Query: {
-        addUser: async (
-            _parent: IUser,
-            args: { email: string; password: string },
-            _context: IContext,
-            _info: GraphQLResolveInfo
-        ): Promise<IUser> => await userService.addUser(args),
-
         user: async (
             _parent: IUser,
             args: { email: string },
             _context: IContext,
             _info: GraphQLResolveInfo
         ): Promise<IUser> => await userService.getUser(args)
+    },
+
+    Mutation: {
+        addUser: async (
+            _parent: IUser,
+            args: { email: string; password: string },
+            _context: IContext,
+            _info: GraphQLResolveInfo
+        ): Promise<IUser> => await userService.addUser(args)
     }
 }
 

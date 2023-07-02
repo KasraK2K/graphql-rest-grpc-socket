@@ -29,9 +29,11 @@ type User {
 }
 
 type Query {
-    "Create new user and return it back"
-    addUser(email: String!, password: String!): User!
-
     "Get user"
     user(email: String!): User!
+}
+
+type Mutation {
+    "Create new user and return it back"
+    addUser(email: String!, password: String!): User!
 }

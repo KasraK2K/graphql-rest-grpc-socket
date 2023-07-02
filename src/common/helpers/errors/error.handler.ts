@@ -3,7 +3,7 @@ import GraphQLAppError from './GraphQLAppError'
 import errorFilePath from './errorFilePath'
 /* -------------------------------------------------------------------------- */
 
-const graphErrorHandler = (statusCode: number, message?: string, batch_message?: string[]) => {
+const errorHandler = (statusCode: number, message?: string, batch_message?: string[]) => {
     // Fill needed Constants
     const { code, message: defaultMessage } = getErrorObject(statusCode)
     const error = new GraphQLAppError(statusCode, message ?? defaultMessage)
@@ -58,4 +58,4 @@ const getErrorObject = (statusCode: number) => {
     return statusMap.has(statusCode) ? statusMap.get(statusCode) : statusMap.get(500)
 }
 
-export default graphErrorHandler
+export default errorHandler

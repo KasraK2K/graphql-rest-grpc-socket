@@ -18,7 +18,7 @@ import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import logger from '../common/helpers/logger.helper'
 import { useCache, useToken } from './plugins'
-// import graphErrorHandler from '../common/helpers/errors/error.handler'
+// import errorHandler from '../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 function main(port: string) {
@@ -26,11 +26,11 @@ function main(port: string) {
         schema,
         context: async (ctx: IContext) => {
             // const authorization = ctx.request.headers.get('authorization')
-            // if (!authorization) graphErrorHandler(401)
+            // if (!authorization) errorHandler(401)
             // else {
             //   const token = authorization.slice(7)
             //   // TODO : check token role/permission
-            //   if (false) graphErrorHandler(403)
+            //   if (false) errorHandler(403)
             // }
 
             // // TODO : Remove redis cache on logout

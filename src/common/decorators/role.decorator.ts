@@ -3,14 +3,14 @@ import { Request } from 'express'
 import config from 'config'
 import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
-import graphErrorHandler from '../helpers/errors/error.handler'
+import errorHandler from '../helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 const bearerKey: string = config.get('application.bearer')
 const bearerHeader: string = config.get('application.bearerHeader')
 
 const Role = (roles: string[]) => {
-    return (_target: Object, _prototypeKey: string, descriptor: PropertyDescriptor) => {
+    return (_target: unknown, _prototypeKey: string, descriptor: PropertyDescriptor) => {
         const originalValue = descriptor.value
 
         descriptor.value = function (...args: any[]) {
@@ -18,13 +18,13 @@ const Role = (roles: string[]) => {
             let token: string | string[] = headers.filter((header) => header.startsWith(bearerKey))
 
             // Check Authorization Header
-            if (!token || !token.length || !headers.includes(bearerHeader)) graphErrorHandler(401)
+            if (!token || !token.length || !headers.includes(bearerHeader)) errorHandler(401)
             // Check Token & Role
             else {
                 token = token[0].slice(bearerKey.length + 1)
                 const tokenRole = 'user' // FIXME : Extract from token
                 // Check role is valid
-                if (!roles.includes(tokenRole)) graphErrorHandler(403)
+                if (!roles.includes(tokenRole)) errorHandler(403)
             }
 
             return originalValue.apply(this, args)
