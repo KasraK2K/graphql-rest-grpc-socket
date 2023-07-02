@@ -1,8 +1,8 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IUser } from './user.interface'
+import { IUser, IAdmin } from '.'
 /* -------------------------------------------------------------------------- */
 
 export interface IAuthResponse {
     token: string
-    entity: IUser
+    entity: IUser | IAdmin
 }

@@ -1,4 +1,4 @@
-type LocalAuthResponse {
+type AuthResponse {
     "Cyphered JWT Token"
     token: String!
     "Authenticated user"
@@ -7,10 +7,10 @@ type LocalAuthResponse {
 
 type Query {
     "Check login and response user and token"
-    loginLocal(type: UserType!, email: String!, password: String!): LocalAuthResponse!
+    login(type: UserType!, email: String!, password: String!): AuthResponse!
 }
 
 type Mutation {
     "Create new user and return user and token"
-    registerLocal(email: String!, password: String!): LocalAuthResponse!
+    register(type: UserType!, email: String!, password: String!): AuthResponse!
 }
