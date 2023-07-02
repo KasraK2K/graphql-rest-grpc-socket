@@ -1,6 +1,8 @@
+/* ----------------------------- Custom Modules ----------------------------- */
 import { UserType } from './../common/enums/general.enum'
-import { IUser } from 'src/modules/auth/constants/interfaces'
 import { ITokenPayload } from '../common/interfaces/general.interface'
+import { IUser } from '../common/interfaces/user.interface'
+/* -------------------------------------------------------------------------- */
 
 interface ContextUser extends IUser {
     type: UserType.USER
