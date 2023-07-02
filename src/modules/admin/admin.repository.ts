@@ -1,26 +1,26 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IUser } from '../../common/interfaces'
+import { IAdmin } from '../../common/interfaces/admin.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
-class AuthRepository extends Repository {
-    addUser(args: { email: string; password: string }): Promise<IUser> {
+class AdminRepository extends Repository {
+    addAdmin(args: { email: string; password: string }): Promise<IAdmin> {
         return new Promise((resolve, reject) => {
-            this.insertOne<IUser>('users', args)
+            this.insertOne<IAdmin>('admins', args)
                 .then((result) => {
-                    if (result.row_count) return reject(errorHandler(404))
+                    if (!result.row_count) return reject(errorHandler(404))
                     else return resolve(result.rows[0])
                 })
                 .catch((err) => reject(errorHandler(500, err.message)))
         })
     }
 
-    getUser(args: { email: string }): Promise<IUser> {
+    getAdmin(args: { email: string }): Promise<IAdmin> {
         return new Promise((resolve, reject) => {
-            this.findOne<IUser>('users', args)
+            this.findOne<IAdmin>('admins', args)
                 .then((result) => {
-                    if (result.row_count) return reject(errorHandler(404))
+                    if (!result.row_count) return reject(errorHandler(404))
                     else return resolve(result.rows[0])
                 })
                 .catch((err) => reject(errorHandler(500, err.message)))
@@ -28,4 +28,4 @@ class AuthRepository extends Repository {
     }
 }
 
-export default new AuthRepository()
+export default new AdminRepository()

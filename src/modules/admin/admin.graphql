@@ -1,4 +1,4 @@
-type User {
+type Admin {
     "Basic database identification field useful most of the time."
     id: ID!
     "UUID to identify entity in logs and another type of database and it is helpful to find user in other places."
@@ -11,11 +11,9 @@ type User {
     email: String!
     "It is possible to anyone make itself activate or deactivate."
     is_active: Boolean!
-    "At the first all users are un-verified and should click on the link sent to there email."
-    is_verify: Boolean!
-    "Admin should have ability to block illegal users."
+    "Admin should have ability to block illegal admins."
     is_block: Boolean!
-    "Users can't delete there own account but they can archive their data to hide from aggregations."
+    "Admins can't delete there own account but they can archive their data to hide from aggregations."
     is_archive: Boolean!
     "Array of role numbers and each role has many different permissions."
     roles: [UUID]!
@@ -29,11 +27,11 @@ type User {
 }
 
 type Query {
-    "Get user"
-    user(email: String!): User!
+    "Get admin"
+    admin(email: String!): Admin!
 }
 
 type Mutation {
     "Create new user and return it back"
-    addUser(email: String!, password: String!): User!
+    addAdmin(email: String!, password: String!): Admin!
 }

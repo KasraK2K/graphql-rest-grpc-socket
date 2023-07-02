@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IAdmin {
     id: number
     uid: string
 
@@ -10,7 +10,6 @@ export interface IUser {
     password: string
 
     is_active: boolean
-    is_verify: boolean
     is_block: boolean
     is_archive: boolean
     roles: string[]

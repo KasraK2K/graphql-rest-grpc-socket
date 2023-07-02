@@ -1,10 +1,10 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import authRepository from './auth.repository'
-import { IUser } from '../../common/interfaces/user.interface'
+import { IUser } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { TokenType, UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'
-import { ITokenPayload } from '../../common/interfaces/general.interface'
+import { ITokenPayload } from '../../common/interfaces'
 import tokenHelper from '../../common/helpers/token.helper'
 /* -------------------------------------------------------------------------- */
 

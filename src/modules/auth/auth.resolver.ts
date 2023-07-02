@@ -6,7 +6,7 @@ import authService from './auth.service'
 import { IContext } from '../../graphql/context'
 import { UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'
-import { IAuthResponse } from '../../common/interfaces/auth.interface'
+import { IAuthResponse } from '../../common/interfaces'
 /* -------------------------------------------------------------------------- */
 
 const resolvers = {

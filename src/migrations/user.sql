@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users
 	
     email             	VARCHAR(50)  NOT NULL UNIQUE,
     password          	VARCHAR(200) NOT NULL,
+
     is_active         	BOOLEAN      DEFAULT TRUE,
     is_verify       	BOOLEAN      DEFAULT FALSE,
     is_block        	BOOLEAN      DEFAULT FALSE,
@@ -32,8 +33,8 @@ CREATE TABLE IF NOT EXISTS users
 );
 
 -- Create Index
-CREATE INDEX "users_is_archive" ON "users"("is_archive");
-CREATE INDEX "users_email" ON "users"("email");
+CREATE INDEX "user_is_archive" ON "users"("is_archive");
+CREATE INDEX "user_email" ON "users"("email");
 
 -- Insert Record
 INSERT INTO users (email, password) VALUES ('kasra_k2k@yahoo.com', '12345678') RETURNING *;

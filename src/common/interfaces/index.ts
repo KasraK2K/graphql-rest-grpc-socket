@@ -1,0 +1,5 @@
+export * from './admin.interface'
+export * from './auth.interface'
+export * from './general.interface'
+export * from './repository.interface'
+export * from './user.interface'
