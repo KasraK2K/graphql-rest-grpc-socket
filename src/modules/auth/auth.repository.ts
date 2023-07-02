@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IUser } from './constants/interfaces'
+import { IUser } from '../../common/interfaces/user.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 

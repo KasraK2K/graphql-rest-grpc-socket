@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import authRepository from './auth.repository'
-import { IUser } from './constants/interfaces'
+import { IUser } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { TokenType, UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'

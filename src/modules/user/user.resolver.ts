@@ -3,7 +3,7 @@ import { GraphQLResolveInfo } from 'graphql'
 /* ----------------------------- Custom Modules ----------------------------- */
 import userService from './user.service'
 import { IContext } from '../../graphql/context'
-import { IUser } from './constants/interfaces'
+import { IUser } from '../../common/interfaces/user.interface'
 /* -------------------------------------------------------------------------- */
 
 const resolvers = {

@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import userRepository from './user.repository'
-import { IUser } from './constants/interfaces'
+import { IUser } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 /* -------------------------------------------------------------------------- */
 
