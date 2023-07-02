@@ -1,0 +1,16 @@
+type LocalAuthResponse {
+    "Cyphered JWT Token"
+    token: String!
+    "Authenticated user"
+    entity: User!
+}
+
+type Query {
+    "Check login and response user and token"
+    loginLocal(type: UserType!, email: String!, password: String!): LocalAuthResponse!
+}
+
+type Mutation {
+    "Create new user and return user and token"
+    registerLocal(email: String!, password: String!): LocalAuthResponse!
+}

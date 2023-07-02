@@ -6,6 +6,7 @@ import _ from 'lodash'
 /* ------------------------------ Custom Module ----------------------------- */
 import logger from '../helpers/logger.helper'
 import { ModuleName } from '../enums/general.enum'
+import { ITokenPayload } from '../interfaces/general.interface'
 /* -------------------------------------------------------------------------- */
 
 /* NOTE --------------------------------------------------------------------- */
@@ -21,7 +22,7 @@ import { ModuleName } from '../enums/general.enum'
 
 export interface IJwtVerify {
     valid: boolean
-    data: Record<string, any>
+    data: ITokenPayload
 }
 
 class Jwt {
@@ -37,7 +38,7 @@ class Jwt {
     }
 
     public verifyJwt(token: string): IJwtVerify {
-        const returnValue: IJwtVerify = { valid: false, data: {} }
+        const returnValue: IJwtVerify = { valid: false, data: {} as ITokenPayload }
 
         verify(token, String(process.env.JWT_SECRET), (err, decoded) => {
             if (err) {
@@ -48,7 +49,7 @@ class Jwt {
                 })
             } else {
                 returnValue.valid = true
-                returnValue.data = {}
+                returnValue.data = {} as ITokenPayload
                 typeof decoded === 'object' &&
                     _.keys(decoded).length &&
                     _.assign(returnValue.data, decoded)

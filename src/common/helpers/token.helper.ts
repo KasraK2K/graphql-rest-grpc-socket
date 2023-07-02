@@ -3,6 +3,7 @@ import { JwtPayload, SignOptions, DecodeOptions } from 'jsonwebtoken'
 /* ----------------------------- Custom Modules ----------------------------- */
 import jwt, { IJwtVerify } from '../utils/jwt.util'
 import crypto from '../utils/crypto.util'
+import { ITokenPayload } from '../interfaces/general.interface'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------- */
@@ -33,7 +34,7 @@ class Token {
             const jwtToken = crypto.decrypt(encryptedText)
             return jwt.verifyJwt(jwtToken)
         } catch {
-            return { valid: false, data: {} }
+            return { valid: false, data: {} as ITokenPayload }
         }
     }
 }

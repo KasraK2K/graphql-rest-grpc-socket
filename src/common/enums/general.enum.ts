@@ -9,15 +9,14 @@ export enum ModuleName {
     GENERAL = 'general'
 }
 
-export enum TokenType {
-    TOKEN,
-
-    REFRESH
+export enum UserType {
+    USER = 'USER',
+    ADMIN = 'ADMIN'
 }
 
-export enum TokenMode {
-    APP_USER,
-    PORTAL_USER
+export enum TokenType {
+    TOKEN,
+    REFRESH
 }
 
 export enum QueueName {
