@@ -19,6 +19,7 @@ import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import errorHandler from '../common/helpers/errors/error.handler'
 import tokenHelper from '../common/helpers/token.helper'
+import { Gender, UserType } from '../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------- */
@@ -44,14 +45,15 @@ function main(port: string) {
             return context
         },
         basePath: '/',
-        swaggerUI: { endpoint: '/swagger' },
+        enumTypes: { Gender, UserType },
+        swaggerUI: { endpoint: '/swagger', showTags: true },
         openAPI: {
             info: { title: 'Graphql Boilerplate API', version: '1.0.0' },
             endpoint: '/openapi.json'
-        },
-        routes: {
-            'Query.users': { method: 'GET' }
         }
+        // routes: {
+        //     'Query.user': { method: 'GET' }
+        // }
     })
 
     app.use('/', sofa)

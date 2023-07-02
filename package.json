@@ -84,7 +84,6 @@
         "@types/lodash": "^4.14.195",
         "@types/node": "^20.3.3",
         "@types/pg": "^8.10.2",
-        "@types/reflect-metadata": "^0.1.0",
         "@types/response-time": "^2.3.5",
         "@typescript-eslint/eslint-plugin": "^5.60.1",
         "@typescript-eslint/parser": "^5.60.1",
