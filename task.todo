@@ -2,85 +2,80 @@
   "todotree": {
     "tree": [
       {
-        "key": 1687157498514,
+        "key": 1688302392561,
         "children": [],
         "todo": {
-          "content": "Change Apollo GraphQL to GraphQL Yoga",
-          "id": 1687157498514,
-          "level": "danger",
-          "done": true,
-          "start": 1687157498514,
-          "focus": false,
-          "end": 1688197791079
-        }
-      },
-      {
-        "key": 1687093977768,
-        "children": [],
-        "todo": {
-          "content": "Check Other type of error (new Error) for errorFilePath function",
-          "id": 1687093977768,
-          "level": "danger",
-          "done": true,
-          "start": 1687093977768,
-          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/common/helpers/errors/errorFilePath.ts",
-          "focus": false,
-          "end": 1688197798662
-        }
-      },
-      {
-        "key": 1687093823347,
-        "children": [],
-        "todo": {
-          "content": "Create logger",
-          "id": 1687093823347,
-          "level": "warning",
-          "done": true,
-          "start": 1687093823347,
-          "focus": false,
-          "end": 1688197800620
-        }
-      },
-      {
-        "key": 1687093852421,
-        "children": [],
-        "todo": {
-          "content": "Move colours from server.ts to logger function",
-          "id": 1687093852421,
-          "level": "success",
-          "done": true,
-          "start": 1687093852421,
-          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/server.ts",
-          "focus": false,
-          "end": 1688197802496
-        }
-      },
-      {
-        "key": 1687093936930,
-        "children": [],
-        "todo": {
-          "content": "User logger (winston) in error.handler.ts",
-          "id": 1687093936930,
+          "content": "create admin module",
+          "id": 1688302392561,
           "level": "default",
-          "done": true,
-          "start": 1687093936930,
-          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/common/helpers/errors/error.handler.ts",
-          "focus": false,
-          "end": 1688197806281
+          "done": false,
+          "start": 1688302392561
         }
       },
       {
-        "key": 1687093903778,
+        "key": 1688302405561,
         "children": [],
         "todo": {
-          "content": "Remove unnecessary middlewares and catch errors in server file",
-          "id": 1687093903778,
+          "content": "change user queries to get list of users with pagination and add one",
+          "id": 1688302405561,
           "level": "default",
-          "done": true,
-          "start": 1687093903778,
-          "fileLink": "/Users/kasrakarami/Home/Projects for learn/koa-graphql/src/server.ts",
-          "focus": false,
-          "end": 1688197814314
+          "done": false,
+          "start": 1688302405561
+        }
+      },
+      {
+        "key": 1688302455021,
+        "children": [],
+        "todo": {
+          "content": "create admin queries to get list of admins with pagination and add one",
+          "id": 1688302455021,
+          "level": "default",
+          "done": false,
+          "start": 1688302455021
+        }
+      },
+      {
+        "key": 1688302472330,
+        "children": [],
+        "todo": {
+          "content": "create login admin",
+          "id": 1688302472330,
+          "level": "default",
+          "done": false,
+          "start": 1688302472330
+        }
+      },
+      {
+        "key": 1688302487358,
+        "children": [],
+        "todo": {
+          "content": "create register user and admin and be sure if type is admin it should have valid token to create admin",
+          "id": 1688302487358,
+          "level": "default",
+          "done": false,
+          "start": 1688302487358
+        }
+      },
+      {
+        "key": 1688302517163,
+        "children": [],
+        "todo": {
+          "content": "write test for each modules",
+          "id": 1688302517163,
+          "level": "default",
+          "done": false,
+          "start": 1688302517163
+        }
+      },
+      {
+        "key": 1688302534961,
+        "children": [],
+        "todo": {
+          "content": "write test for core",
+          "id": 1688302534961,
+          "level": "default",
+          "done": false,
+          "start": 1688302534961
         }
       }
     ],
@@ -96,6 +91,6 @@
     "showEndTime": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1688197814371"
+    "version": "1688302542025"
   }
 }
