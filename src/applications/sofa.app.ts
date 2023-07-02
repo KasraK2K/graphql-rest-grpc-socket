@@ -13,6 +13,7 @@ import { createServer } from 'node:http'
 /* ------------------------------ Dependencies ------------------------------ */
 import express from 'express'
 import { useSofa } from 'sofa-api'
+import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
 import { IContext, context } from '../graphql/context'
@@ -20,7 +21,10 @@ import colour from '../common/utils/logColour.util'
 import errorHandler from '../common/helpers/errors/error.handler'
 import tokenHelper from '../common/helpers/token.helper'
 import { Gender, UserType } from '../common/enums/general.enum'
+import { IApplicationConfig } from '../../config/config.interface'
 /* -------------------------------------------------------------------------- */
+
+const applicationConfig: IApplicationConfig = config.get('application')
 
 /* -------------------------------------------------------------------------- */
 /*                                 Sofa Server                                */
@@ -30,18 +34,16 @@ function main(port: string) {
     const sofa = useSofa({
         schema,
         context: async (ctx: IContext) => {
-            const authorization = ctx.request.headers.get('authorization')
+            const authorization = ctx.request.headers.get(applicationConfig.bearerHeader)
             if (authorization) {
-                const token = authorization.slice(7)
+                const token = authorization.slice(applicationConfig.bearer.length + 1)
                 const { valid, data } = tokenHelper.verify(token)
-                //   // TODO : check token role/permission
                 if (!valid) throw errorHandler(403)
-                else ctx.token_payload = data
+                else {
+                    ctx.token = token
+                    ctx.token_payload = data
+                }
             }
-
-            // // TODO : Remove redis cache on logout
-            // console.log(context.cacheKey)
-
             return context
         },
         basePath: '/',

@@ -12,6 +12,7 @@
 import { createServer } from 'node:http'
 /* ------------------------------ Dependencies ------------------------------ */
 import { createYoga } from 'graphql-yoga'
+import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
 import { IContext, context } from '../graphql/context'
@@ -20,24 +21,25 @@ import logger from '../common/helpers/logger.helper'
 import { /*useCache, */ useToken } from './plugins'
 import errorHandler from '../common/helpers/errors/error.handler'
 import tokenHelper from '../common/helpers/token.helper'
+import { IApplicationConfig } from '../../config/config.interface'
 /* -------------------------------------------------------------------------- */
+
+const applicationConfig: IApplicationConfig = config.get('application')
 
 function main(port: string) {
     const yoga = createYoga({
         schema,
         context: async (ctx: IContext) => {
-            const authorization = ctx.request.headers.get('authorization')
+            const authorization = ctx.request.headers.get(applicationConfig.bearerHeader)
             if (authorization) {
-                const token = authorization.slice(7)
+                const token = authorization.slice(applicationConfig.bearer.length + 1)
                 const { valid, data } = tokenHelper.verify(token)
-                //   // TODO : check token role/permission
                 if (!valid) throw errorHandler(403)
-                else ctx.token_payload = data
+                else {
+                    ctx.token = token
+                    ctx.token_payload = data
+                }
             }
-
-            // // TODO : Remove redis cache on logout
-            // console.log(context.cacheKey)
-
             return context
         },
         landingPage: false,
