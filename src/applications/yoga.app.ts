@@ -17,21 +17,23 @@ import schema from '../graphql/schema'
 import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import logger from '../common/helpers/logger.helper'
-import { useCache, useToken } from './plugins'
-// import errorHandler from '../common/helpers/errors/error.handler'
+import { /*useCache, */ useToken } from './plugins'
+import errorHandler from '../common/helpers/errors/error.handler'
+import tokenHelper from '../common/helpers/token.helper'
 /* -------------------------------------------------------------------------- */
 
 function main(port: string) {
     const yoga = createYoga({
         schema,
         context: async (ctx: IContext) => {
-            // const authorization = ctx.request.headers.get('authorization')
-            // if (!authorization) errorHandler(401)
-            // else {
-            //   const token = authorization.slice(7)
-            //   // TODO : check token role/permission
-            //   if (false) errorHandler(403)
-            // }
+            const authorization = ctx.request.headers.get('authorization')
+            if (authorization) {
+                const token = authorization.slice(7)
+                const { valid, data } = tokenHelper.verify(token)
+                //   // TODO : check token role/permission
+                if (!valid) throw errorHandler(403)
+                else ctx.token_payload = data
+            }
 
             // // TODO : Remove redis cache on logout
             // console.log(context.cacheKey)
@@ -56,7 +58,7 @@ function main(port: string) {
                 logger.error(message, args)
             }
         },
-        plugins: [useCache(), useToken()]
+        plugins: [/*useCache(), */ useToken()]
     })
 
     const server = createServer(yoga)

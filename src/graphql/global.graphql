@@ -10,6 +10,11 @@ enum Gender {
     OTHER
 }
 
+enum UserType {
+    USER
+    ADMIN
+}
+
 "[MailGun Response](https://www.npmjs.com/package/mailgun.js)"
 type MailGunResponse {
     id: String

@@ -15,8 +15,10 @@ import express from 'express'
 import { useSofa } from 'sofa-api'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
-import { context } from '../graphql/context'
+import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
+import errorHandler from '../common/helpers/errors/error.handler'
+import tokenHelper from '../common/helpers/token.helper'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------------------------------------------------- */
@@ -26,7 +28,21 @@ function main(port: string) {
     const app = express()
     const sofa = useSofa({
         schema,
-        context,
+        context: async (ctx: IContext) => {
+            const authorization = ctx.request.headers.get('authorization')
+            if (authorization) {
+                const token = authorization.slice(7)
+                const { valid, data } = tokenHelper.verify(token)
+                //   // TODO : check token role/permission
+                if (!valid) throw errorHandler(403)
+                else ctx.token_payload = data
+            }
+
+            // // TODO : Remove redis cache on logout
+            // console.log(context.cacheKey)
+
+            return context
+        },
         basePath: '/',
         swaggerUI: { endpoint: '/swagger' },
         openAPI: {
