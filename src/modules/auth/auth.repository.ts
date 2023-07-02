@@ -15,7 +15,7 @@ class AuthRepository extends Repository {
 
     getUser(args: { email: string }): Promise<IUser> {
         return new Promise((resolve, reject) => {
-            this.findOne('users', args)
+            this.findOne<IUser>('users', args)
                 .then((result) => resolve(result.rows[0]))
                 .catch((err) => reject(errorHandler(500, err.message)))
         })
