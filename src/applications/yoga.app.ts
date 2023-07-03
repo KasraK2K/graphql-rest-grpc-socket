@@ -36,8 +36,8 @@ function main(port: string) {
                 const { valid, data } = tokenHelper.verify(token)
                 if (!valid) throw errorHandler(403)
                 else {
-                    ctx.token = token
-                    ctx.token_payload = data
+                    context.token = token
+                    context.token_payload = data
                 }
             }
             return context

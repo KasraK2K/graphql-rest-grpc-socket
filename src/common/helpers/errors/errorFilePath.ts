@@ -17,10 +17,10 @@ const errorFilePath = (error: unknown | Error | GraphQLError) => {
         let file_name: string
 
         if (hasParentheses) {
-            file_path = line.slice(line.indexOf('/src'), line.length - 1)
+            file_path = line.slice(line.indexOf('/src') + 1, line.length - 1)
             file_name = line.slice(line.lastIndexOf('/') + 1, line.indexOf(':'))
         } else {
-            file_path = line.slice(line.indexOf('/src'))
+            file_path = line.slice(line.indexOf('/src') + 1)
             file_name = line.slice(line.lastIndexOf('/') + 1, line.indexOf(':'))
         }
 

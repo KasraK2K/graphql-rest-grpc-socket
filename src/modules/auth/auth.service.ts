@@ -19,7 +19,10 @@ class AuthService {
         const { type, email, password } = args
         let entity: IUser | IAdmin
 
-        const getEntity = type === UserType.ADMIN ? adminService.getAdmin : userService.getUser
+        const getEntity =
+            UserType[type.toString()] === UserType.ADMIN
+                ? adminService.getAdmin
+                : userService.getUser
 
         if (!Object.values(UserType).includes(type))
             throw errorHandler(400, 'Can not recognize user type')
@@ -58,7 +61,10 @@ class AuthService {
             if (data.user_type !== UserType.ADMIN) throw errorHandler(403)
         }
 
-        const addEntity = type === UserType.ADMIN ? adminService.addAdmin : userService.addUser
+        const addEntity =
+            UserType[type.toString()] === UserType.ADMIN
+                ? adminService.addAdmin
+                : userService.addUser
 
         if (!Object.values(UserType).includes(type))
             throw errorHandler(400, 'Can not recognize user type')
