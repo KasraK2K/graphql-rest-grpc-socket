@@ -1,5 +1,4 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { UserType } from './../common/enums/general.enum'
 import { ITokenPayload } from '../common/interfaces/general.interface'
 import { IUser } from '../common/interfaces/user.interface'
 import { IAdmin } from '../common/interfaces/admin.interface'
