@@ -20,9 +20,9 @@ const resolvers = {
         addAdmin: async (
             _parent: IAdmin,
             args: { email: string; password: string },
-            _context: IContext,
+            context: IContext,
             _info: GraphQLResolveInfo
-        ): Promise<IAdmin> => await adminService.addAdmin(args)
+        ): Promise<IAdmin> => await adminService.addAdmin(context, args)
     }
 }
 

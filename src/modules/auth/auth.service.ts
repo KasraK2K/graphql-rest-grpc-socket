@@ -11,75 +11,86 @@ import { IContext } from '../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 class AuthService {
-    async loginEntity(args: {
-        type: UserType
+    async loginAdmin(args: {
         email: string
         password: string
-    }): Promise<{ token: string; entity: IUser | IAdmin }> {
-        const { type, email, password } = args
-        let entity: IUser | IAdmin
+    }): Promise<{ token: string; admin: IAdmin }> {
+        const { email, password } = args
+        const admin: IAdmin = await adminService.getAdmin({ email })
 
-        const getEntity =
-            UserType[type.toString()] === UserType.ADMIN
-                ? adminService.getAdmin
-                : userService.getUser
+        if (!admin) throw errorHandler(400, 'Credentials is not valid.')
 
-        if (!Object.values(UserType).includes(type))
-            throw errorHandler(400, 'Can not recognize user type')
-        else entity = await getEntity({ email })
-
-        if (!entity) throw errorHandler(400, 'Credentials is not valid.')
-
-        const isPasswordValid = bcryptHelper.compareHash(password, entity.password)
+        const isPasswordValid = bcryptHelper.compareHash(password, admin.password)
         if (!isPasswordValid) throw errorHandler(400, 'Email and/or Password is wrong.')
 
         const payload: ITokenPayload = {
-            id: entity.id,
-            user_type: UserType[type.toString()],
+            id: admin.id,
+            user_type: UserType.ADMIN,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
 
-        return { token, entity }
+        return { token, admin }
     }
 
-    async registerEntity(
-        context: IContext,
-        args: {
-            type: UserType
-            email: string
-            password: string
-        }
-    ): Promise<{ token: string; entity: IUser | IAdmin }> {
-        const { type, email, password } = args
-        let entity: IUser | IAdmin
+    async loginUser(args: {
+        email: string
+        password: string
+    }): Promise<{ token: string; user: IUser }> {
+        const { email, password } = args
+        const user: IUser = await userService.getUser({ email })
 
-        // If requested type is equal to admin
-        if (UserType[type.toString()] === UserType.ADMIN) {
-            if (!context.token) throw errorHandler(401)
-            const { data } = tokenHelper.verify(context.token)
-            if (data.user_type !== UserType.ADMIN) throw errorHandler(403)
-        }
+        if (!user) throw errorHandler(400, 'Credentials is not valid.')
 
-        const addEntity =
-            UserType[type.toString()] === UserType.ADMIN
-                ? adminService.addAdmin
-                : userService.addUser
-
-        if (!Object.values(UserType).includes(type))
-            throw errorHandler(400, 'Can not recognize user type')
-        else entity = await addEntity({ email, password })
-
-        if (!entity) throw errorHandler(400, 'Credentials is not valid.')
+        const isPasswordValid = bcryptHelper.compareHash(password, user.password)
+        if (!isPasswordValid) throw errorHandler(400, 'Email and/or Password is wrong.')
 
         const payload: ITokenPayload = {
-            id: entity.id,
-            user_type: UserType[type.toString()],
+            id: user.id,
+            user_type: UserType.USER,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
 
-        return { token, entity }
+        return { token, user }
+    }
+
+    async registerAdmin(
+        context: IContext,
+        args: { email: string; password: string }
+    ): Promise<{ token: string; admin: IAdmin }> {
+        const { email, password } = args
+        const admin: IAdmin = await adminService.addAdmin(context, { email, password })
+
+        if (!admin) throw errorHandler(400, 'Credentials is not valid.')
+
+        const payload: ITokenPayload = {
+            id: admin.id,
+            user_type: UserType.ADMIN,
+            token_type: TokenType.TOKEN
+        }
+        const token = tokenHelper.sign(payload)
+
+        return { token, admin }
+    }
+
+    async registerUser(args: {
+        email: string
+        password: string
+    }): Promise<{ token: string; user: IUser }> {
+        const { email, password } = args
+        const user: IUser = await userService.addUser({ email, password })
+
+        if (!user) throw errorHandler(400, 'Credentials is not valid.')
+
+        const payload: ITokenPayload = {
+            id: user.id,
+            user_type: UserType.USER,
+            token_type: TokenType.TOKEN
+        }
+        const token = tokenHelper.sign(payload)
+
+        return { token, user }
     }
 }
 

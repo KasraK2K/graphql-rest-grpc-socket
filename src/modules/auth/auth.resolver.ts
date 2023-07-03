@@ -4,36 +4,59 @@ import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import authService from './auth.service'
 import { IContext } from '../../graphql/context'
-import { UserType } from '../../common/enums/general.enum'
-import { IAuthResponse } from '../../common/interfaces'
+import { IUserAuthResponse, IAdminAuthResponse } from '../../common/interfaces'
 /* -------------------------------------------------------------------------- */
 
 const resolvers = {
     Query: {
-        login: async (
-            _parent: IAuthResponse,
-            args: { type: UserType; email: string; password: string },
+        loginAdmin: async (
+            _parent: IAdminAuthResponse,
+            args: { email: string; password: string },
             context: IContext,
             _info: GraphQLResolveInfo
-        ): Promise<IAuthResponse> => {
-            const { token, entity } = await authService.loginEntity(args)
+        ): Promise<IAdminAuthResponse> => {
+            const { token, admin } = await authService.loginAdmin(args)
             context.token = token
-            _.assign(context.user, { ...entity, type: args.type })
-            return { entity, token }
+            context.user = admin
+            return { token, admin }
+        },
+
+        loginUser: async (
+            _parent: IUserAuthResponse,
+            args: { email: string; password: string },
+            context: IContext,
+            _info: GraphQLResolveInfo
+        ): Promise<IUserAuthResponse> => {
+            const { token, user } = await authService.loginUser(args)
+            context.token = token
+            context.user = user
+            return { token, user }
         }
     },
 
     Mutation: {
-        register: async (
-            _parent: IAuthResponse,
-            args: { type: UserType; email: string; password: string },
+        registerAdmin: async (
+            _parent: IAdminAuthResponse,
+            args: { email: string; password: string },
             context: IContext,
             _info: GraphQLResolveInfo
-        ): Promise<IAuthResponse> => {
-            const { token, entity } = await authService.registerEntity(context, args)
+        ): Promise<IAdminAuthResponse> => {
+            const { token, admin } = await authService.registerAdmin(context, args)
             context.token = token
-            _.assign(context.user, { ...entity, type: args.type })
-            return { entity, token }
+            context.user = admin
+            return { token, admin }
+        },
+
+        registerUser: async (
+            _parent: IUserAuthResponse,
+            args: { email: string; password: string },
+            context: IContext,
+            _info: GraphQLResolveInfo
+        ): Promise<IUserAuthResponse> => {
+            const { token, user } = await authService.registerUser(args)
+            context.token = token
+            context.user = user
+            return { token, user }
         }
     }
 }

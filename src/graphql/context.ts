@@ -2,21 +2,15 @@
 import { UserType } from './../common/enums/general.enum'
 import { ITokenPayload } from '../common/interfaces/general.interface'
 import { IUser } from '../common/interfaces/user.interface'
+import { IAdmin } from '../common/interfaces/admin.interface'
 import { knex } from '../bootstrap'
 /* -------------------------------------------------------------------------- */
-
-interface ContextUser extends IUser {
-    type: UserType.USER
-}
-interface ContextAdmin extends IUser {
-    type: UserType.ADMIN
-}
 
 export interface IContext {
     token?: string
     cacheKey?: string
     token_payload?: ITokenPayload
-    user: ContextUser | ContextAdmin
+    user: IUser | IAdmin
 
     dataSource: {
         knex: typeof knex

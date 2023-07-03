@@ -2,7 +2,12 @@
 import { IUser, IAdmin } from '.'
 /* -------------------------------------------------------------------------- */
 
-export interface IAuthResponse {
+export interface IUserAuthResponse {
     token: string
-    entity: IUser | IAdmin
+    user: IUser
+}
+
+export interface IAdminAuthResponse {
+    token: string
+    admin: IAdmin
 }
