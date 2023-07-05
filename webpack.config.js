@@ -18,7 +18,7 @@ module.exports = {
     externals: [nodeExternals()],
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'server.js'
+        filename: 'src/server.js'
     },
     resolve: {
         extensions: ['.ts', '.js']
