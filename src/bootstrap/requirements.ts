@@ -5,13 +5,17 @@ import assert from 'assert'
 const REQUIRED_ENVIRONMENTS: string[] = [
     'NODE_ENV',
     'GRAPHQL_PORT',
+    'GRAPHQL_SERVER_ADDRESS',
     'REST_PORT',
-    'SERVER_ADDRESS',
+    'REST_SERVER_ADDRESS',
     'API_KEY',
-    'RBBITMQ_URI'
-    // 'MONGO_URI',
-    // 'METRIC_PORT',
-    // 'SENTRY_DSN',
+    'RBBITMQ_URI',
+    'JWT_SECRET',
+    'ENCRYPTION_SECRET',
+    'PROMETHEUS_PORT',
+    'PROMETHEUS_SERVER_ADDRESS',
+    'GRPC_PORT',
+    'GRPC_ADDRESS'
 ]
 
 for (const key of REQUIRED_ENVIRONMENTS)

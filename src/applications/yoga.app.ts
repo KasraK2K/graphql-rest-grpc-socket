@@ -24,8 +24,9 @@ import { IApplicationConfig } from '../../config/config.interface'
 /* -------------------------------------------------------------------------- */
 
 const applicationConfig: IApplicationConfig = config.get('application')
+const GRAPHQL_PORT = process.env.GRAPHQL_PORT || '3000'
 
-function main(port: string) {
+function main() {
     const yoga = createYoga({
         schema,
         context: async (ctx: IContext) => {
@@ -64,11 +65,11 @@ function main(port: string) {
 
     const server = createServer(yoga)
     server
-        .listen(port)
+        .listen(GRAPHQL_PORT)
         .on('listening', () =>
             console.info(
                 `${colour.love('GraphQL')}\t server ready at: ${colour.love.underline(
-                    `http://localhost:${port}`
+                    process.env.GRAPHQL_SERVER_ADDRESS
                 )}`
             )
         )

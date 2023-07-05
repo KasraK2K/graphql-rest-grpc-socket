@@ -25,11 +25,12 @@ import { IApplicationConfig } from '../../config/config.interface'
 /* -------------------------------------------------------------------------- */
 
 const applicationConfig: IApplicationConfig = config.get('application')
+const REST_PORT = process.env.REST_PORT || '3500'
 
 /* -------------------------------------------------------------------------- */
 /*                                 Sofa Server                                */
 /* -------------------------------------------------------------------------- */
-function main(port: string) {
+function main() {
     const app = express()
     const sofa = useSofa({
         schema,
@@ -62,11 +63,11 @@ function main(port: string) {
     const restAppServer = createServer(app)
 
     restAppServer
-        .listen(port)
+        .listen(REST_PORT)
         .on('listening', () =>
             console.info(
                 `${colour.love('HTTP')}\t server ready at: ${colour.love.underline(
-                    `http://localhost:${port}`
+                    process.env.REST_SERVER_ADDRESS
                 )}`
             )
         )
