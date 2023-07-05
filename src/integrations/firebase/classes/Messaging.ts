@@ -8,7 +8,7 @@ class Messaging {
         payload: MessagingPayload,
         options: MessagingOptions
     ) {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             // ─── Send in multiple chunks ─────────────────────────────────────
             if (
                 typeof registrationTokenOrTokens === 'object' &&
@@ -17,7 +17,7 @@ class Messaging {
             ) {
                 const chunks = toChunk<string>(registrationTokenOrTokens, 200)
                 for (const chunk of chunks)
-                    await this.superThis.firebaseApp
+                    this.superThis.firebaseApp
                         .messaging()
                         .sendToDevice(chunk, payload, options)
                         .then((response) => resolve(response))
@@ -25,7 +25,7 @@ class Messaging {
             }
             // ─── Send In Single Chunk ────────────────────────────────────────
             else
-                await this.superThis.firebaseApp
+                this.superThis.firebaseApp
                     .messaging()
                     .sendToDevice(registrationTokenOrTokens, payload, options)
                     .then((response) => resolve(response))

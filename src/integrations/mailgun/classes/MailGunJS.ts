@@ -8,12 +8,7 @@ import { Message } from '..'
 const mailgun = new Mailgun(formData)
 
 class MailGunJS {
-    private certificate = {
-        key: '_key_',
-        url: 'https://api.eu.mailgun.net',
-        from: 'Business Name <info@business_email.com>',
-        domain: 'mailer.registered_domain-for_mailgun.com'
-    }
+    private certificate = require('./certificate.json')
 
     public client = mailgun.client({
         username: 'api',

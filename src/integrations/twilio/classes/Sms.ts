@@ -5,7 +5,7 @@ class Sms {
     constructor(private superThis: Twilio, private certificate: Record<string, any>) {}
 
     public message(body: ISmsBody) {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if (!('from' in body)) Object.assign(body, { from: this.certificate.from })
 
             this.superThis.client.messages
