@@ -23,8 +23,9 @@ rules:
     semi:
         - error
         - never
-    '@typescript-eslint/no-explicit-any': ['off']
-    '@typescript-eslint/no-unused-vars': ['off']
+    'no-explicit-any': true
+    'no-unused-vars': 0
+    'no-var-requires': true
     prettier/prettier: 'error'
     arrow-body-style": 'off'
-    prefer-arrow-callback: 'off'
+    prefer-arrow-callback: 'warn'
