@@ -2,14 +2,27 @@
   "todotree": {
     "tree": [
       {
+        "key": 1688578006783,
+        "children": [],
+        "todo": {
+          "content": "add nodemailer or use mailgun and send email for user after create and just let non blocked, non archived and verified user to login",
+          "id": 1688578006783,
+          "level": "danger",
+          "done": false,
+          "start": 1688578006783
+        }
+      },
+      {
         "key": 1688302392561,
         "children": [],
         "todo": {
           "content": "create admin module",
           "id": 1688302392561,
           "level": "default",
-          "done": false,
-          "start": 1688302392561
+          "done": true,
+          "start": 1688302392561,
+          "focus": false,
+          "end": 1688578059604
         }
       },
       {
@@ -18,7 +31,7 @@
         "todo": {
           "content": "change user queries to get list of users with pagination and add one",
           "id": 1688302405561,
-          "level": "default",
+          "level": "success",
           "done": false,
           "start": 1688302405561
         }
@@ -29,7 +42,7 @@
         "todo": {
           "content": "create admin queries to get list of admins with pagination and add one",
           "id": 1688302455021,
-          "level": "default",
+          "level": "success",
           "done": false,
           "start": 1688302455021
         }
@@ -41,8 +54,10 @@
           "content": "create login admin",
           "id": 1688302472330,
           "level": "default",
-          "done": false,
-          "start": 1688302472330
+          "done": true,
+          "start": 1688302472330,
+          "focus": false,
+          "end": 1688578067785
         }
       },
       {
@@ -52,8 +67,10 @@
           "content": "create register user and admin and be sure if type is admin it should have valid token to create admin",
           "id": 1688302487358,
           "level": "default",
-          "done": false,
-          "start": 1688302487358
+          "done": true,
+          "start": 1688302487358,
+          "focus": false,
+          "end": 1688578077363
         }
       },
       {
@@ -77,6 +94,17 @@
           "done": false,
           "start": 1688302534961
         }
+      },
+      {
+        "key": 1688578176609,
+        "children": [],
+        "todo": {
+          "content": "add stripe integration",
+          "id": 1688578176609,
+          "level": "default",
+          "done": false,
+          "start": 1688578176609
+        }
       }
     ],
     "expandKeys": [],
@@ -91,6 +119,6 @@
     "showEndTime": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1688302542025"
+    "version": "1688578183828"
   }
 }
