@@ -6,9 +6,10 @@ import colour from '../../common/utils/logColour.util'
 /* -------------------------------------------------------------------------- */
 
 const app = express()
+const PROMETHEUS_PORT = process.env.PROMETHEUS_PORT || '4000'
 // const register = new client.Registry()
 
-const startMetricsServer = (port) => {
+const startMetricsServer = () => {
     client.collectDefaultMetrics()
 
     app.get('/metrics', async (_: Request, res: Response) => {
@@ -16,9 +17,9 @@ const startMetricsServer = (port) => {
         return res.send(await client.register.metrics())
     })
 
-    app.listen(port, () =>
+    app.listen(PROMETHEUS_PORT, () =>
         console.log(
-            `${colour.love('Prometheus Metrics')} running on:\t ${colour.green.underline(
+            `${colour.love('Metrics')}\t server ready at: ${colour.love.underline(
                 process.env.PROMETHEUS_SERVER_ADDRESS
             )}`
         )
