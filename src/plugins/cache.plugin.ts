@@ -2,7 +2,7 @@
 import { useResponseCache } from '@envelop/response-cache'
 import { Plugin } from 'graphql-yoga'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { context } from './../../graphql/context'
+import { context } from '../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 // NOTE: For set cache for each query or mutation separately we can use @cacheControl(maxAge: 10) in front of it response or  write it like example (1)

@@ -1,7 +1,7 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { Plugin } from 'graphql-yoga'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { context } from '../../graphql/context'
+import { context } from '../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 const useToken = (): Plugin => {

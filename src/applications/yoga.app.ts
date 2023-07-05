@@ -18,7 +18,6 @@ import schema from '../graphql/schema'
 import { IContext, context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import logger from '../common/helpers/logger.helper'
-import { /*useCache, */ useToken } from './plugins'
 import errorHandler from '../common/helpers/errors/error.handler'
 import tokenHelper from '../common/helpers/token.helper'
 import { IApplicationConfig } from '../../config/config.interface'
@@ -60,7 +59,7 @@ function main(port: string) {
                 logger.error(message, args)
             }
         },
-        plugins: [/*useCache(), */ useToken()]
+        plugins: []
     })
 
     const server = createServer(yoga)
