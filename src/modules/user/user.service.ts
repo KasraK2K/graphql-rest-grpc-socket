@@ -1,11 +1,11 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import userRepository from './user.repository'
-import { IUser } from '../../common/interfaces/user.interface'
+import { IUser, IUserLoginArgs } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
-    async getUser(args: { email: string }): Promise<IUser> {
+    async getUser(args: IUserLoginArgs): Promise<IUser> {
         args.email = args.email.toLowerCase()
         return await userRepository.getUser(args)
     }

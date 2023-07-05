@@ -19,3 +19,10 @@ export interface IUser {
     updated_at: string
     archived_at: string | null
 }
+
+export interface IUserLoginArgs {
+    email: string
+    is_verify?: boolean
+    is_block?: boolean
+    is_archive?: boolean
+}

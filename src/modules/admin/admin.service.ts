@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import adminRepository from './admin.repository'
-import { IAdmin } from '../../common/interfaces'
+import { IAdmin, IAdminLoginArgs } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { IContext } from '../../graphql/context'
 import errorHandler from '../../common/helpers/errors/error.handler'
@@ -9,7 +9,7 @@ import { UserType } from '../../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
 class AdminService {
-    async getAdmin(args: { email: string }): Promise<IAdmin> {
+    async getAdmin(args: IAdminLoginArgs): Promise<IAdmin> {
         args.email = args.email.toLowerCase()
         return await adminRepository.getAdmin(args)
     }

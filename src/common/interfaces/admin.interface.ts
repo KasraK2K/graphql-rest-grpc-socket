@@ -18,3 +18,9 @@ export interface IAdmin {
     updated_at: string
     archived_at: string | null
 }
+
+export interface IAdminLoginArgs {
+    email: string
+    is_block?: boolean
+    is_archive?: boolean
+}
