@@ -54,7 +54,7 @@ const statusMap = new Map<IStatusMapKey, IStatusMapObject>([
     [511, { code: 'NETWORK_AUTHENTICATION_REQUIRED',  message: 'Indicates that the client needs to authenticate to gain network access' }],
 ])
 
-const getErrorObject = (statusCode: number) => {
+const getErrorObject = (statusCode: number): IStatusMapObject => {
     return statusMap.has(statusCode) ? statusMap.get(statusCode) : statusMap.get(500)
 }
 
