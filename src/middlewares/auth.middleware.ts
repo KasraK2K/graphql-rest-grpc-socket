@@ -13,10 +13,10 @@ const authMiddleware = async (
     info: GraphQLResolveInfo
 ) => {
     const authorization: string = context.request.headers.get('Authorization')
-    context.token = authorization && authorization.length ? authorization.slice(7) : undefined
+    const token = authorization && authorization.length ? authorization.slice(7) : undefined
 
     /* ----------------------------- Token Not Found ---------------------------- */
-    !context.token && errorHandler(401)
+    !token && errorHandler(401)
 
     /* --------------------- Has Not Enough Role/Permission --------------------- */
     // <check permission> && errorHandler(info, 403)

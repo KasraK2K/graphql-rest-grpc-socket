@@ -1,16 +1,9 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { ITokenPayload } from '../common/interfaces/general.interface'
-import { IUser } from '../common/interfaces/user.interface'
-import { IAdmin } from '../common/interfaces/admin.interface'
 import { knex } from '../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 export interface IContext {
-    token?: string
     cacheKey?: string
-    token_payload?: ITokenPayload
-    user: IUser | IAdmin
-
     dataSource: {
         knex: typeof knex
     }
@@ -23,6 +16,5 @@ export interface IContext {
 }
 
 export const context: Partial<IContext> = {
-    user: Object.create(null),
     dataSource: { knex }
 }
