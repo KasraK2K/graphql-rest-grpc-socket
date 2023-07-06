@@ -15,11 +15,13 @@ import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { IApplicationConfig } from '../../../config/config.interface'
 import tokenHelper from './token.helper'
+import { ITokenPayload } from '../interfaces'
+import { TokenType, UserType } from '../enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
 const appConfig: IApplicationConfig = config.get('application')
 
-export const printInformation = (port: number) => {
+export const printInformation = (port: string) => {
     if (appConfig.information) {
         console.group('Server Information:')
         console.table([
@@ -56,7 +58,11 @@ export const printInformation = (port: number) => {
         ])
         console.groupEnd()
 
-        const payload = { id: 1 }
+        const payload: ITokenPayload = {
+            id: 1,
+            user_type: UserType.USER,
+            token_type: TokenType.TOKEN
+        }
         const cryptoToken = tokenHelper.sign(payload)
 
         console.log('\n- Crypto Token ----------------------------------------------------------')

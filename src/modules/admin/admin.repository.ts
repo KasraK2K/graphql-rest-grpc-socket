@@ -9,7 +9,7 @@ class AdminRepository extends Repository {
         return new Promise((resolve, reject) => {
             this.findOne<IAdmin>('admins', args)
                 .then((result) => {
-                    if (!result.row_count) return reject(errorHandler(400, 'Admin does not exist.'))
+                    if (!result.row_count) return resolve(null)
                     else return resolve(result.rows[0])
                 })
                 .catch((err) => reject(errorHandler(500, err.message)))

@@ -22,6 +22,8 @@ class AuthService {
             is_archive: false
         })
 
+        if (!admin) throw errorHandler(400, 'Admin does not exist.')
+
         const isPasswordValid = bcryptHelper.compareHash(password, admin.password)
         if (!isPasswordValid) throw errorHandler(400, 'Email and/or Password is wrong.')
 
@@ -47,6 +49,8 @@ class AuthService {
             is_archive: false
         })
 
+        if (!user) throw errorHandler(400, 'User does not exist.')
+
         const isPasswordValid = bcryptHelper.compareHash(password, user.password)
         if (!isPasswordValid) throw errorHandler(400, 'Email and/or Password is wrong.')
 
@@ -68,12 +72,10 @@ class AuthService {
     ): Promise<{ token: string; admin: IAdmin }> {
         const { email, password } = args
 
-        const isAdminExist: IAdmin = await adminService.getAdmin({ email })
-        if (isAdminExist) throw errorHandler(409)
+        const foundedAdmin = await adminService.getAdmin({ email })
+        if (foundedAdmin) throw errorHandler(409, 'Admin is already registered.')
 
         const admin: IAdmin = await adminService.addAdmin(context, { email, password })
-        if (!admin) throw errorHandler(400, 'Credentials is not valid.')
-
         const payload: ITokenPayload = {
             id: admin.id,
             user_type: UserType.ADMIN,
@@ -90,12 +92,10 @@ class AuthService {
     }): Promise<{ token: string; user: IUser }> {
         const { email, password } = args
 
-        const isUserExist: IUser = await userService.getUser({ email })
-        if (isUserExist) throw errorHandler(409)
+        const findUser = await userService.getUser({ email })
+        if (findUser) throw errorHandler(409, 'User is already registered.')
 
         const user: IUser = await userService.addUser({ email, password })
-        if (!user) throw errorHandler(400, 'Credentials is not valid.')
-
         const payload: ITokenPayload = {
             id: user.id,
             user_type: UserType.USER,

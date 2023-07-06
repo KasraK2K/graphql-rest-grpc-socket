@@ -13,18 +13,13 @@ import { createServer } from 'node:http'
 /* ------------------------------ Dependencies ------------------------------ */
 import express from 'express'
 import { useSofa } from 'sofa-api'
-import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
-import { IContext, context } from '../graphql/context'
+import { context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
-import errorHandler from '../common/helpers/errors/error.handler'
-import tokenHelper from '../common/helpers/token.helper'
 import { Gender, UserType } from '../common/enums/general.enum'
-import { IApplicationConfig } from '../../config/config.interface'
 /* -------------------------------------------------------------------------- */
 
-const applicationConfig: IApplicationConfig = config.get('application')
 const REST_PORT = process.env.REST_PORT || '3500'
 
 /* -------------------------------------------------------------------------- */
@@ -34,19 +29,7 @@ function main() {
     const app = express()
     const sofa = useSofa({
         schema,
-        context: async (ctx: IContext) => {
-            const authorization = ctx.request.headers.get(applicationConfig.bearerHeader)
-            if (authorization) {
-                const token = authorization.slice(applicationConfig.bearer.length + 1)
-                const { valid, data } = tokenHelper.verify(token)
-                if (!valid) throw errorHandler(403)
-                else {
-                    context.token = token
-                    context.token_payload = data
-                }
-            }
-            return context
-        },
+        context,
         basePath: '/',
         enumTypes: { Gender, UserType },
         swaggerUI: { endpoint: '/swagger' },
