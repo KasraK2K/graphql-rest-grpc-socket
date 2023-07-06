@@ -17,7 +17,7 @@ module.exports = {
     watch: false,
     externals: [nodeExternals()],
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(process.cwd(), 'build'),
         filename: 'src/server.js'
     },
     resolve: {
