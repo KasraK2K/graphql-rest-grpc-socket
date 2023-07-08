@@ -1,7 +1,9 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import { gRPCServer } from './constants/enums'
-import startGreetingClient from './greetings/client.grpc'
-import startGreetingServer from './greetings/server.grpc'
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------------ Default gRPC ------------------------------ */
+import { startGreetingClient, startGreetingServer } from './default/register.grpc'
 /* -------------------------------------------------------------------------- */
 
 export const startGrpcServers = (serverNames: number[]) => {
