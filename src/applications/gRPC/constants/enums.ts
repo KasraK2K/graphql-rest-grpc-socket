@@ -1,4 +1,3 @@
 export enum gRPCServer {
-    DEFAULT,
-    GREETINGS
+    DEFAULT
 }

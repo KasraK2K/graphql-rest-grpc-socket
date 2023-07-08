@@ -17,7 +17,7 @@ export const startGrpcClient = (clientNames: number[]) => {
 /* SECTION --------------------------- Register Servers --------------------- */
 const serverSwitch = (serverName: number) => {
     switch (serverName) {
-        case gRPCServer.GREETINGS:
+        case gRPCServer.DEFAULT:
             startGreetingServer()
             break
     }
@@ -27,7 +27,7 @@ const serverSwitch = (serverName: number) => {
 /* SECTION -------------------- Register Clients ---------------------------- */
 const clientSwitch = (clientName: number) => {
     switch (clientName) {
-        case gRPCServer.GREETINGS:
+        case gRPCServer.DEFAULT:
             startGreetingClient()
             break
     }

@@ -5,7 +5,7 @@ import { grpc, loaderOptions, protoLoader } from '../../constants/grpc.config'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Constants ------------------------------- */
-const PROTO_PATH = resolve(process.cwd(), 'src/applications/gRPC/default/proto/helloworld.proto')
+const PROTO_PATH = resolve(process.cwd(), 'src/applications/gRPC/default/proto/auth.proto')
 const packageDef = protoLoader.loadSync(PROTO_PATH, loaderOptions)
 const grpcObj = grpc.loadPackageDefinition(packageDef)
 /* -------------------------------------------------------------------------- */

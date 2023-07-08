@@ -5,22 +5,22 @@ import { grpc, grpcServer, loaderOptions, protoLoader } from '../../constants/gr
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Constants ------------------------------- */
-const PROTO_PATH = resolve(process.cwd(), 'src/applications/gRPC/default/proto/helloworld.proto')
+const PROTO_PATH = resolve(process.cwd(), 'src/applications/gRPC/default/proto/auth.proto')
 const packageDef = protoLoader.loadSync(PROTO_PATH, loaderOptions)
 const grpcObj = grpc.loadPackageDefinition(packageDef)
 /* -------------------------------------------------------------------------- */
 
 /* SECTION -------------------- Register Services --------------------------- */
-grpcServer.addService(grpcObj.Greeter.service, {
-    sayHello: (args, callback) => {
-        const name = args.request.name
-        const message = `message for name: ${name}`
-        return !name
-            ? callback({
-                  status: grpc.status.INVALID_ARGUMENT,
-                  message: 'Name should not be empty string'
-              })
-            : callback(null, { status: grpc.status.OK, message })
-    }
+grpcServer.addService(grpcObj.Auth.service, {
+    // sayHello: (args, callback) => {
+    //     const name = args.request.name
+    //     const message = `message for name: ${name}`
+    //     return !name
+    //         ? callback({
+    //               status: grpc.status.INVALID_ARGUMENT,
+    //               message: 'Name should not be empty string'
+    //           })
+    //         : callback(null, { status: grpc.status.OK, message })
+    // }
 })
 /* -------------------------------------------------------------------------- */
