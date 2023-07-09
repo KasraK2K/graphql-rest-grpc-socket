@@ -3,7 +3,7 @@ import { gRPCServer } from './constants/enums'
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ Default gRPC ------------------------------ */
-import { startGreetingClient, startGreetingServer } from './default/register.grpc'
+import { startGreetingClient, startGreetingServer } from './servers/default/default.grpc'
 /* -------------------------------------------------------------------------- */
 
 export const startGrpcServers = (serverNames: number[]) => {

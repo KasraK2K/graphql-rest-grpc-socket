@@ -1,11 +1,14 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { resolve } from 'node:path'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { grpc, loaderOptions, protoLoader } from '../../constants/grpc.config'
+import { grpc, loaderOptions, protoLoader } from '../../../../constants/grpc.config'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- Constants ------------------------------- */
-const PROTO_PATH = resolve(process.cwd(), 'src/applications/gRPC/default/proto/auth.proto')
+const PROTO_PATH = resolve(
+    process.cwd(),
+    'src/applications/gRPC/servers/default/modules/auth/auth.proto'
+)
 const packageDef = protoLoader.loadSync(PROTO_PATH, loaderOptions)
 const grpcObj = grpc.loadPackageDefinition(packageDef)
 /* -------------------------------------------------------------------------- */

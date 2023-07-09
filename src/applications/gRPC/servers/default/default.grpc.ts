@@ -1,8 +1,8 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import colour from '../../../common/utils/logColour.util'
-import { grpc, grpcServer } from '../constants/grpc.config'
+import colour from '../../../../common/utils/logColour.util'
+import { grpc, grpcServer } from '../../constants/grpc.config'
 /* ------------------------------ gRPC Services ----------------------------- */
-import './service/grpc.service'
+import './modules/auth/auth.service'
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ Start Client ------------------------------ */

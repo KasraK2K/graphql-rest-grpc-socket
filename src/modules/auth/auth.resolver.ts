@@ -5,10 +5,10 @@ import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import authService from './auth.service'
 import { IContext } from '../../graphql/context'
-import { IApplicationConfig } from '../../../build/config/config.interface.d'
 import { IUserAuthResponse, IAdminAuthResponse, ITokenPayload } from '../../common/interfaces'
 import tokenHelper from '../../common/helpers/token.helper'
 import errorHandler from '../../common/helpers/errors/error.handler'
+import { IApplicationConfig } from '../../../config/config.interface'
 /* -------------------------------------------------------------------------- */
 
 const applicationConfig: IApplicationConfig = config.get('application')
