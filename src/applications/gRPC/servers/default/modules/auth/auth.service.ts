@@ -21,7 +21,7 @@ const grpcObj = grpc.loadPackageDefinition(packageDef)
 const applicationConfig: IApplicationConfig = config.get('application')
 
 /* SECTION -------------------- Register Services --------------------------- */
-grpcServer.addService(grpcObj.Auth.service, {
+grpcServer.addService(grpcObj.authentication.Auth.service, {
     /* -------------------------------------------------------------------------- */
     /*                                 Login Admin                                */
     /* -------------------------------------------------------------------------- */
@@ -37,6 +37,27 @@ grpcServer.addService(grpcObj.Auth.service, {
             try {
                 const { admin, token } = await authService.loginAdmin({ email, password })
                 return callback(null, { status: grpc.status.OK, token, admin })
+            } catch (error) {
+                return callback(error)
+            }
+        }
+    },
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 Login User                                 */
+    /* -------------------------------------------------------------------------- */
+    loginUser: async (args, callback) => {
+        const { email, password } = args.request
+
+        if (!email || !password)
+            return callback({
+                status: grpc.status.INVALID_ARGUMENT,
+                message: 'Invalid arguments.'
+            })
+        else {
+            try {
+                const { user, token } = await authService.loginUser({ email, password })
+                return callback(null, { status: grpc.status.OK, token, user })
             } catch (error) {
                 return callback(error)
             }
@@ -65,27 +86,6 @@ grpcServer.addService(grpcObj.Auth.service, {
                     })
                 const { admin, token } = await authService.registerAdmin(data, { email, password })
                 return callback(null, { status: grpc.status.OK, token, admin })
-            } catch (error) {
-                return callback(error)
-            }
-        }
-    },
-
-    /* -------------------------------------------------------------------------- */
-    /*                                 Login User                                 */
-    /* -------------------------------------------------------------------------- */
-    loginUser: async (args, callback) => {
-        const { email, password } = args.request
-
-        if (!email || !password)
-            return callback({
-                status: grpc.status.INVALID_ARGUMENT,
-                message: 'Invalid arguments.'
-            })
-        else {
-            try {
-                const { user, token } = await authService.loginUser({ email, password })
-                return callback(null, { status: grpc.status.OK, token, user })
             } catch (error) {
                 return callback(error)
             }

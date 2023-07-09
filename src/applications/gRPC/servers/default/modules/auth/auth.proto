@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package authentication;
+
 service Auth {
   rpc LoginAdmin     (LoginAdminRequest) returns (AuthAdminResponse) {}
   rpc RegisterAdmin  (RegisterAdminRequest) returns (AuthAdminResponse) {}
