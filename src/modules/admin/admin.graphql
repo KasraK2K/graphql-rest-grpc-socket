@@ -26,12 +26,12 @@ type Admin {
     archived_at: DateTime
 }
 
-type Query {
-    "Get admin"
-    admin(email: String!): Admin!
-}
+# type Query {
+#     "Get admin"
+#     admin(email: String!): Admin!
+# }
 
-type Mutation {
-    "Create new user and return it back"
-    addAdmin(email: String!, password: String!): Admin!
-}
+# type Mutation {
+#     "Create new user and return it back"
+#     addAdmin(email: String!, password: String!): Admin!
+# }

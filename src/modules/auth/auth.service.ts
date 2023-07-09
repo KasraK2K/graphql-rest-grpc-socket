@@ -7,7 +7,6 @@ import { ITokenPayload } from '../../common/interfaces'
 import tokenHelper from '../../common/helpers/token.helper'
 import userService from '../user/user.service'
 import adminService from '../admin/admin.service'
-import { IContext } from '../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 class AuthService {
@@ -67,7 +66,7 @@ class AuthService {
     }
 
     async registerAdmin(
-        context: IContext,
+        data: ITokenPayload,
         args: { email: string; password: string }
     ): Promise<{ token: string; admin: IAdmin }> {
         const { email, password } = args
@@ -75,7 +74,7 @@ class AuthService {
         const foundedAdmin = await adminService.getAdmin({ email })
         if (foundedAdmin) throw errorHandler(409, 'Admin is already registered.')
 
-        const admin: IAdmin = await adminService.addAdmin(context, { email, password })
+        const admin: IAdmin = await adminService.addAdmin(data, { email, password })
         const payload: ITokenPayload = {
             id: admin.id,
             user_type: UserType.ADMIN,

@@ -28,12 +28,12 @@ type User {
     archived_at: DateTime
 }
 
-type Query {
-    "Get user"
-    user(email: String!): User!
-}
+# type Query {
+#     "Get user"
+#     user(email: String!): User!
+# }
 
-type Mutation {
-    "Create new user and return it back"
-    addUser(email: String!, password: String!): User!
-}
+# type Mutation {
+#     "Create new user and return it back"
+#     addUser(email: String!, password: String!): User!
+# }
