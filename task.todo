@@ -2,12 +2,23 @@
   "todotree": {
     "tree": [
       {
+        "key": 1688924546284,
+        "children": [],
+        "todo": {
+          "content": "add socket.io",
+          "id": 1688924546284,
+          "level": "danger",
+          "done": false,
+          "start": 1688924546284
+        }
+      },
+      {
         "key": 1688578006783,
         "children": [],
         "todo": {
           "content": "add nodemailer or use mailgun and send email for user after create and just let non blocked, non archived and verified user to login",
           "id": 1688578006783,
-          "level": "danger",
+          "level": "warning",
           "done": false,
           "start": 1688578006783
         }
@@ -69,6 +80,6 @@
     "showEndTime": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1688921210919"
+    "version": "1688924559020"
   }
 }

@@ -25,3 +25,7 @@ type Mutation {
     "Create new user and return user and token"
     registerUser(email: String!, password: String!): AuthUserResponse!
 }
+
+type Subscription {
+    countdown(from: Int!): Int!
+}
