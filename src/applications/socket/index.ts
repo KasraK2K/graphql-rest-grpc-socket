@@ -10,7 +10,7 @@ const events = [
   { name: 'connection', callback: connectionEvent },
 ]
 
-export const registerSocketServer = () => {
+const socketServer = () => {
     for (const event of events) {
         io.sockets.on(event.name, (socket) => {
             event.callback(socket)
@@ -23,3 +23,5 @@ export const registerSocketServer = () => {
         )}`
     )
 }
+
+export default socketServer

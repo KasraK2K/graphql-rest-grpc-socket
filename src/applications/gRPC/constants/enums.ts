@@ -1,3 +1,3 @@
-export enum gRPCServer {
+export enum gRPCServerNames {
     DEFAULT
 }

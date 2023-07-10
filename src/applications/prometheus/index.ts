@@ -9,7 +9,7 @@ const app = express()
 const PROMETHEUS_PORT = process.env.PROMETHEUS_PORT || '4000'
 // const register = new client.Registry()
 
-const startMetricsServer = () => {
+const metricsServer = () => {
     client.collectDefaultMetrics()
 
     app.get('/metrics', async (_: Request, res: Response) => {
@@ -26,4 +26,4 @@ const startMetricsServer = () => {
     )
 }
 
-export default startMetricsServer
+export default metricsServer

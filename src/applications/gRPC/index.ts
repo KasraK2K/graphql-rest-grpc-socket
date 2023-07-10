@@ -1,5 +1,5 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { gRPCServer } from './constants/enums'
+import { gRPCServerNames } from './constants/enums'
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------ Default gRPC ------------------------------ */
@@ -17,7 +17,7 @@ export const startGrpcClient = (clientNames: number[]) => {
 /* SECTION --------------------------- Register Servers --------------------- */
 const serverSwitch = (serverName: number) => {
     switch (serverName) {
-        case gRPCServer.DEFAULT:
+        case gRPCServerNames.DEFAULT:
             startGreetingServer()
             break
     }
@@ -27,7 +27,7 @@ const serverSwitch = (serverName: number) => {
 /* SECTION -------------------- Register Clients ---------------------------- */
 const clientSwitch = (clientName: number) => {
     switch (clientName) {
-        case gRPCServer.DEFAULT:
+        case gRPCServerNames.DEFAULT:
             startGreetingClient()
             break
     }

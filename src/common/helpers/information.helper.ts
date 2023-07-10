@@ -21,7 +21,7 @@ import { TokenType, UserType } from '../enums/general.enum'
 
 const appConfig: IApplicationConfig = config.get('application')
 
-export const printInformation = (port: string) => {
+const printInformation = (port: string) => {
     if (appConfig.information) {
         console.group('Server Information:')
         console.table([
@@ -72,3 +72,5 @@ export const printInformation = (port: string) => {
         console.info(process.env.API_KEY, '\n')
     }
 }
+
+export default printInformation
