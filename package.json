@@ -66,6 +66,7 @@
         "prom-client": "^14.2.0",
         "redis": "^4.6.7",
         "reflect-metadata": "^0.1.13",
+        "socket.io": "^4.7.1",
         "sofa-api": "^0.18.0",
         "sqlstring": "^2.3.3",
         "stripe": "^12.11.0",

@@ -8,25 +8,20 @@
 //
 //========================================================================================
 
-/* ------------------------------ Node Modules ------------------------------ */
-import { createServer } from 'node:http'
 /* ------------------------------ Dependencies ------------------------------ */
-import express from 'express'
 import { useSofa } from 'sofa-api'
 /* ----------------------------- Custom Modules ----------------------------- */
 import schema from '../graphql/schema'
 import { context } from '../graphql/context'
 import colour from '../common/utils/logColour.util'
 import { Gender, UserType } from '../common/enums/general.enum'
+import { app, restAppServer, REST_PORT } from './exporter'
 /* -------------------------------------------------------------------------- */
-
-const REST_PORT = process.env.REST_PORT || '3500'
 
 /* -------------------------------------------------------------------------- */
 /*                                 Sofa Server                                */
 /* -------------------------------------------------------------------------- */
 function main() {
-    const app = express()
     const sofa = useSofa({
         schema,
         context,
@@ -43,13 +38,12 @@ function main() {
     })
 
     app.use('/', sofa)
-    const restAppServer = createServer(app)
 
     restAppServer
         .listen(REST_PORT)
         .on('listening', () =>
             console.info(
-                `${colour.love('HTTP')}\t server ready at: ${colour.love.underline(
+                `${colour.love('Http')}\t server ready at: ${colour.love.underline(
                     process.env.REST_SERVER_ADDRESS
                 )}`
             )
