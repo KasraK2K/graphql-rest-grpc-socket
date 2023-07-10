@@ -5,9 +5,11 @@ import express from 'express'
 import { Server } from 'socket.io'
 /* ----------------------------- Custom Modules ----------------------------- */
 
+/* -------------------------------- Constants ------------------------------- */
 const REST_PORT = process.env.REST_PORT || '3500'
 const app = express()
 const restAppServer = createServer(app)
 const io = new Server(restAppServer)
+/* -------------------------------------------------------------------------- */
 
 export { app, restAppServer, io, REST_PORT }
