@@ -11,12 +11,12 @@
 /**
  * This function can bind class to itself
  * It can be useful to bind class to itself when we use it in router
- * 1. Import autobind into class
+ * 1. Import autoBind into class
  * 2. call it and pass this in constructor
  *
  * @param {*} instance
  */
-function autobind(instance) {
+function autoBind(instance) {
     const proto = Object.getPrototypeOf(instance)
     const propertyNames = Object.getOwnPropertyNames(proto)
 
@@ -35,4 +35,4 @@ function autobind(instance) {
     }
 }
 
-export default autobind
+export default autoBind

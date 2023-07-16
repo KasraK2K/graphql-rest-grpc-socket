@@ -10,7 +10,7 @@
 
 /**
  * This decorator use on top of class to inject and use it in router
- * It is just like autobind and bind class to each method
+ * It is just like autoBind and bind class to each method
  * 1. Import this decorator on top of class
  * 2. use it like @BindInstance before class name
  *
