@@ -28,11 +28,15 @@ class AuthService {
 
         const payload: ITokenPayload = {
             id: admin.id,
+            uid: admin.uid,
             user_type: UserType.ADMIN,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
-        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
+        await adminService.updateAdmin(
+            { id: admin.id, uid: admin.uid, email },
+            { last_token: token, last_login_at: 'NOW()' }
+        )
 
         return { token, admin }
     }
@@ -58,11 +62,15 @@ class AuthService {
 
         const payload: ITokenPayload = {
             id: user.id,
+            uid: user.uid,
             user_type: UserType.USER,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
-        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
+        await userService.updateUser(
+            { id: user.id, uid: user.uid, email },
+            { last_token: token, last_login_at: 'NOW()' }
+        )
 
         return { token, user }
     }
@@ -79,11 +87,15 @@ class AuthService {
         const admin: IAdmin = await adminService.addAdmin(data, { email, password })
         const payload: ITokenPayload = {
             id: admin.id,
+            uid: admin.uid,
             user_type: UserType.ADMIN,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
-        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
+        await adminService.updateAdmin(
+            { id: admin.id, uid: admin.uid, email },
+            { last_token: token, last_login_at: 'NOW()' }
+        )
 
         return { token, admin }
     }
@@ -100,11 +112,15 @@ class AuthService {
         const user: IUser = await userService.addUser({ email, password })
         const payload: ITokenPayload = {
             id: user.id,
+            uid: user.uid,
             user_type: UserType.USER,
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
-        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
+        await userService.updateUser(
+            { id: user.id, uid: user.uid, email },
+            { last_token: token, last_login_at: 'NOW()' }
+        )
 
         return { token, user }
     }

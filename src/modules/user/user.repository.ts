@@ -1,7 +1,8 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IUser, IUserLoginArgs } from '../../common/interfaces/user.interface'
+import { IUser, IUserFilterArgs, IUserLoginArgs } from '../../common/interfaces/user.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
+import { knex } from '../../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 class UserRepository extends Repository {
@@ -27,12 +28,15 @@ class UserRepository extends Repository {
         })
     }
 
-    updateUser(args: Partial<IUser>): Promise<IUser> {
+    updateUser(filter: IUserFilterArgs, args: Partial<IUser>): Promise<IUser> {
         return new Promise((resolve, reject) => {
-            this.updateOne<IUser>('users', args)
+            knex<IUser>('users')
+                .where(filter)
+                .update(args)
+                .returning('*')
                 .then((result) => {
-                    if (!result.row_count) return reject(errorHandler(500))
-                    else return resolve(result.rows[0])
+                    if (!result.length) return reject(errorHandler(500))
+                    else return resolve(result[0])
                 })
                 .catch((err) => reject(errorHandler(500, err.message)))
         })

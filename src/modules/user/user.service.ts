@@ -1,6 +1,6 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import userRepository from './user.repository'
-import { IUser, IUserLoginArgs } from '../../common/interfaces/user.interface'
+import { IUser, IUserFilterArgs, IUserLoginArgs } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 /* -------------------------------------------------------------------------- */
 
@@ -16,8 +16,8 @@ class UserService {
         return await userRepository.addUser(args)
     }
 
-    async updateUser(args: Partial<IUser>): Promise<IUser> {
-        return await userRepository.updateUser(args)
+    async updateUser(filter: IUserFilterArgs, args: Partial<IUser>): Promise<IUser> {
+        return await userRepository.updateUser(filter, args)
     }
 }
 

@@ -26,3 +26,10 @@ export interface IAdminLoginArgs {
     is_block?: boolean
     is_archive?: boolean
 }
+
+export interface IAdminFilterArgs {
+    id?: number
+    uid?: string
+    email?: string
+    last_token?: string
+}

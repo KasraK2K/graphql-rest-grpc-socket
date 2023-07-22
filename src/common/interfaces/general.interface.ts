@@ -30,6 +30,7 @@ export interface IFile {
 
 export interface ITokenPayload {
     id: number
+    uid: string
     user_type: UserType
     token_type: TokenType
 }

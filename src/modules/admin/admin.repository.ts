@@ -1,7 +1,8 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IAdmin, IAdminLoginArgs } from '../../common/interfaces/admin.interface'
+import { IAdmin, IAdminFilterArgs, IAdminLoginArgs } from '../../common/interfaces/admin.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
+import { knex } from '../../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 class AdminRepository extends Repository {
@@ -27,12 +28,15 @@ class AdminRepository extends Repository {
         })
     }
 
-    updateAdmin(args: Partial<IAdmin>): Promise<IAdmin> {
+    updateAdmin(filter: IAdminFilterArgs, args: Partial<IAdmin>): Promise<IAdmin> {
         return new Promise((resolve, reject) => {
-            this.updateOne<IAdmin>('admins', args)
+            knex<IAdmin>('admins')
+                .where(filter)
+                .update(args)
+                .returning('*')
                 .then((result) => {
-                    if (!result.row_count) return reject(errorHandler(500))
-                    else return resolve(result.rows[0])
+                    if (!result.length) return reject(errorHandler(500))
+                    else return resolve(result[0])
                 })
                 .catch((err) => reject(errorHandler(500, err.message)))
         })

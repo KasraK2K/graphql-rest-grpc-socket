@@ -22,6 +22,7 @@ const resolvers = {
             _info: GraphQLResolveInfo
         ): Promise<IAdminAuthResponse> => {
             const { token, admin } = await authService.loginAdmin(args)
+
             return { token, admin }
         },
 

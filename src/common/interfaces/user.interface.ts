@@ -28,3 +28,10 @@ export interface IUserLoginArgs {
     is_block?: boolean
     is_archive?: boolean
 }
+
+export interface IUserFilterArgs {
+    id?: number
+    uid?: string
+    email?: string
+    last_token?: string
+}

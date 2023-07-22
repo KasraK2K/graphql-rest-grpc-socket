@@ -2,7 +2,7 @@
 // import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import adminRepository from './admin.repository'
-import { IAdmin, IAdminLoginArgs, ITokenPayload } from '../../common/interfaces'
+import { IAdmin, IAdminFilterArgs, IAdminLoginArgs, ITokenPayload } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import errorHandler from '../../common/helpers/errors/error.handler'
 import { UserType } from '../../common/enums/general.enum'
@@ -26,8 +26,8 @@ class AdminService {
         return await adminRepository.addAdmin(args)
     }
 
-    async updateAdmin(args: Partial<IAdmin>): Promise<IAdmin> {
-        return await adminRepository.updateAdmin(args)
+    async updateAdmin(filter: IAdminFilterArgs, args: Partial<IAdmin>): Promise<IAdmin> {
+        return await adminRepository.updateAdmin(filter, args)
     }
 }
 
