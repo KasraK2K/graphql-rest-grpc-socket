@@ -30,13 +30,16 @@ CREATE TABLE IF NOT EXISTS users
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-    archived_at       	TIMESTAMPTZ
+    archived_at       	TIMESTAMPTZ,
     last_login_at       TIMESTAMPTZ
 );
 
 -- Create Index
-CREATE INDEX "user_is_archive" ON "users"("is_archive");
+CREATE INDEX "user_uid" ON "users"("uid");
 CREATE INDEX "user_email" ON "users"("email");
+CREATE INDEX "user_last_token" ON "users"("last_token");
+CREATE INDEX "user_is_archive" ON "users"("is_archive");
 
 -- Insert Record
-INSERT INTO users (email, password) VALUES ('kasra_k2k@yahoo.com', '12345678') RETURNING *;
+-- Password is 12345678 and hashed by bcryptjs salt 7
+INSERT INTO users (email, password) VALUES ('kasra_k2k@yahoo.com', '$2a$07$r66gkFrxBP5L5/XSd4No4eY.Z/UGu.56F/neHhsLjAwydlPvUnocO') RETURNING *;
