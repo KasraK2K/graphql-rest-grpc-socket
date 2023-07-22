@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users
 	
     email             	VARCHAR(50)  NOT NULL UNIQUE,
     password          	VARCHAR(200) NOT NULL,
+    latest_token        VARCHAR(500) NOT NULL DEFAULT '',
 
     is_active         	BOOLEAN      DEFAULT TRUE,
     is_verify       	BOOLEAN      DEFAULT FALSE,
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS users
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-    archived_at       	TIMESTAMP
+    archived_at       	TIMESTAMPTZ
+    last_login_at       TIMESTAMPTZ
 );
 
 -- Create Index
