@@ -32,6 +32,7 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
+        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
 
         return { token, admin }
     }
@@ -61,6 +62,7 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
+        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
 
         return { token, user }
     }
@@ -81,6 +83,7 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
+        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
 
         return { token, admin }
     }
@@ -101,6 +104,7 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
+        await adminService.updateAdmin({ last_token: token, last_login_at: 'NOW()' })
 
         return { token, user }
     }
