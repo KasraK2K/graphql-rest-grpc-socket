@@ -8,6 +8,7 @@ export interface IAdmin {
 
     email: string
     password: string
+    last_token: string
 
     is_active: boolean
     is_block: boolean
@@ -17,6 +18,7 @@ export interface IAdmin {
     created_at: string
     updated_at: string
     archived_at: string | null
+    last_login_at: string | null
 }
 
 export interface IAdminLoginArgs {

@@ -24,6 +24,8 @@ type Admin {
     updated_at: DateTime
     "This field has relation with `is_archive` field in this entity and it is time of archive."
     archived_at: DateTime
+    "Last time admin get token successfully."
+    last_login_at: DateTime
 }
 
 # type Query {

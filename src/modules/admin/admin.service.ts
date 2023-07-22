@@ -25,6 +25,10 @@ class AdminService {
         args.email = args.email.toLowerCase()
         return await adminRepository.addAdmin(args)
     }
+
+    async updateAdmin(args: Partial<IAdmin>): Promise<IAdmin> {
+        return await adminRepository.updateAdmin(args)
+    }
 }
 
 export default new AdminService()
