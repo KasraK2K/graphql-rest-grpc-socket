@@ -15,6 +15,10 @@ class UserService {
         args.email = args.email.toLowerCase()
         return await userRepository.addUser(args)
     }
+
+    async updateUser(args: Partial<IUser>): Promise<IUser> {
+        return await userRepository.updateUser(args)
+    }
 }
 
 export default new UserService()

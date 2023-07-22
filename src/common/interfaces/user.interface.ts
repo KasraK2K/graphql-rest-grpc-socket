@@ -8,6 +8,7 @@ export interface IUser {
 
     email: string
     password: string
+    last_token: string
 
     is_active: boolean
     is_verify: boolean
@@ -18,6 +19,7 @@ export interface IUser {
     created_at: string
     updated_at: string
     archived_at: string | null
+    last_login_at: string | null
 }
 
 export interface IUserLoginArgs {
