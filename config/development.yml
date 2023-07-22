@@ -33,13 +33,13 @@ logger:
 
 database:
     mongodb:
-        name: 'backend_solution'
+        name: 'lms'
         default_collection: 'default'
         uri: 'mongodb://0.0.0.0:27017'
     postgres:
         user: 'postgres'
         host: '0.0.0.0'
-        database: 'backend_solution'
+        database: 'lms'
         password: 'postgres'
         port: 5432
         idleTimeoutMillis: 10000
