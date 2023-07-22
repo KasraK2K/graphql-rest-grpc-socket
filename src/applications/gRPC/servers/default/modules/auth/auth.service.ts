@@ -25,7 +25,10 @@ grpcServer.addService(grpcObj.authentication.Auth.service, {
     /* -------------------------------------------------------------------------- */
     /*                                 Login Admin                                */
     /* -------------------------------------------------------------------------- */
-    loginAdmin: async (args, callback) => {
+    loginAdmin: async (
+        args: { request: { email: string; password: string; authorization: string } },
+        callback: (error: Record<string, any> | null, ...result: Record<string, any>[]) => any
+    ) => {
         const { email, password } = args.request
 
         if (!email || !password)
@@ -46,7 +49,10 @@ grpcServer.addService(grpcObj.authentication.Auth.service, {
     /* -------------------------------------------------------------------------- */
     /*                                 Login User                                 */
     /* -------------------------------------------------------------------------- */
-    loginUser: async (args, callback) => {
+    loginUser: async (
+        args: { request: { email: string; password: string } },
+        callback: (error: Record<string, any> | null, ...result: Record<string, any>[]) => any
+    ) => {
         const { email, password } = args.request
 
         if (!email || !password)
@@ -67,7 +73,10 @@ grpcServer.addService(grpcObj.authentication.Auth.service, {
     /* -------------------------------------------------------------------------- */
     /*                               Register Admin                               */
     /* -------------------------------------------------------------------------- */
-    registerAdmin: async (args, callback) => {
+    registerAdmin: async (
+        args: { request: { email: string; password: string; authorization: string } },
+        callback: (error: Record<string, any> | null, ...result: Record<string, any>[]) => any
+    ) => {
         const { email, password, authorization } = args.request
 
         if (!email || !password || !authorization)
@@ -95,7 +104,10 @@ grpcServer.addService(grpcObj.authentication.Auth.service, {
     /* -------------------------------------------------------------------------- */
     /*                                Register User                               */
     /* -------------------------------------------------------------------------- */
-    registerUser: async (args, callback) => {
+    registerUser: async (
+        args: { request: { email: string; password: string; authorization: string } },
+        callback: (error: Record<string, any> | null, ...result: Record<string, any>[]) => any
+    ) => {
         const { email, password } = args.request
 
         if (!email || !password)

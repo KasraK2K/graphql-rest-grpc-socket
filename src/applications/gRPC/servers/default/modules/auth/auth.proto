@@ -39,6 +39,7 @@ message Admin {
   string created_at = 11;
   string updated_at = 12;
   string archived_at = 13;
+  string last_login_at = 14;
 }
 
 
@@ -67,5 +68,6 @@ message User {
   string created_at = 12;
   string updated_at = 13;
   string archived_at = 14;
+  string last_login_at = 15;
 }
 
