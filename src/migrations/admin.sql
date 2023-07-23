@@ -32,6 +32,13 @@ CREATE TABLE IF NOT EXISTS admins
     last_login_at       TIMESTAMPTZ
 );
 
+-- Update updated_at
+CREATE TRIGGER set_timestamp
+    BEFORE UPDATE
+    ON "admins"
+    FOR EACH ROW
+EXECUTE PROCEDURE trg_timestamp();
+
 -- Create Index
 CREATE INDEX "admin_email" ON "admins"("email");
 CREATE INDEX "admin_last_token" ON "admins"("last_token");

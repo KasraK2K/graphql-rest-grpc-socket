@@ -25,6 +25,13 @@ CREATE TABLE IF NOT EXISTS permissions
     archived_at       	TIMESTAMPTZ,
 );
 
+-- Update updated_at
+CREATE TRIGGER set_timestamp
+    BEFORE UPDATE
+    ON "permissions"
+    FOR EACH ROW
+EXECUTE PROCEDURE trg_timestamp();
+
 -- Create Index
 CREATE INDEX "permission_last_token" ON "permissions"("last_token");
 CREATE INDEX "permission_is_archive" ON "permissions"("is_archive");
