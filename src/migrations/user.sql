@@ -12,7 +12,6 @@
 CREATE TABLE IF NOT EXISTS users
 (
     id                	SERIAL PRIMARY KEY,
-	-- uid					uuid DEFAULT uuid_generate_v4 (),
 	
 	first_name        	VARCHAR(50)  NOT NULL DEFAULT '',
 	surname           	VARCHAR(50)  NOT NULL DEFAULT '',
@@ -35,7 +34,6 @@ CREATE TABLE IF NOT EXISTS users
 );
 
 -- Create Index
--- CREATE INDEX "user_uid" ON "users"("uid");
 CREATE INDEX "user_email" ON "users"("email");
 CREATE INDEX "user_last_token" ON "users"("last_token");
 CREATE INDEX "user_is_archive" ON "users"("is_archive");
