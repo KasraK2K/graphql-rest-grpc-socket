@@ -12,7 +12,7 @@
 CREATE TABLE IF NOT EXISTS admins
 (
     id                	SERIAL PRIMARY KEY,
-	uid					uuid DEFAULT uuid_generate_v4 (),
+	-- uid					uuid DEFAULT uuid_generate_v4 (),
 	
 	first_name        	VARCHAR(50)  NOT NULL DEFAULT '',
 	surname           	VARCHAR(50)  NOT NULL DEFAULT '',
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS admins
     is_active         	BOOLEAN      DEFAULT TRUE,
     is_block        	BOOLEAN      DEFAULT FALSE,
     is_archive        	BOOLEAN      DEFAULT FALSE,
-	roles				UUID[]	     DEFAULT '{}',
+	roles				INTEGER[]	     DEFAULT '{}',
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),

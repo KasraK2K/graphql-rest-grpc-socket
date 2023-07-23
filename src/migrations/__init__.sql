@@ -13,4 +13,4 @@ CREATE DATABASE <db_name>;
 
 GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <db_username>;
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
