@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS admins
 );
 
 -- Create Index
-CREATE INDEX "admin_uid" ON "admins"("uid");
+-- CREATE INDEX "admin_uid" ON "admins"("uid");
 CREATE INDEX "admin_email" ON "admins"("email");
 CREATE INDEX "admin_last_token" ON "admins"("last_token");
 CREATE INDEX "admin_is_archive" ON "admins"("is_archive");

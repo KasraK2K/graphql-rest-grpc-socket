@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users
 );
 
 -- Create Index
-CREATE INDEX "user_uid" ON "users"("uid");
+-- CREATE INDEX "user_uid" ON "users"("uid");
 CREATE INDEX "user_email" ON "users"("email");
 CREATE INDEX "user_last_token" ON "users"("last_token");
 CREATE INDEX "user_is_archive" ON "users"("is_archive");
