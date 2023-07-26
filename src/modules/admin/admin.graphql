@@ -1,8 +1,6 @@
 type Admin {
     "Basic database identification field useful most of the time."
     id: ID!
-    "UUID to identify entity in logs and another type of database and it is helpful to find user in other places."
-    uid: UUID!
 
     first_name: String
     surname: String
@@ -16,7 +14,7 @@ type Admin {
     "Admins can't delete there own account but they can archive their data to hide from aggregations."
     is_archive: Boolean!
     "Array of role numbers and each role has many different permissions."
-    roles: [UUID]!
+    roles: [Int]!
 
     "Record creation time and it change just when we create a record."
     created_at: DateTime!

@@ -1,6 +1,5 @@
 export interface IAdmin {
     id: number
-    uid: string
 
     first_name: string
     surname: string
@@ -29,7 +28,6 @@ export interface IAdminLoginArgs {
 
 export interface IAdminFilterArgs {
     id?: number
-    uid?: string
     email?: string
     last_token?: string
 }

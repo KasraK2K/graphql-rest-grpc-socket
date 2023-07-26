@@ -1,6 +1,5 @@
 export interface IUser {
     id: number
-    uid: string
 
     first_name: string
     surname: string
@@ -31,7 +30,6 @@ export interface IUserLoginArgs {
 
 export interface IUserFilterArgs {
     id?: number
-    uid?: string
     email?: string
     last_token?: string
 }
