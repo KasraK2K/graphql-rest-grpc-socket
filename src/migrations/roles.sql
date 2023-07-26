@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS roles
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-    archived_at       	TIMESTAMPTZ,
+    archived_at       	TIMESTAMPTZ
 );
 
 -- Update updated_at
@@ -31,10 +31,6 @@ CREATE TRIGGER set_timestamp
     FOR EACH ROW
 EXECUTE PROCEDURE trg_timestamp();
 
-
--- Create Index
-CREATE INDEX "role_last_token" ON "roles"("last_token");
-CREATE INDEX "role_is_archive" ON "roles"("is_archive");
 
 -- Insert Record
 INSERT INTO roles (name, description, permissions) VALUES ('admin', 'access to everything', '{0, 1, 2}') RETURNING *;
