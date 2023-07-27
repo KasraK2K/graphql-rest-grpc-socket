@@ -18,6 +18,8 @@ class AdminRepository extends Repository {
     }
 
     addAdmin(args: { email: string; password: string }): Promise<IAdmin> {
+        if ('email' in args) args.email = args.email.toLowerCase()
+
         return new Promise((resolve, reject) => {
             this.insertOne<IAdmin>('admins', args)
                 .then((result) => {
@@ -29,6 +31,9 @@ class AdminRepository extends Repository {
     }
 
     updateAdmin(filter: IAdminFilterArgs, args: Partial<IAdmin>): Promise<IAdmin> {
+        if ('email' in filter) filter.email = filter.email.toLowerCase()
+        if ('email' in args) args.email = args.email.toLowerCase()
+
         return new Promise((resolve, reject) => {
             knex<IAdmin>('admins')
                 .where(filter)

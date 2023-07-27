@@ -18,6 +18,8 @@ class UserRepository extends Repository {
     }
 
     addUser(args: { email: string; password: string }): Promise<IUser> {
+        if ('email' in args) args.email = args.email.toLowerCase()
+
         return new Promise((resolve, reject) => {
             this.insertOne<IUser>('users', args)
                 .then((result) => {
@@ -29,13 +31,15 @@ class UserRepository extends Repository {
     }
 
     updateUser(filter: IUserFilterArgs, args: Partial<IUser>): Promise<IUser> {
-        return new Promise((resolve, reject) => {
+        if ('email' in filter) filter.email = filter.email.toLowerCase()
+        if ('email' in args) args.email = args.email.toLowerCase()
+
+        return new Promise(async (resolve, reject) => {
             knex<IUser>('users')
                 .where(filter)
                 .update(args)
                 .returning('*')
                 .then((result) => {
-                    console.log({ result })
                     if (!result.length) return reject(errorHandler(500))
                     else return resolve(result[0])
                 })
