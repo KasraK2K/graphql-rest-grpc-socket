@@ -35,6 +35,7 @@ class UserRepository extends Repository {
                 .update(args)
                 .returning('*')
                 .then((result) => {
+                    console.log({ result })
                     if (!result.length) return reject(errorHandler(500))
                     else return resolve(result[0])
                 })

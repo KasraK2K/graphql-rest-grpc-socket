@@ -36,7 +36,7 @@ class AuthHandler {
         return { token, admin }
     }
 
-    @Role(['admin'])
+    @Role(['admin', 'user'])
     async loginUser(
         _parent: IUserAuthResponse,
         args: { email: string; password: string },
