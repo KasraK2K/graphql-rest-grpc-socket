@@ -1,15 +1,15 @@
 /* ------------------------------ Dependencies ------------------------------ */
-import { Request } from 'express'
 import config from 'config'
 import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import errorHandler from '../helpers/errors/error.handler'
+import tokenHelper from '../helpers/token.helper'
 /* -------------------------------------------------------------------------- */
 
 const bearerKey: string = config.get('application.bearer')
 const bearerHeader: string = config.get('application.bearerHeader')
 
-const Role = (roles: string[]) => {
+const TypeGate = (roles: number[]) => {
     return (_target: unknown, _prototypeKey: string, descriptor: PropertyDescriptor) => {
         const originalValue = descriptor.value
 
@@ -23,7 +23,10 @@ const Role = (roles: string[]) => {
             // Check Token & Role
             else {
                 token = token[0].slice(bearerKey.length + 1)
-                const tokenRole = 'user' // FIXME : Extract from token
+                const { valid, data } = tokenHelper.verify(token)
+                if (!valid) throw errorHandler(401)
+                const tokenRole = data.user_type
+
                 // Check role is valid
                 if (!roles.includes(tokenRole)) throw errorHandler(403)
             }
@@ -33,4 +36,4 @@ const Role = (roles: string[]) => {
     }
 }
 
-export default Role
+export default TypeGate

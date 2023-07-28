@@ -9,7 +9,8 @@ import { IUserAuthResponse, IAdminAuthResponse, ITokenPayload } from '../../comm
 import tokenHelper from '../../common/helpers/token.helper'
 import errorHandler from '../../common/helpers/errors/error.handler'
 import { IApplicationConfig } from '../../../config/config.interface'
-import { Role } from '../../common/decorators'
+import { TypeGate } from '../../common/decorators'
+import { UserType } from '../../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
 const applicationConfig: IApplicationConfig = config.get('application')
@@ -36,7 +37,7 @@ class AuthHandler {
         return { token, admin }
     }
 
-    @Role(['admin', 'user'])
+    @TypeGate([UserType.ADMIN, UserType.USER])
     async loginUser(
         _parent: IUserAuthResponse,
         args: { email: string; password: string },
