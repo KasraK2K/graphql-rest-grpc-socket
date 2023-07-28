@@ -13,9 +13,9 @@ const TypeGate = (roles: number[]) => {
     return (_target: unknown, _prototypeKey: string, descriptor: PropertyDescriptor) => {
         const originalValue = descriptor.value
 
-        descriptor.value = function (...args: any[]) {
-            const rawHeaders = args[2].req.rawHeaders
-            const headers: string[] = Array.from(rawHeaders)
+        descriptor.value = async (...args: any[]) => {
+            const req = args[2].req
+            const headers: string[] = Array.from(req.rawHeaders)
             let token: string | string[] = headers.filter((header) => header.startsWith(bearerKey))
 
             // Check Authorization Header
@@ -29,6 +29,7 @@ const TypeGate = (roles: number[]) => {
 
                 // Check role is valid
                 if (!roles.includes(tokenRole)) throw errorHandler(403)
+                req.token_payload = data
             }
 
             return originalValue.apply(this, args)
