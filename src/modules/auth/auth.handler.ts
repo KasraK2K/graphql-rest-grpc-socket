@@ -9,7 +9,7 @@ import { IUserAuthResponse, IAdminAuthResponse, ITokenPayload } from '../../comm
 import tokenHelper from '../../common/helpers/token.helper'
 import errorHandler from '../../common/helpers/errors/error.handler'
 import { IApplicationConfig } from '../../../config/config.interface'
-import { TypeGate } from '../../common/decorators'
+import { TypeGate, PermissionGate } from '../../common/decorators'
 import { UserType } from '../../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
@@ -38,6 +38,7 @@ class AuthHandler {
     }
 
     @TypeGate([UserType.ADMIN, UserType.USER])
+    @PermissionGate([1, 2, 3])
     async loginUser(
         _parent: IUserAuthResponse,
         args: { email: string; password: string },
