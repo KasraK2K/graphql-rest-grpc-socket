@@ -14,6 +14,9 @@ const TypeGate = (roles: number[]) => {
         const originalValue = descriptor.value
 
         descriptor.value = async (...args: any[]) => {
+            // Quite function if doesn't have roles
+            if (!roles.length) return originalValue.apply(this, args)
+
             const req = args[2].req
             const headers: string[] = Array.from(req.rawHeaders)
             let token: string | string[] = headers.filter((header) => header.startsWith(bearerKey))
