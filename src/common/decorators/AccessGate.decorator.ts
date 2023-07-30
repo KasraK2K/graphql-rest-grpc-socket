@@ -20,6 +20,11 @@ const AccessGate = (accesses: number[]) => {
             if (!accesses.length) return originalValue.apply(this, args)
 
             const req = args[2].req
+
+            // If TypeGate not used
+            if (!('token_payload' in req))
+                return errorHandler(500, 'Before use AccessGate, use TypeGate decorator')
+
             const token_payload: ITokenPayload = req.token_payload
             const isAdmin = token_payload.user_type === UserType.ADMIN
             const api = isAdmin ? knex<IAdminApplicant>('admins') : knex<IUserApplicant>('users')
