@@ -12,6 +12,7 @@ export interface IAdmin {
     is_active: boolean
     is_block: boolean
     is_archive: boolean
+    is_superuser: boolean
     roles: string[]
 
     created_at: string

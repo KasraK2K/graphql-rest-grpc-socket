@@ -21,8 +21,8 @@ const AccessGate = (accesses: number[]) => {
 
             const req = args[2].req
             const token_payload: ITokenPayload = req.token_payload
-            const isAdmin = token_payload.user_type === UserType.USER
-            const api = isAdmin ? knex<IUserApplicant>('users') : knex<IAdminApplicant>('admins')
+            const isAdmin = token_payload.user_type === UserType.ADMIN
+            const api = isAdmin ? knex<IAdminApplicant>('admins') : knex<IUserApplicant>('users')
 
             // If applicant with this token.id not found
             const applicants: IApplicant[] = await api
@@ -32,7 +32,11 @@ const AccessGate = (accesses: number[]) => {
             if (!applicants || !applicants.length) throw errorHandler(401)
             const applicant = applicants[0]
 
-            // if applicant.roles is empty
+            // If is superuser admin do not check access
+            if (isAdmin && 'is_superuser' in applicant && applicant.is_superuser)
+                return originalValue.apply(this, args)
+
+            // If applicant.roles is empty
             if (!applicant.roles.length) throw errorHandler(403)
 
             const permissionsQuery = /* SQL */ `
@@ -41,6 +45,7 @@ const AccessGate = (accesses: number[]) => {
                 JOIN "roles" r ON u.roles @> ARRAY[r.id]
                 JOIN "permissions" p ON r.permissions @> ARRAY[p.id]
                 WHERE u.id = ${token_payload.id};`
+
             await knex
                 .raw(permissionsQuery)
                 .then((result) => {

@@ -1,5 +1,6 @@
 const ROLES_SEED = [
-    { id: 1, name: 'Default User', description: 'Default roles for normal users', permissions: [1] }
+    { id: 1, name: 'User', description: 'Default roles for users', permissions: [1] },
+    { id: 2, name: 'Admin', description: 'Default roles for admins', permissions: [2] }
 ]
 
 export default ROLES_SEED

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS users
     is_verify       	BOOLEAN      DEFAULT FALSE,
     is_block        	BOOLEAN      DEFAULT FALSE,
     is_archive        	BOOLEAN      DEFAULT FALSE,
-	roles				INTEGER[]	     DEFAULT '{}',
+	roles				INTEGER[]	     DEFAULT '{1}',
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),

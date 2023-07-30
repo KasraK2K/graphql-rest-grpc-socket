@@ -25,6 +25,8 @@ const getTokenAndPayload = (context: IContext): { token: string; data: ITokenPay
 }
 
 class AuthHandler {
+    @TypeGate([UserType.ADMIN, UserType.USER])
+    @AccessGate([1009])
     async loginAdmin(
         _parent: IAdminAuthResponse,
         args: { email: string; password: string },
