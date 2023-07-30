@@ -1,6 +1,5 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { resolve } from 'node:path'
-import _ from 'lodash'
 import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { grpc, grpcServer, loaderOptions, protoLoader } from '../../../../constants/grpc.config'

@@ -1,5 +1,3 @@
-/* ------------------------------ Node Modules ------------------------------ */
-import { nextTick } from 'node:process'
 /* ------------------------------ Dependencies ------------------------------ */
 import {
     CompressionTypes,
@@ -11,8 +9,7 @@ import {
     ProducerBatch,
     TopicMessages,
     IKafkaConfig,
-    RecordMetadata,
-    Transaction
+    RecordMetadata
 } from '..'
 /* -------------------------------------------------------------------------- */
 
@@ -48,11 +45,7 @@ class ProducerFactory {
     //   .catch((err) => errorHandler(err.name, { status: 500, message: err.message }))
     /* -------------------------------------------------------------------------- */
     public async start(): Promise<void> {
-        try {
-            await this.producer.connect()
-        } catch (error) {
-            throw error
-        }
+        await this.producer.connect()
     }
 
     public async shutdown(): Promise<void> {

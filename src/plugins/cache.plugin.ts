@@ -9,7 +9,7 @@ import { context } from '../graphql/context'
 const useCache = (): Plugin =>
     useResponseCache({
         includeExtensionMetadata: true,
-        shouldCacheResult: ({ cacheKey, result: __ }) => {
+        shouldCacheResult: ({ cacheKey /* result */ }) => {
             context.cacheKey = cacheKey
             return true
         },

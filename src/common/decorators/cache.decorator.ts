@@ -7,7 +7,7 @@ import NodeCache from 'node-cache'
 const cache = new NodeCache()
 
 const Cache = (duration: number) => {
-    return (_target: Object, _prototypeKey: string, descriptor: PropertyDescriptor) => {
+    return (_target: unknown, _prototypeKey: string, descriptor: PropertyDescriptor) => {
         const originalValue = descriptor.value
 
         descriptor.value = function (...args: any[]) {

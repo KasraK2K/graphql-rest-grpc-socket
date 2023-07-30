@@ -23,9 +23,10 @@ rules:
     semi:
         - error
         - never
-    'no-explicit-any': true
-    'no-unused-vars': 0
-    'no-var-requires': true
+    '@typescript-eslint/no-unused-vars': 'off'
+    '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-namespace': 0
+    '@typescript-eslint/no-var-requires': 'off'
     prettier/prettier: 'error'
     arrow-body-style": 'off'
     prefer-arrow-callback: 'warn'

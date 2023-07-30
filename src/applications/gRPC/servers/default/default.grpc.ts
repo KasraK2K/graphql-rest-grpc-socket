@@ -10,7 +10,7 @@ export const startGreetingServer = () => {
     grpcServer.bindAsync(
         process.env.GRPC_ADDRESS,
         grpc.ServerCredentials.createInsecure(),
-        (error, _port) => {
+        (error /* port */) => {
             if (error) console.log(error)
             console.log(
                 `${colour.love('gRPC')}\t server ready at: ${colour.love.underline(

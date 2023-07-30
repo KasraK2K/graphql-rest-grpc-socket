@@ -1,6 +1,5 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import config from 'config'
-import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import errorHandler from '../helpers/errors/error.handler'
 import tokenHelper from '../helpers/token.helper'

@@ -48,17 +48,12 @@ class ConsumerFactory {
     ): Promise<void> {
         const topic: ConsumerSubscribeTopics = { topics: this.topics, fromBeginning: false }
 
-        try {
-            await this.kafkaConsumer.connect()
-            await this.kafkaConsumer.subscribe(topic)
+        await this.kafkaConsumer.connect()
+        await this.kafkaConsumer.subscribe(topic)
 
-            await this.kafkaConsumer.run({
-                eachMessage: async (messagePayload: EachMessagePayload) =>
-                    await callback(messagePayload)
-            })
-        } catch (error) {
-            throw error
-        }
+        await this.kafkaConsumer.run({
+            eachMessage: async (messagePayload: EachMessagePayload) => callback(messagePayload)
+        })
     }
 
     /* SECTION ------------------------------------------------------------------ */
@@ -82,16 +77,11 @@ class ConsumerFactory {
             fromBeginning: false
         }
 
-        try {
-            await this.kafkaConsumer.connect()
-            await this.kafkaConsumer.subscribe(topic)
-            await this.kafkaConsumer.run({
-                eachBatch: async (eachBatchPayload: EachBatchPayload) =>
-                    await callback(eachBatchPayload)
-            })
-        } catch (error) {
-            throw error
-        }
+        await this.kafkaConsumer.connect()
+        await this.kafkaConsumer.subscribe(topic)
+        await this.kafkaConsumer.run({
+            eachBatch: async (eachBatchPayload: EachBatchPayload) => callback(eachBatchPayload)
+        })
     }
 
     public async shutdown(): Promise<void> {

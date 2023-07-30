@@ -1,7 +1,5 @@
 /* ------------------------------ Node Modules ------------------------------ */
 import { basename } from 'node:path'
-/* ------------------------------ Dependencies ------------------------------ */
-import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { IStripeGetCharge, Stripe } from '..'
 import logger from '../../../common/helpers/logger.helper'

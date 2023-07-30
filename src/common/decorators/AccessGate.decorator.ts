@@ -1,5 +1,3 @@
-/* ------------------------------ Dependencies ------------------------------ */
-import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { ITokenPayload } from '../interfaces'
 import { UserType } from '../enums/general.enum'

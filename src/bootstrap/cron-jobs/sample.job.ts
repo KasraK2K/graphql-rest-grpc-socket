@@ -11,7 +11,7 @@ const maxCycles = 3
 
 const sampleJob = new CronJob(
     '* * * 1-31 * *',
-    function () {
+    () => {
         console.log(`Job ${cycle}/${maxCycles} Done.`)
         if (cycle++ === maxCycles) sampleJob.stop()
     },

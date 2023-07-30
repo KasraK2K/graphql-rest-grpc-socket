@@ -34,7 +34,7 @@ class UserRepository extends Repository {
         if ('email' in filter) filter.email = filter.email.toLowerCase()
         if ('email' in args) args.email = args.email.toLowerCase()
 
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             knex<IUser>('users')
                 .where(filter)
                 .update(args)

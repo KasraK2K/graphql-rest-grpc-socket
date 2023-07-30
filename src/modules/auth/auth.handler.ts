@@ -1,6 +1,5 @@
 /* ------------------------------ Dependencies ------------------------------ */
 import { GraphQLResolveInfo } from 'graphql'
-import _ from 'lodash'
 import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import authService from './auth.service'
