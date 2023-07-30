@@ -8,6 +8,7 @@ import socketServer from './applications/socket'
 import metricsServer from './applications/prometheus'
 import { startGrpcServers } from './applications/gRPC'
 import { gRPCServerNames } from './applications/gRPC/constants/enums'
+import necessaryDataSeeder from './common/helpers/seeder.helper'
 /* -------------------------------------------------------------------------- */
 
 printInformation(process.env.GRAPHQL_PORT)
@@ -16,3 +17,4 @@ sofaServer()
 socketServer()
 metricsServer()
 startGrpcServers([gRPCServerNames.DEFAULT])
+necessaryDataSeeder()
