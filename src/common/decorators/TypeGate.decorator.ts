@@ -9,6 +9,11 @@ import tokenHelper from '../helpers/token.helper'
 const bearerKey: string = config.get('application.bearer')
 const bearerHeader: string = config.get('application.bearerHeader')
 
+/**
+ * Check token existence and validate token and add token_payload to req
+ *
+ * @param {number[]} roles
+ */
 const TypeGate = (roles: number[]) => {
     return (_target: unknown, _prototypeKey: string, descriptor: PropertyDescriptor) => {
         const originalValue = descriptor.value
