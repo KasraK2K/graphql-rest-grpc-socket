@@ -13,12 +13,56 @@
         }
       },
       {
+        "key": 1690824235419,
+        "children": [],
+        "todo": {
+          "content": "add handler for admin and user module and use it instead of service because of using decorator",
+          "id": 1690824235419,
+          "level": "success",
+          "done": false,
+          "start": 1690824235419
+        }
+      },
+      {
+        "key": 1690824211247,
+        "children": [],
+        "todo": {
+          "content": "create role module",
+          "id": 1690824211247,
+          "level": "success",
+          "done": false,
+          "start": 1690824211247
+        }
+      },
+      {
+        "key": 1690824222634,
+        "children": [],
+        "todo": {
+          "content": "create permission module",
+          "id": 1690824222634,
+          "level": "success",
+          "done": false,
+          "start": 1690824222634
+        }
+      },
+      {
+        "key": 1690824328772,
+        "children": [],
+        "todo": {
+          "content": "remove unnecessary token check in admin registeration",
+          "id": 1690824328772,
+          "level": "default",
+          "done": false,
+          "start": 1690824328773
+        }
+      },
+      {
         "key": 1688302517163,
         "children": [],
         "todo": {
           "content": "write test for each modules",
           "id": 1688302517163,
-          "level": "default",
+          "level": "secondary",
           "done": false,
           "start": 1688302517163
         }
@@ -29,20 +73,9 @@
         "todo": {
           "content": "write test for core",
           "id": 1688302534961,
-          "level": "default",
+          "level": "secondary",
           "done": false,
           "start": 1688302534961
-        }
-      },
-      {
-        "key": 1688578176609,
-        "children": [],
-        "todo": {
-          "content": "add stripe integration",
-          "id": 1688578176609,
-          "level": "default",
-          "done": false,
-          "start": 1688578176609
         }
       },
       {
@@ -51,7 +84,7 @@
         "todo": {
           "content": "add pagination for all kind of aggrigration",
           "id": 1688921180634,
-          "level": "default",
+          "level": "secondary",
           "done": false,
           "start": 1688921180634
         }
@@ -67,8 +100,9 @@
     "title": "task",
     "autoSort": false,
     "showEndTime": false,
+    "simpleMode": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1690009899075"
+    "version": "1690824395017"
   }
 }
