@@ -33,4 +33,4 @@ EXECUTE PROCEDURE trg_timestamp();
 
 
 -- Insert Record
-INSERT INTO roles (name, description, permissions) VALUES ('admin', 'access to everything', '{0, 1, 2}') RETURNING *;
+INSERT INTO roles (name, description, permissions) VALUES ('admin', 'access to everything', '{1}') RETURNING *;
