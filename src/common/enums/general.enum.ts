@@ -6,7 +6,15 @@ export enum Gender {
 
 export enum ModuleName {
     DEFAULT = 'default',
-    GENERAL = 'general'
+    GENERAL = 'general',
+    USER = 'user',
+    ADMIN = 'admin'
+}
+
+export enum ModuleNumber {
+    GENERAL,
+    USER,
+    ADMIN
 }
 
 export enum UserType {
