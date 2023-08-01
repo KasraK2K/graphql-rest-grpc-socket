@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS roles
 	
 	name        	    VARCHAR(50)  NOT NULL DEFAULT '',
 	description         VARCHAR(250) NOT NULL DEFAULT '',
-    
 	permissions			INTEGER[]	     DEFAULT '{}',
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
