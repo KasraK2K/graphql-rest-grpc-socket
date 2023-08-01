@@ -56,9 +56,9 @@ const AccessGate = (accesses: number[]) => {
                 .then((result) => {
                     if (!result.rowCount) throw errorHandler(403)
                     else {
-                        const foundedAccesses: number[] = result.rows
-                            .map((item: { access: number }) => item.access)
-                            .flat(Infinity)
+                        const foundedAccesses: number[] = result.rows.map(
+                            (item: { access: number }) => item.access
+                        )
                         for (const access of accesses) {
                             if (foundedAccesses.includes(access)) {
                                 // Add type and permissions to applicant
