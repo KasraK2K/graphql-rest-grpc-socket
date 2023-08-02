@@ -5,6 +5,10 @@ import devCertificate from './certificate.dev.json'
 import prodCertificate from './certificate.prod.json'
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------- Constants ------------------------------- */
+const certificate = process.env.NODE_ENV === 'production' ? prodCertificate : devCertificate
+/* -------------------------------------------------------------------------- */
+
 /* -------------------------------------------------------------------------- */
 /*                                 How To Use                                 */
 /* -------------------------------------------------------------------------- */
@@ -43,10 +47,6 @@ import prodCertificate from './certificate.prod.json'
 //     const error = errorHandler(500, { status: 500, message: error_message })
 //     return reject(error)
 //   })
-/* -------------------------------------------------------------------------- */
-
-/* -------------------------------- Constants ------------------------------- */
-const certificate = process.env.NODE_ENV === 'development' ? devCertificate : prodCertificate
 /* -------------------------------------------------------------------------- */
 
 export * from './libs/interface'

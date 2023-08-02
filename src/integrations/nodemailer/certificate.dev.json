@@ -1,0 +1,7 @@
+{
+    "host": "sandbox.smtp.mailtrap.io",
+    "auth": {
+        "user": "--",
+        "pass": "--"
+    }
+}
