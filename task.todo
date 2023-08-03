@@ -2,41 +2,6 @@
   "todotree": {
     "tree": [
       {
-        "key": 1691011152657,
-        "children": [],
-        "todo": {
-          "content": "create new template to send activation code to email",
-          "id": 1691011152657,
-          "level": "danger",
-          "done": false,
-          "start": 1691011152657
-        }
-      },
-      {
-        "key": 1691011184968,
-        "children": [],
-        "todo": {
-          "content": "change login user/admin to mutation",
-          "id": 1691011184968,
-          "level": "danger",
-          "done": false,
-          "start": 1691011184968
-        }
-      },
-      {
-        "key": 1688578006783,
-        "children": [],
-        "todo": {
-          "content": "add nodemailer or use mailgun and send email for user after create",
-          "id": 1688578006783,
-          "level": "warning",
-          "done": true,
-          "start": 1688578006783,
-          "focus": false,
-          "end": 1691011224504
-        }
-      },
-      {
         "key": 1690824235419,
         "children": [],
         "todo": {
@@ -127,6 +92,6 @@
     "simpleMode": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1691011228630"
+    "version": "1691045540438"
   }
 }
