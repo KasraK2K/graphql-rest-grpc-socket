@@ -22,3 +22,15 @@ type MailGunResponse {
     status: Int
     details: String
 }
+
+type InformationResponse {
+    site_name: String
+    api_version: String
+    front_version: String
+    portal_version: String
+    app_version: String
+}
+
+type Query {
+    information: InformationResponse!
+}

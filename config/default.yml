@@ -1,9 +1,11 @@
 mode: default
 
 application:
+    site_name: 'Wisdom'
     api_version: '1.0.0'
     front_version: '1.0.0'
     portal_version: '1.0.0'
+    app_version: '1.0.0'
 
     monitoring:
         treblle:

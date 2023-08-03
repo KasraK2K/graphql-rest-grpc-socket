@@ -12,14 +12,11 @@ type AuthUserResponse {
     user: User!
 }
 
-type Query {
+type Mutation {
     "Check login and response admin and token"
     loginAdmin(email: String!, password: String!): AuthAdminResponse!
     "Check login and response user and token"
     loginUser(email: String!, password: String!): AuthUserResponse!
-}
-
-type Mutation {
     "Create new admin and return admin and token"
     registerAdmin(email: String!, password: String!): AuthAdminResponse!
     "Create new user and return user and token"

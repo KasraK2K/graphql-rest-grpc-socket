@@ -16,12 +16,14 @@ export interface IApplicationConfig {
     bearer: string
     bearerHeader: string
     apiKeyHeader: string
+    site_name: string
     api_version: string
     front_version: string
     portal_version: string
+    app_version: string
     information: boolean
     monitoring: IMonitoringConfig
-    request: IRecuestConfig
+    request: IRequestConfig
 }
 
 export interface IJobsConfig {
@@ -49,7 +51,7 @@ export interface IMonitoringConfig {
     }
 }
 
-export interface IRecuestConfig {
+export interface IRequestConfig {
     allowMethods: string[]
     ignoreCheckMethods: string[]
     ignoreApiKey: string[]
