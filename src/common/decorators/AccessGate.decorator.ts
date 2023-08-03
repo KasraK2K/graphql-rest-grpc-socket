@@ -4,6 +4,7 @@ import { knex } from '../../bootstrap'
 import errorHandler from '../helpers/errors/error.handler'
 import { IAdminApplicant, IApplicant, IUserApplicant } from '../interfaces/applicant.interface'
 import { IContext } from '../../graphql/context'
+import { TypeGate } from '.'
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -24,7 +25,7 @@ const AccessGate = (accesses: number[]) => {
 
             // If TypeGate not used
             if (!('token_payload' in context))
-                return errorHandler(500, 'Before use AccessGate, use TypeGate decorator')
+                return errorHandler(500, `Before use AccessGate, use ${TypeGate.name} decorator`)
 
             const token_payload = context.token_payload
             const isAdmin = token_payload.user_type === UserType.ADMIN
