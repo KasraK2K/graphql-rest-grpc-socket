@@ -1,4 +1,5 @@
 /* ----------------------------- Custom Modules ----------------------------- */
+import { ITokenPayload } from '../common/interfaces/general.interface'
 import { knex } from '../bootstrap'
 /* -------------------------------------------------------------------------- */
 
@@ -13,6 +14,9 @@ export interface IContext {
     waitUntil: Record<string, any>
     request: Record<string, any>
     params: Record<string, any>
+
+    token: string
+    token_payload: ITokenPayload
 }
 
 export const context: Partial<IContext> = {

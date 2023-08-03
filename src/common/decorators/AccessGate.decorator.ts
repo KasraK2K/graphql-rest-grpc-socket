@@ -1,9 +1,9 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { ITokenPayload } from '../interfaces'
 import { UserType } from '../enums/general.enum'
 import { knex } from '../../bootstrap'
 import errorHandler from '../helpers/errors/error.handler'
 import { IAdminApplicant, IApplicant, IUserApplicant } from '../interfaces/applicant.interface'
+import { IContext } from '../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -19,13 +19,14 @@ const AccessGate = (accesses: number[]) => {
             // Quite function if doesn't have accesses
             if (!accesses.length) return originalValue.apply(this, args)
 
-            const req = args[2].req
+            const context: IContext = args[2]
+            const req = context.req
 
             // If TypeGate not used
-            if (!('token_payload' in req))
+            if (!('token_payload' in context))
                 return errorHandler(500, 'Before use AccessGate, use TypeGate decorator')
 
-            const token_payload: ITokenPayload = req.token_payload
+            const token_payload = context.token_payload
             const isAdmin = token_payload.user_type === UserType.ADMIN
             const api = isAdmin ? knex<IAdminApplicant>('admins') : knex<IUserApplicant>('users')
 

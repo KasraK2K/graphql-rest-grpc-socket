@@ -3,6 +3,7 @@ import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import errorHandler from '../helpers/errors/error.handler'
 import tokenHelper from '../helpers/token.helper'
+import { IContext } from './../../graphql/context'
 /* -------------------------------------------------------------------------- */
 
 const bearerKey: string = config.get('application.bearer')
@@ -21,7 +22,8 @@ const TypeGate = (roles: number[]) => {
             // Quite function if doesn't have roles
             if (!roles.length) return originalValue.apply(this, args)
 
-            const req = args[2].req
+            const context: IContext = args[2]
+            const req = context.req
             const headers: string[] = Array.from(req.rawHeaders)
             let token: string | string[] = headers.filter((header) => header.startsWith(bearerKey))
 
@@ -36,7 +38,9 @@ const TypeGate = (roles: number[]) => {
 
                 // Check role is valid
                 if (!roles.includes(tokenRole)) throw errorHandler(403)
-                req.token_payload = data
+
+                context.token = token
+                context.token_payload = data
             }
 
             return originalValue.apply(this, args)

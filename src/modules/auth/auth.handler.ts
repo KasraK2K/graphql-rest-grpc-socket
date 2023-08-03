@@ -75,14 +75,16 @@ class AuthHandler {
      * @return {*}  {Promise<IAdminAuthResponse>}
      * @memberof AuthHandler
      */
+    @TypeGate([UserType.ADMIN])
+    @AccessGate([1002])
     async registerAdmin(
         _parent: IAdminAuthResponse,
         args: { email: string; password: string },
         context: IContext,
         _info: GraphQLResolveInfo
     ): Promise<IAdminAuthResponse> {
-        const { data } = getTokenAndPayload(context)
-        const { token, admin } = await authService.registerAdmin(data, args)
+        const { token_payload } = context
+        const { token, admin } = await authService.registerAdmin(token_payload, args)
         return { token, admin }
     }
 
@@ -119,22 +121,6 @@ class AuthHandler {
             }
         }
     }
-}
-
-/**
- * This function is useful to get token and token payload
- *
- * @param {IContext} context
- * @return {*}  {{ token: string; data: ITokenPayload }}
- */
-const getTokenAndPayload = (context: IContext): { token: string; data: ITokenPayload } => {
-    const authorization = context.request.headers.get(applicationConfig.bearerHeader)
-    if (authorization) {
-        const token = authorization.slice(applicationConfig.bearer.length + 1)
-        const { valid, data } = tokenHelper.verify(token)
-        if (!valid) throw errorHandler(403)
-        else return { token, data }
-    } else throw errorHandler(401)
 }
 
 export default new AuthHandler()
