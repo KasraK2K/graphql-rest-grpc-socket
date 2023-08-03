@@ -1,7 +1,10 @@
-import { IUser } from '../interfaces'
+import { IVerifyUserEmailArgs } from '../interfaces'
 
 class HtmlGenerator {
-    verifyEmail(user: IUser): string {
+    verifyEmail(args: IVerifyUserEmailArgs): string {
+        const { user, verify_token } = args
+        const verifyUrl = `${process.env.REST_SERVER_ADDRESS}/auth/verify/${verify_token}`
+
         return /* HTML */ `
             <!DOCTYPE html>
             <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -178,7 +181,7 @@ class HtmlGenerator {
                                                     </div>
                                                     <div>
                                                         <a
-                                                            href="https://example.com"
+                                                            href="${verifyUrl}"
                                                             style="display: inline-block; border-radius: 4px; background-color: #334155; padding: 16px 24px; font-size: 16px; font-weight: 600; line-height: 1; color: #f8fafc; text-decoration: none"
                                                         >
                                                             <!--[if mso]>

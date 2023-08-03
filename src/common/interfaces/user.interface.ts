@@ -8,6 +8,7 @@ export interface IUser {
     email: string
     password: string
     last_token: string
+    verify_token: string
 
     is_active: boolean
     is_verify: boolean

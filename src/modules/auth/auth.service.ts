@@ -1,5 +1,5 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IAdmin, IUser } from '../../common/interfaces'
+import { IAdmin, IUser, IVerifyUserEmailArgs } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { TokenType, UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'
@@ -7,6 +7,8 @@ import { ITokenPayload } from '../../common/interfaces'
 import tokenHelper from '../../common/helpers/token.helper'
 import userService from '../user/user.service'
 import adminService from '../admin/admin.service'
+import { uniqueString } from '../../common/helpers/unique.helper'
+import nodeMailer from '../../integrations/nodemailer'
 /* -------------------------------------------------------------------------- */
 
 class AuthService {
@@ -113,9 +115,16 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
+        const verify_token = uniqueString()
         await userService.updateUser(
             { id: user.id, email },
-            { last_token: token, last_login_at: 'NOW()' }
+            { last_token: token, last_login_at: 'NOW()', verify_token }
+        )
+
+        await nodeMailer.sendMail<IVerifyUserEmailArgs>(
+            { to: user.email, subject: 'Verify Wisdom Account' },
+            'verifyEmail',
+            { verify_token, user }
         )
 
         return { token, user }

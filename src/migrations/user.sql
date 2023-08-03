@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users
     email             	VARCHAR(50)  NOT NULL UNIQUE,
     password          	VARCHAR(200) NOT NULL,
     last_token          VARCHAR(500) NOT NULL DEFAULT '',
+    verify_token        VARCHAR(50)  NOT NULL,
 
     is_active         	BOOLEAN      DEFAULT TRUE,
     is_verify       	BOOLEAN      DEFAULT FALSE,

@@ -1,4 +1,7 @@
+/* ----------------------------- Custom Modules ----------------------------- */
 import { TokenType, UserType } from '../enums/general.enum'
+import { IUser } from './user.interface'
+/* -------------------------------------------------------------------------- */
 
 export interface IDefaultArgs {
     [key: string]: any
@@ -32,4 +35,9 @@ export interface ITokenPayload {
     id: number
     user_type: UserType
     token_type: TokenType
+}
+
+export interface IVerifyUserEmailArgs {
+    verify_token: string
+    user: Partial<IUser>
 }
