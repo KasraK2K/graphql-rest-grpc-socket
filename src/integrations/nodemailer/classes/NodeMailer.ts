@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer'
 /* ----------------------------- Custom Modules ----------------------------- */
 import { certificate } from '..'
 import htmlGenerator from '../../../common/helpers/html.helper'
+import errorHandler from '../../../common/helpers/errors/error.handler'
 /* -------------------------------------------------------------------------- */
 
 class NodeMailer {
@@ -21,9 +22,16 @@ class NodeMailer {
         const from = 'Kasra.Karami.KK@gmail.com',
             sender = 'Kasra.Karami.KK@gmail.com'
 
-        const result = await this.transport.sendMail({ ...options, from, sender, html })
-        if (result.accepted.includes(options.to)) return true
-        else return false
+        return await this.transport
+            .sendMail({ ...options, from, sender, html })
+            .then((result) => {
+                if (result.accepted.includes(options.to)) return true
+                else return false
+            })
+            .catch((err) => {
+                errorHandler(err)
+                return false
+            })
     }
 }
 
