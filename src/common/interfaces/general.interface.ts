@@ -36,8 +36,3 @@ export interface ITokenPayload {
     user_type: UserType
     token_type: TokenType
 }
-
-export interface IVerifyUserEmailArgs {
-    verify_token: string
-    user: Partial<IUser>
-}

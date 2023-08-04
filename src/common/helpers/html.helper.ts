@@ -1,9 +1,8 @@
-import { IVerifyUserEmailArgs } from '../interfaces'
+import { IUser } from '../interfaces'
 
 class HtmlGenerator {
-    verifyEmail(args: IVerifyUserEmailArgs): string {
-        const { user, verify_token } = args
-        const verifyUrl = `${process.env.REST_SERVER_ADDRESS}/auth/verify/${verify_token}`
+    verifyEmail(user: Partial<IUser>): string {
+        const verifyUrl = `${process.env.REST_SERVER_ADDRESS}/auth/verify/${user.verify_token}`
 
         return /* HTML */ `
             <!DOCTYPE html>
@@ -167,7 +166,7 @@ class HtmlGenerator {
                                                         class="sm-leading-8"
                                                         style="margin: 0 0 24px; font-size: 24px; font-weight: 600; color: #000"
                                                     >
-                                                        Hello dear ${user.first_name},
+                                                        Hello,
                                                     </h1>
                                                     <p style="margin: 0; line-height: 24px">
                                                         We are pleased to have you here.
