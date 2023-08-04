@@ -2,10 +2,8 @@
 // import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import adminRepository from './admin.repository'
-import { IAdmin, IAdminFilterArgs, IAdminLoginArgs, ITokenPayload } from '../../common/interfaces'
+import { IAdmin, IAdminFilterArgs, IAdminLoginArgs } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
-import errorHandler from '../../common/helpers/errors/error.handler'
-import { UserType } from '../../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
 
 // const applicationConfig: IApplicationConfig = config.get('application')
@@ -16,11 +14,7 @@ class AdminService {
         return await adminRepository.getAdmin(args)
     }
 
-    async addAdmin(
-        data: ITokenPayload,
-        args: { email: string; password: string }
-    ): Promise<IAdmin> {
-        if (data.user_type !== UserType.ADMIN) throw errorHandler(403)
+    async addAdmin(args: { email: string; password: string }): Promise<IAdmin> {
         args.password = bcryptHelper.hashGen(args.password)
         args.email = args.email.toLowerCase()
         return await adminRepository.addAdmin(args)
