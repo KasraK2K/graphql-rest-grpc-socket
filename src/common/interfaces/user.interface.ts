@@ -34,3 +34,8 @@ export interface IUserFilterArgs {
     email?: string
     last_token?: string
 }
+
+export interface IUserFindArgs {
+    id?: number
+    email?: string
+}

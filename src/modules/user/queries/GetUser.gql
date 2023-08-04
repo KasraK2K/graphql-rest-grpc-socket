@@ -1,0 +1,31 @@
+query GetUser($email: String!) {
+    user(email: $email) {
+        ...userFields
+    }
+}
+
+fragment userFields on User {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_verify
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "email": "User Email"
+# }
+
+# ---------------------------------- Headers --------------------------------- #
+# {
+#   "authorization": "Bearer <User Token>"
+# }

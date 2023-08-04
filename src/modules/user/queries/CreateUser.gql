@@ -1,0 +1,32 @@
+mutation CreateUser($email: String!, $password: String!) {
+    addUser(email: $email, password: $password) {
+        ...userFields
+    }
+}
+
+fragment userFields on User {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_verify
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "email": "User Email",
+#   "password": "User Password"
+# }
+
+# ---------------------------------- Headers --------------------------------- #
+# {
+#   "authorization": "Bearer <User Token>"
+# }

@@ -41,8 +41,10 @@
           "content": "remove unnecessary token check in admin registeration",
           "id": 1690824328772,
           "level": "default",
-          "done": false,
-          "start": 1690824328773
+          "done": true,
+          "start": 1690824328773,
+          "focus": false,
+          "end": 1691072249443
         }
       },
       {
@@ -92,6 +94,6 @@
     "simpleMode": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1691045540438"
+    "version": "1691072249507"
   }
 }
