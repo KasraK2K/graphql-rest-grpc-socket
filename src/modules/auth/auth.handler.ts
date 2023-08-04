@@ -23,8 +23,6 @@ class AuthHandler {
      * @return {*}  {Promise<IAdminAuthResponse>}
      * @memberof AuthHandler
      */
-    @TypeGate([UserType.ADMIN, UserType.USER])
-    @AccessGate([1009])
     async loginAdmin(
         _parent: IAdminAuthResponse,
         args: { email: string; password: string },
@@ -46,8 +44,6 @@ class AuthHandler {
      * @return {*}  {Promise<IUserAuthResponse>}
      * @memberof AuthHandler
      */
-    @TypeGate([UserType.ADMIN, UserType.USER])
-    @AccessGate([1001])
     async loginUser(
         _parent: IUserAuthResponse,
         args: { email: string; password: string },
@@ -69,15 +65,14 @@ class AuthHandler {
      * @memberof AuthHandler
      */
     @TypeGate([UserType.ADMIN])
-    @AccessGate([1002])
+    @AccessGate([1004])
     async registerAdmin(
         _parent: IAdminAuthResponse,
         args: { email: string; password: string },
-        context: IContext,
+        _context: IContext,
         _info: GraphQLResolveInfo
     ): Promise<IAdminAuthResponse> {
-        const { token_payload } = context
-        const { token, admin } = await authService.registerAdmin(token_payload, args)
+        const { token, admin } = await authService.registerAdmin(args)
         return { token, admin }
     }
 

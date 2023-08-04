@@ -1,5 +1,5 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IAdmin, IUser, IVerifyUserEmailArgs } from '../../common/interfaces'
+import { IAdmin, IUser } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { TokenType, UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'
@@ -7,7 +7,6 @@ import { ITokenPayload } from '../../common/interfaces'
 import tokenHelper from '../../common/helpers/token.helper'
 import userService from '../user/user.service'
 import adminService from '../admin/admin.service'
-import { uniqueString } from '../../common/helpers/unique.helper'
 import nodeMailer from '../../integrations/nodemailer'
 /* -------------------------------------------------------------------------- */
 
@@ -75,16 +74,16 @@ class AuthService {
         return { token, user }
     }
 
-    async registerAdmin(
-        data: ITokenPayload,
-        args: { email: string; password: string }
-    ): Promise<{ token: string; admin: IAdmin }> {
+    async registerAdmin(args: {
+        email: string
+        password: string
+    }): Promise<{ token: string; admin: IAdmin }> {
         const { email, password } = args
 
         const foundedAdmin = await adminService.getAdmin({ email })
         if (foundedAdmin) throw errorHandler(409, 'Admin is already registered.')
 
-        const admin: IAdmin = await adminService.addAdmin(data, { email, password })
+        const admin: IAdmin = await adminService.addAdmin({ email, password })
         const payload: ITokenPayload = {
             id: admin.id,
             user_type: UserType.ADMIN,
@@ -115,16 +114,16 @@ class AuthService {
             token_type: TokenType.TOKEN
         }
         const token = tokenHelper.sign(payload)
-        const verify_token = uniqueString()
+        // const verify_token = uniqueString()
         await userService.updateUser(
             { id: user.id, email },
-            { last_token: token, last_login_at: 'NOW()', verify_token }
+            { last_token: token, last_login_at: 'NOW()' }
         )
 
-        await nodeMailer.sendMail<IVerifyUserEmailArgs>(
+        await nodeMailer.sendMail<Partial<IUser>>(
             { to: user.email, subject: 'Verify Wisdom Account' },
             'verifyEmail',
-            { verify_token, user }
+            user
         )
 
         return { token, user }

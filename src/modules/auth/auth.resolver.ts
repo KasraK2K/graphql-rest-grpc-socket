@@ -3,9 +3,12 @@ import authHandler from './auth.handler'
 /* -------------------------------------------------------------------------- */
 
 const resolver = {
-    Mutation: {
+    Query: {
         loginAdmin: authHandler.loginAdmin,
-        loginUser: authHandler.loginUser,
+        loginUser: authHandler.loginUser
+    },
+
+    Mutation: {
         registerAdmin: authHandler.registerAdmin,
         registerUser: authHandler.registerUser
     },
