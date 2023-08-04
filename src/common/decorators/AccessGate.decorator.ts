@@ -48,7 +48,7 @@ const AccessGate = (accesses: number[]) => {
 
             const permissionsQuery = /* SQL */ `
                 SELECT DISTINCT p.access
-                FROM "users" u
+                FROM ${!isAdmin ? 'users' : 'admins'} u
                 JOIN "roles" r ON u.roles @> ARRAY[r.id]
                 JOIN "permissions" p ON r.permissions @> ARRAY[p.id]
                 WHERE u.id = ${token_payload.id};`
@@ -56,6 +56,7 @@ const AccessGate = (accesses: number[]) => {
             await knex
                 .raw(permissionsQuery)
                 .then((result) => {
+                    console.log({ result })
                     if (!result.rowCount) throw errorHandler(403)
                     else {
                         const foundedAccesses: number[] = result.rows.map(
