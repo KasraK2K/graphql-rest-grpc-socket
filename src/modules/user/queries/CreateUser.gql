@@ -28,5 +28,5 @@ fragment userFields on User {
 
 # ---------------------------------- Headers --------------------------------- #
 # {
-#   "authorization": "Bearer <User Token>"
+#   "authorization": "Bearer <Admin Token>"
 # }
