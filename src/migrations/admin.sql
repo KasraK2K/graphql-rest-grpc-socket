@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS admins
     is_block        	BOOLEAN      DEFAULT FALSE,
     is_archive        	BOOLEAN      DEFAULT FALSE,
     is_superuser        BOOLEAN      DEFAULT FALSE,
-	roles				INTEGER[]	     DEFAULT '{1,2}',
+	roles				INTEGER[]	 DEFAULT '{}',
 
     created_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at        	TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
@@ -47,4 +47,4 @@ CREATE INDEX "admin_is_archive" ON "admins"("is_archive");
 
 -- Insert Record
 -- Password is 12345678 and hashed by bcryptjs salt 7
-INSERT INTO admins (email, password, is_superuser) VALUES ('kasra_k2k@yahoo.com', '$2a$07$r66gkFrxBP5L5/XSd4No4eY.Z/UGu.56F/neHhsLjAwydlPvUnocO', TRUE) RETURNING *;
+INSERT INTO admins (email, password, is_superuser) VALUES ('kasra.karami.kk@yahoo.com', '$2a$07$r66gkFrxBP5L5/XSd4No4eY.Z/UGu.56F/neHhsLjAwydlPvUnocO', TRUE) RETURNING *;
