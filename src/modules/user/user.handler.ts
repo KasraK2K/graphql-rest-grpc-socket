@@ -24,7 +24,7 @@ class UserHandler {
      * @return {*}  {Promise<IUser>}
      * @memberof AuthHandler
      */
-    @TypeGate([UserType.ADMIN, UserType.USER])
+    @TypeGate([UserType.ADMIN])
     @AccessGate([1001])
     async user(
         _parent: IUser,

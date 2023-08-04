@@ -2,6 +2,7 @@
 import userRepository from './user.repository'
 import { IUser, IUserFilterArgs, IUserLoginArgs } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
+import { uniqueString } from './../../common/helpers/unique.helper'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
@@ -13,7 +14,8 @@ class UserService {
     async addUser(args: { email: string; password: string }): Promise<IUser> {
         args.password = bcryptHelper.hashGen(args.password)
         args.email = args.email.toLowerCase()
-        return await userRepository.addUser(args)
+        const verify_token = uniqueString()
+        return await userRepository.addUser({ ...args, verify_token })
     }
 
     async updateUser(filter: IUserFilterArgs, args: Partial<IUser>): Promise<IUser> {

@@ -17,7 +17,7 @@ class UserRepository extends Repository {
         })
     }
 
-    addUser(args: { email: string; password: string }): Promise<IUser> {
+    addUser(args: { email: string; password: string; verify_token: string }): Promise<IUser> {
         if ('email' in args) args.email = args.email.toLowerCase()
 
         return new Promise((resolve, reject) => {
