@@ -2,14 +2,14 @@
 // import config from 'config'
 /* ----------------------------- Custom Modules ----------------------------- */
 import adminRepository from './admin.repository'
-import { IAdmin, IAdminFilterArgs, IAdminLoginArgs } from '../../common/interfaces'
+import { IAdmin, IAdminFilterArgs } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 /* -------------------------------------------------------------------------- */
 
 // const applicationConfig: IApplicationConfig = config.get('application')
 
 class AdminService {
-    async getAdmin(args: IAdminLoginArgs): Promise<IAdmin> {
+    async getAdmin(args: Partial<IAdmin>): Promise<IAdmin> {
         args.email = args.email.toLowerCase()
         return await adminRepository.getAdmin(args)
     }

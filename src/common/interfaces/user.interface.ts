@@ -22,13 +22,6 @@ export interface IUser {
     last_login_at: string | null
 }
 
-export interface IUserLoginArgs {
-    email: string
-    is_verify?: boolean
-    is_block?: boolean
-    is_archive?: boolean
-}
-
 export interface IUserFilterArgs {
     id?: number
     email?: string

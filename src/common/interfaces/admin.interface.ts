@@ -21,12 +21,6 @@ export interface IAdmin {
     last_login_at: string | null
 }
 
-export interface IAdminLoginArgs {
-    email: string
-    is_block?: boolean
-    is_archive?: boolean
-}
-
 export interface IAdminFilterArgs {
     id?: number
     email?: string

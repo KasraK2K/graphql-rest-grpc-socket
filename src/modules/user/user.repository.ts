@@ -1,12 +1,12 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IUser, IUserFilterArgs, IUserLoginArgs } from '../../common/interfaces/user.interface'
+import { IUser, IUserFilterArgs } from '../../common/interfaces/user.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
 import { knex } from '../../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 class UserRepository extends Repository {
-    getUser(args: IUserLoginArgs): Promise<IUser> {
+    getUser(args: Partial<IUser>): Promise<IUser> {
         return new Promise((resolve, reject) => {
             this.findOne<IUser>('users', args)
                 .then((result) => {

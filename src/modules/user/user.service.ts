@@ -1,12 +1,12 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import userRepository from './user.repository'
-import { IUser, IUserFilterArgs, IUserLoginArgs } from '../../common/interfaces/user.interface'
+import { IUser, IUserFilterArgs } from '../../common/interfaces/user.interface'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { uniqueString } from './../../common/helpers/unique.helper'
 /* -------------------------------------------------------------------------- */
 
 class UserService {
-    async getUser(args: IUserLoginArgs): Promise<IUser> {
+    async getUser(args: Partial<IUser>): Promise<IUser> {
         args.email = args.email.toLowerCase()
         return await userRepository.getUser(args)
     }

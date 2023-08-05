@@ -1,12 +1,12 @@
 /* ----------------------------- Custom Modules ----------------------------- */
 import Repository from '../../base/repository/Repository'
-import { IAdmin, IAdminFilterArgs, IAdminLoginArgs } from '../../common/interfaces/admin.interface'
+import { IAdmin, IAdminFilterArgs } from '../../common/interfaces/admin.interface'
 import errorHandler from '../../common/helpers/errors/error.handler'
 import { knex } from '../../bootstrap'
 /* -------------------------------------------------------------------------- */
 
 class AdminRepository extends Repository {
-    getAdmin(args: IAdminLoginArgs): Promise<IAdmin> {
+    getAdmin(args: Partial<IAdmin>): Promise<IAdmin> {
         return new Promise((resolve, reject) => {
             this.findOne<IAdmin>('admins', args)
                 .then((result) => {
