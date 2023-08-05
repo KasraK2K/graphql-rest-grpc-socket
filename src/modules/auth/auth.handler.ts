@@ -96,6 +96,16 @@ class AuthHandler {
         return { token, user }
     }
 
+    /**
+     * Verify user email
+     *
+     * @param {IUserAuthResponse} _parent
+     * @param {{ verify_token: string }} args
+     * @param {IContext} _context
+     * @param {GraphQLResolveInfo} _info
+     * @return {*}  {Promise<IOmittedUser>}
+     * @memberof AuthHandler
+     */
     async verifyUserEmail(
         _parent: IUserAuthResponse,
         args: { verify_token: string },

@@ -1,0 +1,26 @@
+mutation VerifyUserEmail($verify_token: String!) {
+    verifyUserEmail(verify_token: $verify_token) {
+        ...userFields
+    }
+}
+
+fragment userFields on User {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_verify
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "verify_token": "User verify email sent to the user email"
+# }
