@@ -26,3 +26,5 @@ export interface IAdminFilterArgs {
     email?: string
     last_token?: string
 }
+
+export type IOmittedAdmin = Omit<IAdmin, 'password'>

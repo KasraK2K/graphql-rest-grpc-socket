@@ -10,7 +10,8 @@ const resolver = {
 
     Mutation: {
         registerAdmin: authHandler.registerAdmin,
-        registerUser: authHandler.registerUser
+        registerUser: authHandler.registerUser,
+        verifyUserEmail: authHandler.verifyUserEmail
     },
 
     Subscription: {

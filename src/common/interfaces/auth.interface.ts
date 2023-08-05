@@ -1,13 +1,13 @@
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IUser, IAdmin } from '.'
+import { IOmittedUser, IOmittedAdmin } from '.'
 /* -------------------------------------------------------------------------- */
 
 export interface IUserAuthResponse {
     token: string
-    user: IUser
+    user: IOmittedUser
 }
 
 export interface IAdminAuthResponse {
     token: string
-    admin: IAdmin
+    admin: IOmittedAdmin
 }

@@ -24,6 +24,8 @@ type Mutation {
     registerAdmin(email: String!, password: String!): AuthAdminResponse!
     "Create new user and return user and token"
     registerUser(email: String!, password: String!): AuthUserResponse!
+    "Verify user email"
+    verifyUserEmail(verify_token: String!): User!
 }
 
 type Subscription {

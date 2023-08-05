@@ -1,5 +1,7 @@
+/* ------------------------------ Dependencies ------------------------------ */
+import _ from 'lodash'
 /* ----------------------------- Custom Modules ----------------------------- */
-import { IAdmin, IUser } from '../../common/interfaces'
+import { IAdmin, IOmittedAdmin, IOmittedUser, IUser } from '../../common/interfaces'
 import bcryptHelper from '../../common/helpers/bcrypt.helper'
 import { TokenType, UserType } from '../../common/enums/general.enum'
 import errorHandler from '../../common/helpers/errors/error.handler'
@@ -14,7 +16,7 @@ class AuthService {
     async loginAdmin(args: {
         email: string
         password: string
-    }): Promise<{ token: string; admin: IAdmin }> {
+    }): Promise<{ token: string; admin: IOmittedAdmin }> {
         const { email, password } = args
         const admin: IAdmin = await adminService.getAdmin({
             email,
@@ -38,13 +40,13 @@ class AuthService {
             { last_token: token, last_login_at: 'NOW()' }
         )
 
-        return { token, admin }
+        return { token, admin: this.getOmittedAdmin(admin) }
     }
 
     async loginUser(args: {
         email: string
         password: string
-    }): Promise<{ token: string; user: IUser }> {
+    }): Promise<{ token: string; user: IOmittedUser }> {
         const { email, password } = args
         const user: IUser = await userService.getUser({
             email,
@@ -71,13 +73,13 @@ class AuthService {
             { last_token: token, last_login_at: 'NOW()' }
         )
 
-        return { token, user }
+        return { token, user: this.getOmittedUser(user) }
     }
 
     async registerAdmin(args: {
         email: string
         password: string
-    }): Promise<{ token: string; admin: IAdmin }> {
+    }): Promise<{ token: string; admin: IOmittedAdmin }> {
         const { email, password } = args
 
         const foundedAdmin = await adminService.getAdmin({ email })
@@ -95,13 +97,13 @@ class AuthService {
             { last_token: token, last_login_at: 'NOW()' }
         )
 
-        return { token, admin }
+        return { token, admin: this.getOmittedAdmin(admin) }
     }
 
     async registerUser(args: {
         email: string
         password: string
-    }): Promise<{ token: string; user: IUser }> {
+    }): Promise<{ token: string; user: IOmittedUser }> {
         const { email, password } = args
 
         const findUser = await userService.getUser({ email })
@@ -126,7 +128,27 @@ class AuthService {
             user
         )
 
-        return { token, user }
+        return { token, user: this.getOmittedUser(user) }
+    }
+
+    async verifyUserEmail(verify_token: string): Promise<IOmittedUser> {
+        const user: IUser = await userService.getUser({
+            verify_token,
+            is_verify: false,
+            is_block: false,
+            is_archive: false
+        })
+        if (!user) throw errorHandler(404, 'Token is broken.')
+        const updatedUser = await userService.updateUser({ id: user.id }, { is_verify: true })
+        return this.getOmittedUser(updatedUser)
+    }
+
+    private getOmittedAdmin(admin: IAdmin): IOmittedAdmin {
+        return _.omit(admin, ['password'])
+    }
+
+    private getOmittedUser(user: IUser): IOmittedUser {
+        return _.omit(user, ['password', 'last_token', 'verify_token'])
     }
 }
 

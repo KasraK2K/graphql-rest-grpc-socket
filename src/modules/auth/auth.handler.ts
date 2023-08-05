@@ -3,7 +3,7 @@ import { GraphQLResolveInfo } from 'graphql'
 /* ----------------------------- Custom Modules ----------------------------- */
 import authService from './auth.service'
 import { IContext } from '../../graphql/context'
-import { IUserAuthResponse, IAdminAuthResponse } from '../../common/interfaces'
+import { IUserAuthResponse, IAdminAuthResponse, IOmittedUser } from '../../common/interfaces'
 import { TypeGate, AccessGate } from '../../common/decorators'
 import { UserType } from '../../common/enums/general.enum'
 /* -------------------------------------------------------------------------- */
@@ -94,6 +94,15 @@ class AuthHandler {
     ): Promise<IUserAuthResponse> {
         const { token, user } = await authService.registerUser(args)
         return { token, user }
+    }
+
+    async verifyUserEmail(
+        _parent: IUserAuthResponse,
+        args: { verify_token: string },
+        _context: IContext,
+        _info: GraphQLResolveInfo
+    ): Promise<IOmittedUser> {
+        return await authService.verifyUserEmail(args.verify_token)
     }
 
     /**

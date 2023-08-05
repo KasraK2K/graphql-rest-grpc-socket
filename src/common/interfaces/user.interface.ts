@@ -32,3 +32,5 @@ export interface IUserFindArgs {
     id?: number
     email?: string
 }
+
+export type IOmittedUser = Omit<IUser, 'password' | 'last_token' | 'verify_token'>

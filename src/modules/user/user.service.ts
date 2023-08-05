@@ -7,7 +7,7 @@ import { uniqueString } from './../../common/helpers/unique.helper'
 
 class UserService {
     async getUser(args: Partial<IUser>): Promise<IUser> {
-        args.email = args.email.toLowerCase()
+        if ('email' in args) args.email = args.email.toLowerCase()
         return await userRepository.getUser(args)
     }
 
