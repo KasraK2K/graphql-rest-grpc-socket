@@ -1,0 +1,29 @@
+query LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+        token
+        user {
+            ...userFields
+        }
+    }
+}
+
+fragment userFields on User {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_verify
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "email": "Admin Email"
+# }

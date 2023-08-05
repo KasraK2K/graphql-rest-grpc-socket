@@ -1,0 +1,28 @@
+query LoginAdmin($email: String!, $password: String!) {
+    loginAdmin(email: $email, password: $password) {
+        token
+        admin {
+            ...adminFields
+        }
+    }
+}
+
+fragment adminFields on Admin {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "email": "Admin Email"
+# }

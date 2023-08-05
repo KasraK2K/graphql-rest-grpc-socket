@@ -1,0 +1,31 @@
+mutation CreateAdmin($email: String!, $password: String!) {
+    addAdmin(email: $email, password: $password) {
+        ...adminFields
+    }
+}
+
+fragment adminFields on Admin {
+    id
+    first_name
+    surname
+    contact_number
+    email
+    is_active
+    is_block
+    is_archive
+    roles
+    created_at
+    updated_at
+    archived_at
+}
+
+# --------------------------------- Variables -------------------------------- #
+# {
+#   "email": "Admin Email",
+#   "password": "Admin Password"
+# }
+
+# ---------------------------------- Headers --------------------------------- #
+# {
+#   "authorization": "Bearer <Admin Token>"
+# }

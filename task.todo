@@ -2,52 +2,6 @@
   "todotree": {
     "tree": [
       {
-        "key": 1690824235419,
-        "children": [],
-        "todo": {
-          "content": "add handler for admin and user module and use it instead of service because of using decorator",
-          "id": 1690824235419,
-          "level": "success",
-          "done": false,
-          "start": 1690824235419
-        }
-      },
-      {
-        "key": 1690824211247,
-        "children": [],
-        "todo": {
-          "content": "create role module",
-          "id": 1690824211247,
-          "level": "success",
-          "done": false,
-          "start": 1690824211247
-        }
-      },
-      {
-        "key": 1690824222634,
-        "children": [],
-        "todo": {
-          "content": "create permission module",
-          "id": 1690824222634,
-          "level": "success",
-          "done": false,
-          "start": 1690824222634
-        }
-      },
-      {
-        "key": 1690824328772,
-        "children": [],
-        "todo": {
-          "content": "remove unnecessary token check in admin registeration",
-          "id": 1690824328772,
-          "level": "default",
-          "done": true,
-          "start": 1690824328773,
-          "focus": false,
-          "end": 1691072249443
-        }
-      },
-      {
         "key": 1688302517163,
         "children": [],
         "todo": {
@@ -94,6 +48,6 @@
     "simpleMode": false,
     "lang": "en",
     "desc": "Koa GraphQL Boilerplate",
-    "version": "1691072249507"
+    "version": "1691160450764"
   }
 }
