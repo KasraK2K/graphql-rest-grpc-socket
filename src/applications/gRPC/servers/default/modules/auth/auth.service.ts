@@ -86,13 +86,13 @@ grpcServer.addService(grpcObj.authentication.Auth.service, {
         else {
             try {
                 const extractedToken = authorization.slice(applicationConfig.bearer.length + 1)
-                const { valid, data } = tokenHelper.verify(extractedToken)
+                const { valid } = tokenHelper.verify(extractedToken)
                 if (!valid)
                     return callback({
                         status: grpc.status.INVALID_ARGUMENT,
                         message: 'Authorization argument is not valid.'
                     })
-                const { admin, token } = await authService.registerAdmin(data, { email, password })
+                const { admin, token } = await authService.registerAdmin({ email, password })
                 return callback(null, { status: grpc.status.OK, token, admin })
             } catch (error) {
                 return callback(error)
